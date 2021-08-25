@@ -1,0 +1,36 @@
+!SESSION 2021-08-25 16:24:29.894 -----------------------------------------------
+eclipse.buildId=Version 1.7.0
+java.version=11.0.10
+java.vendor=AdoptOpenJDK
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=it_IT
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2021-08-25 16:24:46.484
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2021-08-25 16:24:46.546
+!MESSAGE Log4j initialized with config file D:\BadiBoard\STM32F103_Telemetry_V01\.metadata\.log4j.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2021-08-25 16:24:48.859
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.cdt.core 1 0 2021-08-25 16:26:08.751
+!MESSAGE Indexed 'BadiApp_STM32F103C8T6' (40 sources, 123 headers) in 3,64 sec: 11.245 declarations; 58.488 references; 2 unresolved inclusions; 36 syntax errors; 188 unresolved names (0,27%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2021-08-25 16:26:33.880
+!MESSAGE Indexed 'Bootloader_STM32F103C8T6' (31 sources, 113 headers) in 2,15 sec: 8.525 declarations; 31.816 references; 2 unresolved inclusions; 36 syntax errors; 188 unresolved names (0,46%)
+!SESSION 2021-08-25 16:27:02.940 -----------------------------------------------
+eclipse.buildId=Version 1.7.0
+java.version=11.0.10
+java.vendor=AdoptOpenJDK
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=it_IT
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2021-08-25 16:27:09.105
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2021-08-25 16:27:09.167
+!MESSAGE Log4j initialized with config file D:\BadiBoard\STM32F103_Telemetry_V01\.metadata\.log4j.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2021-08-25 16:27:14.846
+!MESSAGE Started RMI Server, listening on port 41337
