@@ -1,3 +1,0 @@
-RPM_Counter.c:11:6:initCounterRPM	0	static
-RPM_Counter.c:21:6:deltaTimeInterruptRPM	0	static
-RPM_Counter.c:39:6:calculateRPM	8	static
