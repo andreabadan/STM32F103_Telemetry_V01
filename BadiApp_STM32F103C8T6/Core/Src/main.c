@@ -162,7 +162,7 @@ int main(void)
 		  //USB
 		  sizeBuffUSB += sprintf(txtBufUSB, "RPM_Value: %u ", RPM_Value);
 		  //BT
-		  sizeBuffBT += sprintf(txtBufBT, BT_RPM_SYMBOL "%u", RPM_Value); //6 Characters
+		  sizeBuffBT += sprintf(txtBufBT, "%u" BT_RPM_SYMBOL, RPM_Value); //6 Characters
 		  //Update counter
 		  previousMillisRPM_Display = currentMillis;
 	  }
@@ -171,7 +171,7 @@ int main(void)
 		  //USB
 		  sizeBuffUSB += sprintf(txtBufUSB + sizeBuffUSB, "!--! Lap value: %lu !--! ", Lap_Value);
 		  //BT
-		  //sizeBuffBT += sprintf(txtBufBT + sizeBuffBT, BT_LAP_SYMBOL BT_LAPFINISHED_SYMBOL "%lu", Lap_Value); //12 Characters
+		  sizeBuffBT += sprintf(txtBufBT + sizeBuffBT, BT_LAPFINISHED_SYMBOL "%lu" BT_LAP_SYMBOL, Lap_Value); //12 Characters
 		  //Update counter
 		  previousMillisLap_Display = currentMillis + DELAY_DISPLAY_LAP_TIME;
 		  LapUpdateDisplay = 0;
@@ -180,7 +180,7 @@ int main(void)
 		  //USB
 		  sizeBuffUSB += sprintf(txtBufUSB + sizeBuffUSB, "Lap value: %lu ", currentMillis-previousMillisLap);
 		  //BT
-		  sizeBuffBT += sprintf(txtBufBT + sizeBuffBT, BT_LAP_SYMBOL "%lu", currentMillis-previousMillisLap); //11 Characters
+		  sizeBuffBT += sprintf(txtBufBT + sizeBuffBT, "%lu" BT_LAP_SYMBOL, currentMillis-previousMillisLap); //11 Characters
 		  //Update counter
 		  previousMillisLap_Display = currentMillis;
 	  }
@@ -191,7 +191,7 @@ int main(void)
 		  //USB
 		  sizeBuffUSB += sprintf(txtBufUSB + sizeBuffUSB, "Temp: %u ", TemperatureValue);
 		  //BT
-		  sizeBuffBT += sprintf(txtBufBT + sizeBuffBT,BT_TEMP_SYMBOL "%u", TemperatureValue); //6 Characters
+		  sizeBuffBT += sprintf(txtBufBT + sizeBuffBT, "%u" BT_TEMP_SYMBOL, TemperatureValue); //6 Characters
 		  //Update counter
 		  previousMillisTemperature_Display = currentMillis;
 	  }
