@@ -1,4 +1,5 @@
 .metadata/**
 
-BadiApp_STM32F103C8T6/Debug/**
-Bootloader_STM32F103C8T6/Debug/**
+**/Debug/**
+
+**/.settings/**
