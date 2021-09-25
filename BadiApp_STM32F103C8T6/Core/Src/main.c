@@ -202,23 +202,29 @@ int main(void)
 	  }
 
 	  //Print via USB all informations
+	//#define debugBT
+	#ifdef debugBT
+	  sizeBuffUSB = sizeBuffBT;
+	  for(int i=0; i<sizeBuffBT; i++)
+		  txtBufUSB[i] = txtBufBT[i];
+	#endif
+
 	  if(sizeBuffUSB > 0){
 		  sizeBuffUSB += sprintf(txtBufUSB + sizeBuffUSB, "\r\n");
 		  CDC_Transmit_FS((uint8_t *)txtBufUSB, sizeBuffUSB);
 		  sizeBuffUSB   = 0;
 		  txtBufUSB[50] = 0;
 	  }
-
 	  //Print via BT all informations
 	  if(sizeBuffBT > 0){
 		  HAL_UART_Transmit_DMA(&huart2, (uint8_t *)txtBufBT, sizeBuffBT);
 		  sizeBuffBT   = 0;
 		  txtBufBT[30] = 0;
 	  }
-
 	  //Led status
 	  HAL_GPIO_TogglePin (ToDeleate_Led_GPIO_Port, ToDeleate_Led_Pin);
 	  HAL_Delay(50);
+	  MX_USB_DEVICE_DeInit();
   }
   /* USER CODE END 3 */
 }

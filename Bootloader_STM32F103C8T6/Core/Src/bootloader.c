@@ -87,7 +87,7 @@ void deinitEverything()
 {
 	//-- reset peripherals to guarantee flawless start of user application
 	HAL_GPIO_DeInit(BootloaderLed_GPIO_Port, BootloaderLed_Pin);
-	USBD_DeInit(&hUsbDeviceFS);
+	MX_USB_DEVICE_DeInit();
 	  __HAL_RCC_GPIOC_CLK_DISABLE();
 	  __HAL_RCC_GPIOD_CLK_DISABLE();
 	  __HAL_RCC_GPIOB_CLK_DISABLE();

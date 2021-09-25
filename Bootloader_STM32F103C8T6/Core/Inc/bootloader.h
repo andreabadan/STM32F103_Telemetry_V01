@@ -66,7 +66,7 @@ FlashStatus flashStatus;
 FlashLocked flashLocked;
 //uint32_t *bootReadPointer = (uint32_t*)RAM_ADDRESS_BOOTMODE;
 
-extern USBD_HandleTypeDef hUsbDeviceFS;//it is defined in the usb_device.c
+//extern USBD_HandleTypeDef hUsbDeviceFS;//it is defined in the usb_device.c
 
 uint32_t Read_BootMode(uint32_t RAM_Address);
 void Write_BootMode(uint32_t RAM_Address, uint32_t data);
