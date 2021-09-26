@@ -66,7 +66,12 @@ DMA_HandleTypeDef hdma_usart2_tx;
 DMA_HandleTypeDef hdma_usart2_rx;
 
 /* USER CODE BEGIN PV */
-
+typedef enum
+{
+    JumpMode   = 0x00000000,
+	FlashMode  = 0xFFFFFFFF
+} BootLoaderMode;
+BootLoaderMode __attribute__((section(".BootOptions"))) bootLoaderMode;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -224,7 +229,7 @@ int main(void)
 	  //Led status
 	  HAL_GPIO_TogglePin (ToDeleate_Led_GPIO_Port, ToDeleate_Led_Pin);
 	  HAL_Delay(50);
-	  MX_USB_DEVICE_DeInit();
+	  //MX_USB_DEVICE_DeInit();
   }
   /* USER CODE END 3 */
 }

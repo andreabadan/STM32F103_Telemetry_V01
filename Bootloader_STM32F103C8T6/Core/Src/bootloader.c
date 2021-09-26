@@ -5,17 +5,8 @@
  *      Author: BadiBoard
  */
 
-#include "bootloader.h"
-
-uint32_t Read_BootMode(uint32_t RAM_Address) {
-    uint32_t *RAM_Pointer = (uint32_t*) RAM_Address;
-	return *RAM_Pointer;
-}
-
-void Write_BootMode(uint32_t RAM_Address, uint32_t data) {
-	uint32_t *RAM_Pointer = (uint32_t*) RAM_Address;
-	*RAM_Pointer = data;
-}
+#include <BootLoader.h>
+BootloaderMode __attribute__((section(".BootOptions"))) bootloaderMode;
 
 void bootloaderInit()
 {
@@ -36,8 +27,6 @@ void bootloaderInit()
 	flashStatus = Unerased;
 	flashLocked = Locked;
 
-	BootloaderMode bootloaderMode = Read_BootMode(RAM_ADDRESS_BOOTMODE);
-
 	switch(bootloaderMode)
 	{
 		case FlashMode:
@@ -53,7 +42,7 @@ void bootloaderInit()
 			jumpToApp();
 			break;
 		default:
-			Write_BootMode(RAM_ADDRESS_BOOTMODE, JumpMode);
+			bootloaderMode = JumpMode;
 			jumpToApp();
 			break;
 	}
@@ -289,7 +278,7 @@ void messageHandler(uint8_t* Buf)
 				flashStatus = Unerased;
 				if(flashLocked != Locked)
 					lockMemory();
-				Write_BootMode(RAM_ADDRESS_BOOTMODE, JumpMode);
+				bootloaderMode = JumpMode;
 				CDC_Transmit_FS((uint8_t*)&"Flash: Success!\n", strlen("Flash: Success!\n"));
 			} else {
 				CDC_Transmit_FS((uint8_t*)&"Flash: Error: flash procedure not running\n", strlen("Flash: Error: flash procedure not running\n"));
@@ -304,7 +293,7 @@ void messageHandler(uint8_t* Buf)
 			CDC_Transmit_FS((uint8_t*)&"Flash: Aborted!\n", strlen("Flash: Aborted!\n"));
 			break;
 		case StartApplication:
-			Write_BootMode(RAM_ADDRESS_BOOTMODE, JumpMode);
+			bootloaderMode = JumpMode;
 			break;
 	}
 }

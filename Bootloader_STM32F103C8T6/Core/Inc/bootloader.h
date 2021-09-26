@@ -12,8 +12,6 @@
 #define FLASH_BANK_SIZE (0XB000)		//44kB
 #define FLASH_PAGE_SIZE_USER (0x400)	//1kB
 
-#define RAM_ADDRESS_BOOTMODE 0x20004FF9//RAM address where read/write BootloaderMode
-
 #define ERASE_FLASH_MEMORY "#$ERASE_MEMORY"
 #define FLASHING_START     "#$FLASH_START#"
 #define FLASHING_FINISH    "#$FLASH_FINISH"
@@ -61,15 +59,13 @@ typedef struct
     application_t*	func_p;        // Program Counter
 } JumpStruct;
 
+extern BootloaderMode bootloaderMode;
+
 uint32_t Flashed_offset;
 FlashStatus flashStatus;
 FlashLocked flashLocked;
-//uint32_t *bootReadPointer = (uint32_t*)RAM_ADDRESS_BOOTMODE;
 
 //extern USBD_HandleTypeDef hUsbDeviceFS;//it is defined in the usb_device.c
-
-uint32_t Read_BootMode(uint32_t RAM_Address);
-void Write_BootMode(uint32_t RAM_Address, uint32_t data);
 
 void bootloaderInit();
 
