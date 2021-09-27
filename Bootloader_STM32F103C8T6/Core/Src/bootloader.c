@@ -6,21 +6,16 @@
  */
 
 #include <BootLoader.h>
-BootloaderMode __attribute__((section(".BootOptions"))) bootloaderMode;
-
+//BootloaderMode __attribute__((section(".BootOptions"))) bootloaderMode;
+BootloaderMode bootloaderMode = JumpMode;
 void bootloaderInit()
 {
-	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_SET);
-	HAL_Delay(50);
-	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_RESET);
-	HAL_Delay(50);
-	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_SET);
-	HAL_Delay(50);
-	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_RESET);
-	HAL_Delay(50);
-	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_SET);
-	HAL_Delay(50);
-	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_RESET);
+	for(uint8_t i=0; i<3; i++){
+		HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_SET);
+		HAL_Delay(100);
+		HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_RESET);
+		HAL_Delay(100);
+	}
 	HAL_Delay(200);
 
 	Flashed_offset = 0;
@@ -50,7 +45,14 @@ void bootloaderInit()
 
 void jumpToApp()
 {
-	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_RESET);
+	for(uint8_t i=0; i<2; i++){
+		HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_SET);
+		HAL_Delay(50);
+		HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_RESET);
+		HAL_Delay(50);
+	}
+	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_SET);
+	HAL_Delay(200);
 	//Check if the application is there
 	uint8_t emptyCellCount = 0;
 	for(uint8_t i=0; i<20; i++)
@@ -60,6 +62,8 @@ void jumpToApp()
 	}
 	if(emptyCellCount != 20)
 	{
+		HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_RESET);
+
 		const JumpStruct* vector_p = (JumpStruct*)APP_START;
 
 		deinitEverything();

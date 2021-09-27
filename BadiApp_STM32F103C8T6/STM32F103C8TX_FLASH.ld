@@ -51,7 +51,7 @@ SECTIONS
     . = ALIGN(4);
   } >FLASH
   /*Boot options section*/
-  .BootOptions 0x20000010 (NOLOAD):
+  .BootOptions 0x20000000 (NOLOAD):
   {
   	KEEP(*(.BootOptions))
   } >RAM
