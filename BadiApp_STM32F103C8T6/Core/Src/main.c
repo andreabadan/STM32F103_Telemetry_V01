@@ -101,7 +101,7 @@ static void MX_USART3_UART_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+  bootLoaderMode = JumpMode;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/

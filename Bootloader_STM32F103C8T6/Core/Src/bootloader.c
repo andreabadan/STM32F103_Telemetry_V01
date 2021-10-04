@@ -6,8 +6,7 @@
  */
 
 #include <BootLoader.h>
-//BootloaderMode __attribute__((section(".BootOptions"))) bootloaderMode;
-BootloaderMode bootloaderMode = JumpMode;
+BootloaderMode __attribute__((section(".BootOptions"))) bootloaderMode;
 void bootloaderInit()
 {
 	for(uint8_t i=0; i<3; i++){
