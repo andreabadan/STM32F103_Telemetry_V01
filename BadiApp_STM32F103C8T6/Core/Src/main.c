@@ -25,6 +25,8 @@
 /* USER CODE BEGIN Includes */
 #include "usbd_cdc_if.h"
 
+#include "BootLoaderMng.h"
+
 #include "RPM_Counter.h"
 #include "Lap_Timer.h"
 #include "Temperature_Sensor.h"
@@ -37,11 +39,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define BT_RPM_SYMBOL "R"
-#define BT_LAP_SYMBOL "L"
-#define BT_LAPFINISHED_SYMBOL "F"
-#define BT_TEMP_SYMBOL "T"
-#define BT_PROBEBROKE_SYMBOL "B"
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -66,12 +64,7 @@ DMA_HandleTypeDef hdma_usart2_tx;
 DMA_HandleTypeDef hdma_usart2_rx;
 
 /* USER CODE BEGIN PV */
-typedef enum
-{
-    JumpMode   = 0x00000000,
-	FlashMode  = 0xFFFFFFFF
-} BootLoaderMode;
-BootLoaderMode __attribute__((section(".BootOptions"))) bootLoaderMode;
+uint8_t UART2_rxBuffer[4]={0};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -101,7 +94,7 @@ static void MX_USART3_UART_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-  bootLoaderMode = JumpMode;
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -138,6 +131,11 @@ int main(void)
   CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
   DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
 
+  /*************/
+  /*Init Funct**/
+  /*************/
+  //Initialization of "BootLoader"
+  initBootLoaderMode();
   //Initialization of "RPM counter"
   initCounterRPM();
   //Initialization of "Track counter"
@@ -145,10 +143,18 @@ int main(void)
   //Initialization of "Read temperature"
   initReadTemperature();
 
-  //Bluetooth
+  /*************/
+  /**Bluetooth**/
+  /*************/
+  //TX
   char txtBufBT[30];
   uint16_t sizeBuffBT = 0;
-  //USB
+  //RX
+  HAL_UART_Receive_DMA (&huart2, UART2_rxBuffer, 4);
+
+  /*************/
+  /*****USB*****/
+  /*************/
   char txtBufUSB[50];
   uint16_t sizeBuffUSB = 0;
   /* USER CODE END 2 */
@@ -679,6 +685,19 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 {
     // Conversion complete & DMA transfer complete as well
 	averageRead();
+}
+// DMA Callback
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+	if(huart->Instance==USART2){
+		if(UART2_rxBuffer[0]==BOOTLOADER_WRITE_B &&
+		   UART2_rxBuffer[1]==BOOTLOADER_WRITE_O &&
+		   UART2_rxBuffer[2]==BOOTLOADER_WRITE_O &&
+		   UART2_rxBuffer[3]==BOOTLOADER_WRITE_T){
+			jumpToBootLoader(FlashMode);
+		}
+		HAL_UART_Receive_DMA(&huart2, UART2_rxBuffer, 4);
+	}
 }
 /* USER CODE END 4 */
 

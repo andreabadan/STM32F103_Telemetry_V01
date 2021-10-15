@@ -5,8 +5,9 @@
  *      Author: BadiBoard
  */
 
-#include <BootLoader.h>
-BootloaderMode __attribute__((section(".BootOptions"))) bootloaderMode;
+#include "BootLoader.h"
+BootloaderMode __attribute__((section(".BootOptions"))) bootLoaderMode;
+
 void bootloaderInit()
 {
 	for(uint8_t i=0; i<3; i++){
@@ -21,7 +22,7 @@ void bootloaderInit()
 	flashStatus = Unerased;
 	flashLocked = Locked;
 
-	switch(bootloaderMode)
+	switch(bootLoaderMode)
 	{
 		case FlashMode:
 			for(uint8_t i=0; i<10; i++)
@@ -36,7 +37,7 @@ void bootloaderInit()
 			jumpToApp();
 			break;
 		default:
-			bootloaderMode = JumpMode;
+			bootLoaderMode = JumpMode;
 			jumpToApp();
 			break;
 	}
@@ -155,11 +156,14 @@ void flashWord(uint32_t dataToFlash)
 			  flashStatus = Writing;
 		  Flashed_offset += 4;
 		  CDC_Transmit_FS((uint8_t*)&"Flash: OK\n", strlen("Flash: OK\n"));
+		  //Reboot system in jump mode
+		  bootLoaderMode = JumpMode;
+		  NVIC_SystemReset();
 	  }
 	}else
 	{
-	  CDC_Transmit_FS((uint8_t*)&"Error: Memory not unlocked nor erased!\n",
-			  strlen("Error: Memory not unlocked nor erased!\n"));
+	  CDC_Transmit_FS((uint8_t*)&"Error: Memory not unlocked or not erased!\n",
+			  strlen("Error: Memory not unlocked or not erased!\n"));
 	}
 }
 
@@ -281,7 +285,7 @@ void messageHandler(uint8_t* Buf)
 				flashStatus = Unerased;
 				if(flashLocked != Locked)
 					lockMemory();
-				bootloaderMode = JumpMode;
+				bootLoaderMode = JumpMode;
 				CDC_Transmit_FS((uint8_t*)&"Flash: Success!\n", strlen("Flash: Success!\n"));
 			} else {
 				CDC_Transmit_FS((uint8_t*)&"Flash: Error: flash procedure not running\n", strlen("Flash: Error: flash procedure not running\n"));
@@ -296,7 +300,24 @@ void messageHandler(uint8_t* Buf)
 			CDC_Transmit_FS((uint8_t*)&"Flash: Aborted!\n", strlen("Flash: Aborted!\n"));
 			break;
 		case StartApplication:
-			bootloaderMode = JumpMode;
+			bootLoaderMode = JumpMode;
+			NVIC_SystemReset();
 			break;
 	}
+}
+
+void createMessage(uint8_t* Buf,  uint32_t *Len)
+{
+	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_RESET);//LED ON
+	uint16_t length = (uint16_t) *Len;
+	if(length == 4 && flashLocked == Unlocked && flashStatus != Unerased){
+		uint32_t dataToFlash =  (Buf[3]<<24) +
+								(Buf[2]<<16) +
+								(Buf[1]<<8) +
+								Buf[0];//32bit Word contains 4 Bytes
+		flashWord(dataToFlash);
+	}else{
+		messageHandler(Buf);
+	}
+	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_SET);//LED OFF
 }

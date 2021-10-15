@@ -59,7 +59,7 @@ typedef struct
     application_t*	func_p;        // Program Counter
 } JumpStruct;
 
-extern BootloaderMode bootloaderMode;
+extern BootloaderMode bootLoaderMode;
 
 uint32_t Flashed_offset;
 FlashStatus flashStatus;
@@ -80,5 +80,6 @@ void errorBlink(char UnknounCommand);
 Command commandDecoding(char array1[]);
 uint8_t string_compare(char array1[], char array2[], uint16_t length);
 void messageHandler(uint8_t* Buf);
+void createMessage(uint8_t* Buf,  uint32_t *Len);
 
 #endif /* INC_BOOTLOADER_H_ */
