@@ -32,7 +32,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -85,11 +85,9 @@ void Error_Handler(void);
 #define IMU_Interrupt_Pin GPIO_PIN_9
 #define IMU_Interrupt_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
-#define BT_RPM_SYMBOL "R"
-#define BT_LAP_SYMBOL "L"
-#define BT_LAPFINISHED_SYMBOL "F"
-#define BT_TEMP_SYMBOL "T"
-#define BT_PROBEBROKE_SYMBOL "B"
+#define BOOTLOADER_WRITE_B 66 //->B in ASCII
+#define BOOTLOADER_WRITE_O 79 //->O in ASCII
+#define BOOTLOADER_WRITE_T 84 //->T in ASCII
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

@@ -27,6 +27,8 @@
 
 #include "BootLoaderMng.h"
 
+#include "BluetoothMng.h"
+
 #include "RPM_Counter.h"
 #include "Lap_Timer.h"
 #include "Temperature_Sensor.h"
@@ -64,7 +66,7 @@ DMA_HandleTypeDef hdma_usart2_tx;
 DMA_HandleTypeDef hdma_usart2_rx;
 
 /* USER CODE BEGIN PV */
-uint8_t UART2_rxBuffer[4]={0};
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -136,21 +138,14 @@ int main(void)
   /*************/
   //Initialization of "BootLoader"
   initBootLoaderMode();
+  //Initialization of "Bluetooth"
+  initBluetoothCommunication(&huart2);
   //Initialization of "RPM counter"
   initCounterRPM();
   //Initialization of "Track counter"
   initCounterLap();
   //Initialization of "Read temperature"
   initReadTemperature();
-
-  /*************/
-  /**Bluetooth**/
-  /*************/
-  //TX
-  char txtBufBT[30];
-  uint16_t sizeBuffBT = 0;
-  //RX
-  HAL_UART_Receive_DMA (&huart2, UART2_rxBuffer, 4);
 
   /*************/
   /*****USB*****/
@@ -173,7 +168,7 @@ int main(void)
 		  //USB
 		  sizeBuffUSB += sprintf(txtBufUSB, "RPM_Value: %u ", RPM_Value);
 		  //BT
-		  sizeBuffBT += sprintf(txtBufBT, "%u" BT_RPM_SYMBOL, RPM_Value); //6 Characters
+		  sizeBuffBT += sprintf(txtBufBT, "%u" RPM_SYMBOL, RPM_Value); //6 Characters
 		  //Update counter
 		  previousMillisRPM_Display = currentMillis;
 	  }
@@ -182,7 +177,7 @@ int main(void)
 		  //USB
 		  sizeBuffUSB += sprintf(txtBufUSB + sizeBuffUSB, "!--! Lap value: %lu !--! ", Lap_Value);
 		  //BT
-		  sizeBuffBT += sprintf(txtBufBT + sizeBuffBT, BT_LAPFINISHED_SYMBOL "%lu" BT_LAP_SYMBOL, Lap_Value); //12 Characters
+		  appendData(LAPFINISHED_SYMBOL "%lu" LAP_SYMBOL, Lap_Value);//12 Characters
 		  //Update counter
 		  previousMillisLap_Display = currentMillis + DELAY_DISPLAY_LAP_TIME;
 		  LapUpdateDisplay = 0;
@@ -191,7 +186,7 @@ int main(void)
 		  //USB
 		  sizeBuffUSB += sprintf(txtBufUSB + sizeBuffUSB, "Lap value: %lu ", currentMillis-previousMillisLap);
 		  //BT
-		  sizeBuffBT += sprintf(txtBufBT + sizeBuffBT, "%lu" BT_LAP_SYMBOL, currentMillis-previousMillisLap); //11 Characters
+		  appendData("%lu" LAP_SYMBOL, currentMillis-previousMillisLap); //11 Characters
 		  //Update counter
 		  previousMillisLap_Display = currentMillis;
 	  }
@@ -202,7 +197,7 @@ int main(void)
 		  //USB
 		  sizeBuffUSB += sprintf(txtBufUSB + sizeBuffUSB, "Temp: %u ", TemperatureValue);
 		  //BT
-		  sizeBuffBT += sprintf(txtBufBT + sizeBuffBT, "%u" BT_TEMP_SYMBOL, TemperatureValue); //6 Characters
+		  appendData("%u" TEMP_SYMBOL, TemperatureValue); //6 Characters
 		  //Update counter
 		  previousMillisTemperature_Display = currentMillis;
 	  }
@@ -227,11 +222,7 @@ int main(void)
 		  txtBufUSB[50] = 0;
 	  }
 	  //Print via BT all informations
-	  if(sizeBuffBT > 0){
-		  HAL_UART_Transmit_DMA(&huart2, (uint8_t *)txtBufBT, sizeBuffBT);
-		  sizeBuffBT   = 0;
-		  txtBufBT[30] = 0;
-	  }
+	  printData(&huart2);
 	  //Led status
 	  HAL_GPIO_TogglePin (ToDeleate_Led_GPIO_Port, ToDeleate_Led_Pin);
 	  HAL_Delay(50);
@@ -689,15 +680,13 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 // DMA Callback
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-	if(huart->Instance==USART2){
-		if(UART2_rxBuffer[0]==BOOTLOADER_WRITE_B &&
-		   UART2_rxBuffer[1]==BOOTLOADER_WRITE_O &&
-		   UART2_rxBuffer[2]==BOOTLOADER_WRITE_O &&
-		   UART2_rxBuffer[3]==BOOTLOADER_WRITE_T){
+	switch(readData(huart)){
+		case LoadNewApp:
 			jumpToBootLoader(FlashMode);
-		}
-		HAL_UART_Receive_DMA(&huart2, UART2_rxBuffer, 4);
+			break;
+		default: break;
 	}
+
 }
 /* USER CODE END 4 */
 
