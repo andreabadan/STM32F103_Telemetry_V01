@@ -10,27 +10,27 @@
 //Initialization of all variables
 void initBluetoothCommunication(UART_HandleTypeDef *huart){
 	//Initialization of DMA
-	HAL_UART_Receive_DMA (huart, UART2_rxBuffer, 4);
+	HAL_UART_Receive_DMA (huart, rxBuffer, RXSIZE);
 	bluetoothStatus = Connect;
-	sizeBuffBT = 0;
+	sizeTxBuffer = 0;
 	//TODO: Increase boudrate and set name
 }
 
 //Append new data
 void appendData(char *options, uint32_t value){
 	if(bluetoothStatus==Connect){
-		sizeBuffBT += sprintf(txtBufBT + sizeBuffBT, options, value);
+		sizeTxBuffer += sprintf(txBuffer + sizeTxBuffer, options, value);
 	}
 }
 
 //Print all pending data
 HAL_StatusTypeDef printData(UART_HandleTypeDef *huart) {
 	HAL_StatusTypeDef trasmission = HAL_OK;
-	if(sizeBuffBT > 0 && bluetoothStatus==Connect){
-		trasmission = HAL_UART_Transmit_DMA(huart, (uint8_t *)txtBufBT, sizeBuffBT);
+	if(sizeTxBuffer > 0 && bluetoothStatus==Connect){
+		trasmission = HAL_UART_Transmit_DMA(huart, (uint8_t *)txBuffer, sizeTxBuffer);
 		if(trasmission == HAL_OK){
-			sizeBuffBT    = 0;
-			txtBufBT[100] = 0;
+			sizeTxBuffer  = 0;
+			txBuffer[100] = 0;
 		}
 	}
 	return(trasmission);
@@ -39,12 +39,26 @@ HAL_StatusTypeDef printData(UART_HandleTypeDef *huart) {
 //Read the incoming data
 BluetoothAction readData(UART_HandleTypeDef *huart){
 	if(huart->Instance==USART2){
-		if(UART2_rxBuffer[0]==BOOTLOADER_WRITE_B &&
-		   UART2_rxBuffer[1]==BOOTLOADER_WRITE_O &&
-		   UART2_rxBuffer[2]==BOOTLOADER_WRITE_O &&
-		   UART2_rxBuffer[3]==BOOTLOADER_WRITE_T){
-
+		if(strstr((char *)rxBuffer, BOOTLOADER_WRITE) != NULL){
+			HAL_UART_Receive_DMA(huart, rxBuffer, RXSIZE);
+			return(LoadNewApp);
+			//TODO: reboot mode
 		}
-		HAL_UART_Receive_DMA(huart, UART2_rxBuffer, 4);
+		//Stop communication
+		if(strstr((char *)rxBuffer, AT_NOT_CONNECTED) != NULL){
+			bluetoothStatus = Lost;
+			HAL_UART_Receive_DMA(huart, rxBuffer, RXSIZE);
+			return(None);
+		}
+		//Start communication
+		if(strstr((char *)rxBuffer, AT_CONNECTED) != NULL){
+			bluetoothStatus = Connect;
+			HAL_UART_Receive_DMA(huart, rxBuffer, RXSIZE);
+			return(None);
+		}
+
+		HAL_UART_Receive_DMA(huart, rxBuffer, RXSIZE);
+		return(None);
 	}
+	return(None);
 }

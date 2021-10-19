@@ -168,7 +168,7 @@ int main(void)
 		  //USB
 		  sizeBuffUSB += sprintf(txtBufUSB, "RPM_Value: %u ", RPM_Value);
 		  //BT
-		  sizeBuffBT += sprintf(txtBufBT, "%u" RPM_SYMBOL, RPM_Value); //6 Characters
+		  appendData( "%u" RPM_SYMBOL, RPM_Value); //6 Characters
 		  //Update counter
 		  previousMillisRPM_Display = currentMillis;
 	  }

@@ -14,6 +14,10 @@
 #define TEMP_SYMBOL         "T"
 #define PROBEBROKE_SYMBOL   "B"
 
+#define RXSIZE              20
+
+#define BOOTLOADER_WRITE    "BOOT"
+
 #define AT_CONNECTED        "OK+CONN"
 #define AT_NOT_CONNECTED    "OK+LOST"
 
@@ -33,10 +37,10 @@ typedef enum
 BluetoothStatus bluetoothStatus;
 
 //RX
-uint8_t UART2_rxBuffer[4];
+uint8_t rxBuffer[RXSIZE];
 //TX
-char txtBufBT[100];
-uint16_t sizeBuffBT;
+char txBuffer[100];
+uint16_t sizeTxBuffer;
 
 //Initialization of all variables
 void initBluetoothCommunication(UART_HandleTypeDef *huart);
