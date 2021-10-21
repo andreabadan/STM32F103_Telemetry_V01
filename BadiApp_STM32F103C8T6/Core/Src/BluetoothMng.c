@@ -10,7 +10,7 @@
 //Initialization of all variables
 void initBluetoothCommunication(UART_HandleTypeDef *huart){
 	//Initialization of DMA
-	HAL_UART_Receive_DMA (huart, rxBuffer, RXSIZE);
+	HAL_UARTEx_ReceiveToIdle_DMA (huart, rxBuffer, RXSIZE);
 	bluetoothStatus = Connect;
 	sizeTxBuffer = 0;
 	//TODO: Increase boudrate and set name
@@ -37,27 +37,39 @@ HAL_StatusTypeDef printData(UART_HandleTypeDef *huart) {
 }
 
 //Read the incoming data
-BluetoothAction readData(UART_HandleTypeDef *huart){
+BluetoothAction readData(UART_HandleTypeDef *huart, uint16_t Size){
 	if(huart->Instance==USART2){
-		if(strstr((char *)rxBuffer, BOOTLOADER_WRITE) != NULL){
-			HAL_UART_Receive_DMA(huart, rxBuffer, RXSIZE);
+		if((char)rxBuffer[Size-4] == BOOTLOADER_WRITE[0] &&
+		   (char)rxBuffer[Size-3] == BOOTLOADER_WRITE[1] &&
+		   (char)rxBuffer[Size-2] == BOOTLOADER_WRITE[2] &&
+		   (char)rxBuffer[Size-1] == BOOTLOADER_WRITE[3]){
+			HAL_UARTEx_ReceiveToIdle_DMA(huart, rxBuffer, RXSIZE);
 			return(LoadNewApp);
-			//TODO: reboot mode
 		}
 		//Stop communication
-		if(strstr((char *)rxBuffer, AT_NOT_CONNECTED) != NULL){
+		if((char)rxBuffer[Size-9] == AT_NOT_CONNECTED[0] &&
+		   (char)rxBuffer[Size-8] == AT_NOT_CONNECTED[1] &&
+		   (char)rxBuffer[Size-7] == AT_NOT_CONNECTED[2] &&
+		   (char)rxBuffer[Size-6] == AT_NOT_CONNECTED[3] &&
+		   (char)rxBuffer[Size-5] == AT_NOT_CONNECTED[4] &&
+		   (char)rxBuffer[Size-4] == AT_NOT_CONNECTED[5] &&
+		   (char)rxBuffer[Size-3] == AT_NOT_CONNECTED[6]){
 			bluetoothStatus = Lost;
-			HAL_UART_Receive_DMA(huart, rxBuffer, RXSIZE);
+			HAL_UARTEx_ReceiveToIdle_DMA(huart, rxBuffer, RXSIZE);
 			return(None);
 		}
 		//Start communication
-		if(strstr((char *)rxBuffer, AT_CONNECTED) != NULL){
+		//WARNING: "AT_CONNECTED" must be at the and of searching procedure
+		if((char)rxBuffer[Size-9] == AT_CONNECTED[0] &&
+		   (char)rxBuffer[Size-8] == AT_CONNECTED[1] &&
+		   (char)rxBuffer[Size-7] == AT_CONNECTED[2] &&
+		   (char)rxBuffer[Size-6] == AT_CONNECTED[3] &&
+		   (char)rxBuffer[Size-5] == AT_CONNECTED[4] &&
+		   (char)rxBuffer[Size-4] == AT_CONNECTED[5] &&
+		   (char)rxBuffer[Size-3] == AT_CONNECTED[6]){
 			bluetoothStatus = Connect;
-			HAL_UART_Receive_DMA(huart, rxBuffer, RXSIZE);
-			return(None);
 		}
-
-		HAL_UART_Receive_DMA(huart, rxBuffer, RXSIZE);
+		HAL_UARTEx_ReceiveToIdle_DMA(huart, rxBuffer, RXSIZE);
 		return(None);
 	}
 	return(None);

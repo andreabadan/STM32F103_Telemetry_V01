@@ -52,6 +52,6 @@ void appendData(char *options, uint32_t value);
 HAL_StatusTypeDef printData(UART_HandleTypeDef *huart);
 
 //Read the incoming data
-BluetoothAction readData(UART_HandleTypeDef *huart);
+BluetoothAction readData(UART_HandleTypeDef *huart, uint16_t Size);
 
 #endif /* BLUETOOTH_MNG_H_ */

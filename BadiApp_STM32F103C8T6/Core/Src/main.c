@@ -677,10 +677,10 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
     // Conversion complete & DMA transfer complete as well
 	averageRead();
 }
-// DMA Callback
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+// DMA USART Callback
+void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 {
-	switch(readData(huart)){
+	switch(readData(huart, Size)){
 		case LoadNewApp:
 			jumpToBootLoader(FlashMode);
 			break;
