@@ -216,7 +216,7 @@ static void MX_GPIO_Init(void)
 //Bluetooth Callback
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-	createMessage(UART2_rxBuffer, &huart->RxXferSize);
+	createMessage(UART2_rxBuffer, huart->RxXferSize);
 	HAL_UART_Receive_IT (&huart2, UART2_rxBuffer, 4);
 }
 /* USER CODE END 4 */

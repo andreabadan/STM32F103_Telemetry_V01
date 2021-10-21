@@ -306,10 +306,10 @@ void messageHandler(uint8_t* Buf)
 	}
 }
 
-void createMessage(uint8_t* Buf,  uint16_t *Len)
+void createMessage(uint8_t* Buf,  uint16_t Len)
 {
 	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_RESET);//LED ON
-	if(*Len == 4 && flashLocked == Unlocked && flashStatus != Unerased){
+	if(Len == 4 && flashLocked == Unlocked && flashStatus != Unerased){
 		uint32_t dataToFlash =  (Buf[3]<<24) +
 								(Buf[2]<<16) +
 								(Buf[1]<<8) +
