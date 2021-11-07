@@ -197,7 +197,17 @@ int main(void)
 		  //USB
 		  sizeBuffUSB += sprintf(txtBufUSB + sizeBuffUSB, "Temp: %u ", TemperatureValue);
 		  //BT
-		  appendData("%u" TEMP_SYMBOL, TemperatureValue); //6 Characters
+		  switch(TemperatureAlarmUpdateDisplay){
+		  	  case ProbeOk:
+		  		  appendData("%u" TEMP_SYMBOL, TemperatureValue); //6 Characters
+		  		  break;
+		  	  case HighTemperature:
+		  		  appendData(HIGHTEMP_SYMBOL "%u" TEMP_SYMBOL, TemperatureValue); //7 Characters
+		  		  break;
+		  	  default:
+		  		appendData(PROBEBROKE_SYMBOL "%u" TEMP_SYMBOL, TemperatureValue); //7 Characters
+		  		break;
+		  }
 		  //Update counter
 		  previousMillisTemperature_Display = currentMillis;
 	  }

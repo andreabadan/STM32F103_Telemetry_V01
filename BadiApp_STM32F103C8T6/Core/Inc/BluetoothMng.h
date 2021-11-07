@@ -13,6 +13,7 @@
 #define LAPFINISHED_SYMBOL  "F"
 #define TEMP_SYMBOL         "T"
 #define PROBEBROKE_SYMBOL   "B"
+#define HIGHTEMP_SYMBOL     "H"
 
 #define RXSIZE              20
 

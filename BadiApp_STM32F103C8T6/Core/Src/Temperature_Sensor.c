@@ -29,6 +29,7 @@ void averageRead(){
 //Convert read average to temperature
 void calculateTemperature(){
 	float Vin = V_MAX_TEMP*(float)((float)(sumReadValue/counterAverageRead)/4096.0);
+	//TODO: Calculate error probe
 	TemperatureValue = (float)(1.0/(1.0 / (TEMP_ZERO + 273.15) + (1.0 / BETA * log((KNOWN_RES_TEMP*Vin)/(V_MAX_TEMP-Vin)/RES_ZERO))) - 273.15)*10.0;
 
 	sumReadValue = 0;

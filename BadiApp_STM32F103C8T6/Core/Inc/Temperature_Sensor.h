@@ -16,7 +16,7 @@
 #define BETA 3970.0
 
 #define CALCULATE_TEMPERATUIRE_SENSOR_TIME 100     	   //250ms (0.25s)
-#define DELAY_DISPLAY_TEMPERATUIRE_SENSOR_TIME 2000    //2000ms delay to fix the time of the lap done (2s)
+#define DELAY_DISPLAY_TEMPERATUIRE_SENSOR_TIME 2000    //2000ms delay to fix the time of calculateTemperature (2s)
 
 typedef enum
 {
