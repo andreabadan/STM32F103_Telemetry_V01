@@ -14,10 +14,13 @@
 #define TEMP_SYMBOL         "T"
 #define PROBEBROKE_SYMBOL   "B"
 #define HIGHTEMP_SYMBOL     "H"
+#define W_FIRMWARE_VERSION    "V"
 
 #define RXSIZE              20
 
 #define BOOTLOADER_WRITE    "BOOT"
+
+#define R_FIRMWARE_VERSION  "FWV"
 
 #define AT_CONNECTED        "OK+CONN"
 #define AT_NOT_CONNECTED    "OK+LOST"
@@ -42,6 +45,7 @@ uint8_t rxBuffer[RXSIZE];
 //TX
 char txBuffer[100];
 uint16_t sizeTxBuffer;
+char _writeFWVersion;
 
 //Initialization of all variables
 void initBluetoothCommunication(UART_HandleTypeDef *huart);

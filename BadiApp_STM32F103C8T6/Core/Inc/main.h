@@ -85,7 +85,7 @@ void Error_Handler(void);
 #define IMU_Interrupt_Pin GPIO_PIN_9
 #define IMU_Interrupt_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
-
+#define VERISON "0.0.1B"
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
@@ -93,5 +93,3 @@ void Error_Handler(void);
 #endif
 
 #endif /* __MAIN_H */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
