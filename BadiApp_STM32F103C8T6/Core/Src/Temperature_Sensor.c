@@ -27,6 +27,8 @@ void initReadTemperature(){
 	previousMillisTemperature_Display = previousMillisTemperature_Read;
 	TemperatureValue = 0;
 
+	TemperatureAlarmThreeshold = 650;
+
 	counterAverageRead = 0;
 	sumReadValue = 0;
 
