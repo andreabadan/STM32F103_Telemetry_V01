@@ -1,17 +1,18 @@
 #MicroXplorer Configuration settings - do not modify
 ADC1.Channel-17\#ChannelRegularConversion=ADC_CHANNEL_7
-ADC1.IPParameters=Rank-17\#ChannelRegularConversion,Channel-17\#ChannelRegularConversion,SamplingTime-17\#ChannelRegularConversion,NbrOfConversionFlag,master,NbrOfConversion
+ADC1.ContinuousConvMode=DISABLE
+ADC1.IPParameters=Rank-17\#ChannelRegularConversion,Channel-17\#ChannelRegularConversion,SamplingTime-17\#ChannelRegularConversion,NbrOfConversionFlag,NbrOfConversion,ContinuousConvMode,master
 ADC1.NbrOfConversion=1
 ADC1.NbrOfConversionFlag=1
 ADC1.Rank-17\#ChannelRegularConversion=1
-ADC1.SamplingTime-17\#ChannelRegularConversion=ADC_SAMPLETIME_1CYCLE_5
+ADC1.SamplingTime-17\#ChannelRegularConversion=ADC_SAMPLETIME_239CYCLES_5
 ADC1.master=1
 Dma.ADC1.0.Direction=DMA_PERIPH_TO_MEMORY
 Dma.ADC1.0.Instance=DMA1_Channel1
-Dma.ADC1.0.MemDataAlignment=DMA_MDATAALIGN_HALFWORD
+Dma.ADC1.0.MemDataAlignment=DMA_MDATAALIGN_WORD
 Dma.ADC1.0.MemInc=DMA_MINC_ENABLE
 Dma.ADC1.0.Mode=DMA_NORMAL
-Dma.ADC1.0.PeriphDataAlignment=DMA_PDATAALIGN_HALFWORD
+Dma.ADC1.0.PeriphDataAlignment=DMA_PDATAALIGN_WORD
 Dma.ADC1.0.PeriphInc=DMA_PINC_DISABLE
 Dma.ADC1.0.Priority=DMA_PRIORITY_LOW
 Dma.ADC1.0.RequestParameters=Instance,Direction,PeriphInc,MemInc,PeriphDataAlignment,MemDataAlignment,Mode,Priority
