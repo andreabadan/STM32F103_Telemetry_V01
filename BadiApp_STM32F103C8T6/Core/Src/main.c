@@ -150,7 +150,7 @@ int main(void)
   /*************/
   /*****USB*****/
   /*************/
-  char txtBufUSB[50];
+  char txtBufUSB[100];
   uint16_t sizeBuffUSB = 0;
   /* USER CODE END 2 */
 
@@ -205,7 +205,7 @@ int main(void)
 		  		  appendData(HIGHTEMP_SYMBOL "%u" TEMP_SYMBOL, TemperatureValue); //7 Characters
 		  		  break;
 		  	  default:
-		  		appendData(PROBEBROKE_SYMBOL "%u" TEMP_SYMBOL, TemperatureValue); //7 Characters
+		  		appendData(PROBEBROKE_SYMBOL "%u" TEMP_SYMBOL, 0); //7 Characters
 		  		break;
 		  }
 		  //Update counter
