@@ -23,7 +23,8 @@
 
 typedef enum
 {
-    ProbeOk,
+	ProbeInit,
+	ProbeOk,
 	ProbeNotConnected,
 	ProbeErrorReading,
 	HighTemperature

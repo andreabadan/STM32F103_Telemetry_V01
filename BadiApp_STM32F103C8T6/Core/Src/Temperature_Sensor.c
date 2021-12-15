@@ -9,15 +9,11 @@
 #include "math.h"
 
 //Filter initialization
-void initFilter(){
+void initTempFilter(){
 	TemperatureFilter.In  = 0.0;
-	TemperatureFilter.R   = 0.026971021;
+	TemperatureFilter.R   = 0.01650072343;
 	TemperatureFilter.Q   = 5e-04;
-	TemperatureFilter.Pp  = 0.0;
-	TemperatureFilter.K   = 0.0;
-	TemperatureFilter.e   = 0.0;
 	TemperatureFilter.P   = 1.0;
-	TemperatureFilter.Xp  = 0.0;
 	TemperatureFilter.Out = 0.0;
 }
 
@@ -32,9 +28,9 @@ void initReadTemperature(){
 	counterAverageRead = 0;
 	sumReadValue = 0;
 
-	initFilter();
+	initTempFilter();
 
-	TemperatureAlarmUpdateDisplay = ProbeOk;
+	TemperatureAlarmUpdateDisplay = ProbeInit;
 }
 
 //Increment counters and readings
@@ -46,18 +42,22 @@ void averageRead(){
 //Convert read average to temperature
 void calculateTemperature(){
 	float Vin = V_MAX_TEMP*(((float)sumReadValue/(float)counterAverageRead)/4096.0);
-	if(Vin > V_MIN_ERROR && Vin < V_MAX_ERROR){ //Probe OK
+
+	if(Vin > V_MIN_ERROR && Vin < V_MAX_ERROR) { //Probe OK
 		TemperatureFilter.In = (float)(1.0/(1.0 / (TEMP_ZERO + 273.15) + (1.0 / BETA * log((KNOWN_RES_TEMP*Vin)/(V_MAX_TEMP-Vin)/RES_ZERO))) - 273.15);
+		//TODO: Init out flter
+		/*if(TemperatureAlarmUpdateDisplay != ProbeOk || TemperatureAlarmUpdateDisplay != HighTemperature){
+		}*/
 		KalmanFilter(&TemperatureFilter);
 		TemperatureValue = TemperatureFilter.Out * 10.0;
-		if(TemperatureValue > TemperatureAlarmThreeshold){
+		if(TemperatureValue > TemperatureAlarmThreeshold) {
 			TemperatureAlarmUpdateDisplay = HighTemperature;
-		} else{
+		} else {
 			TemperatureAlarmUpdateDisplay = ProbeOk;
 		}
 	} else { //Probe Error
-		if(TemperatureAlarmUpdateDisplay != ProbeNotConnected){
-			initFilter();
+		if(TemperatureAlarmUpdateDisplay != ProbeNotConnected) {
+			initTempFilter();
 		}
 		TemperatureAlarmUpdateDisplay = ProbeNotConnected;
 	}

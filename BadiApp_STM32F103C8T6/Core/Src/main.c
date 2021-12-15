@@ -199,6 +199,7 @@ int main(void)
 		  //BT
 		  switch(TemperatureAlarmUpdateDisplay){
 		  	  case ProbeOk:
+		  	  case ProbeInit:
 		  		  appendData("%u" TEMP_SYMBOL, TemperatureValue); //6 Characters
 		  		  break;
 		  	  case HighTemperature:
