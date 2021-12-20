@@ -10,8 +10,8 @@
 //Filter initialization
 void initRPM_Filter(){
 	RPM_Filter.In  = 0.0;
-	RPM_Filter.R   = 0.01650072343;
-	RPM_Filter.Q   = 1;
+	RPM_Filter.R   = 0.01;
+	RPM_Filter.Q   = 5e-03;
 	RPM_Filter.P   = 1.0;
 	RPM_Filter.Out = 0.0;
 }

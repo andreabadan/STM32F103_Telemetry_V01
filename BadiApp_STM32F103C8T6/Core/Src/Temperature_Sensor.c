@@ -11,7 +11,7 @@
 //Filter initialization
 void initTempFilter(){
 	TemperatureFilter.In  = 0.0;
-	TemperatureFilter.R   = 0.01650072343;
+	TemperatureFilter.R   = 0.01;
 	TemperatureFilter.Q   = 5e-04;
 	TemperatureFilter.P   = 1.0;
 	TemperatureFilter.Out = 0.0;
@@ -41,10 +41,10 @@ void averageRead(){
 
 //Convert read average to temperature
 void calculateTemperature(){
-	float Vin = V_MAX_TEMP*(((float)sumReadValue/(float)counterAverageRead)/4096.0);
+	float Vin = V_MAX_TEMP*(((float)sumReadValue/(float)counterAverageRead)/4096.0f);
 
 	if(Vin > V_MIN_ERROR && Vin < V_MAX_ERROR) { //Probe OK
-		TemperatureFilter.In = (float)(1.0/(1.0 / (TEMP_ZERO + 273.15) + (1.0 / BETA * log((KNOWN_RES_TEMP*Vin)/(V_MAX_TEMP-Vin)/RES_ZERO))) - 273.15);
+		TemperatureFilter.In = (1.0f/(1.0f / (TEMP_ZERO + 273.15f) + (1.0f / BETA * log((KNOWN_RES_TEMP*Vin)/(V_MAX_TEMP-Vin)/RES_ZERO))) - 273.15f);
 		//TODO: Init out flter
 		/*if(TemperatureAlarmUpdateDisplay != ProbeOk || TemperatureAlarmUpdateDisplay != HighTemperature){
 		}*/
