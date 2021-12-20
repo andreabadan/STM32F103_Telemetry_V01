@@ -19,3 +19,22 @@ void KalmanFilter(KalmanFilterStruct *Struct){
 	Struct->P  = (1-K)*Pp;                           // (CORRECTION) updating the variance of the filtering error
 	Struct->Out = Xp + K*(Struct->In-Xp);            // (CORRECTION) output + Kalman gain * variance of the filtering error
 }
+
+
+//IIRFilter
+void IIRFilter(IIRFilterStruct *Struct){
+	float K;//IIR Gain
+	if(Struct->In > Struct->Out) {
+		K = (Struct->In - Struct->Out)*Struct->M;
+	} else {
+		K = (Struct->Out - Struct->In)*Struct->M;
+	}
+
+	if(K >= 1.0f) {
+		Struct->Out = Struct->In;    //Change very high, so filter will initialize again
+	} else if(K <= 0.0f) {
+		Struct->Out = Struct->Out;   //Change very low, so output will not change
+	} else {
+		Struct->Out = K*Struct->In + (1.0f-K)*Struct->Out; //Calculate new output
+	}
+}

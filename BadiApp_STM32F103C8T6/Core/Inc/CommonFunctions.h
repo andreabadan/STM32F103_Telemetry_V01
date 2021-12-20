@@ -8,6 +8,8 @@
 #ifndef COMMON_FUNCTIONS_H_
 #define COMMON_FUNCTIONS_H_
 
+#include "main.h"
+
 typedef struct{
 	float In;   // Input
 	float R;    // variance of the noise on the measurement
@@ -16,8 +18,14 @@ typedef struct{
 	float Out;  // Output
 }KalmanFilterStruct;
 
-#include "main.h"
+typedef struct{
+	float In;   // Input
+	uint8_t M;  // Linearization of error (from 0 to 255)
+	float Out;  // Output
+}IIRFilterStruct;
 
 void KalmanFilter(KalmanFilterStruct *Struct);
+
+void IIRFilter(IIRFilterStruct *Struct);
 
 #endif /* COMMON_FUNCTIONS_H_ */
