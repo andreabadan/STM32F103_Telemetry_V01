@@ -15,18 +15,23 @@
 #define RES_ZERO 3300.0
 #define BETA 3970.0
 
+#define V_MAX_ERROR 3.28
+#define V_MIN_ERROR 0.1
+
 #define CALCULATE_TEMPERATUIRE_SENSOR_TIME 100     	   //250ms (0.25s)
 #define DELAY_DISPLAY_TEMPERATUIRE_SENSOR_TIME 2000    //2000ms delay to fix the time of calculateTemperature (2s)
 
 typedef enum
 {
-    ProbeOk,
+	ProbeInit,
+	ProbeOk,
 	ProbeNotConnected,
 	ProbeErrorReading,
 	HighTemperature
 } TempAlarm;
 
 #include "main.h"
+#include "CommonFunctions.h"
 
 uint32_t previousMillisTemperature_Read;     //Updated every CALCULATE_TEMPERATUIRE_SENSOR_TIME
 uint32_t previousMillisTemperature_Display;  //Updated every DELAY_DISPLAY_TEMPERATUIRE_SENSOR_TIME
@@ -34,6 +39,8 @@ uint32_t previousMillisTemperature_Display;  //Updated every DELAY_DISPLAY_TEMPE
 unsigned char counterAverageRead;
 uint32_t sumReadValue;
 uint32_t ActualRead;
+
+KalmanFilterStruct TemperatureFilter;
 
 int16_t TemperatureAlarmThreeshold;
 int16_t TemperatureValue;

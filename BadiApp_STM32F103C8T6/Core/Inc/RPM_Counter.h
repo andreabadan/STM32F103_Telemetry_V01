@@ -14,12 +14,15 @@
 #define CALCULATE_RPM_DELTA_TIME 200     //200ms (0.2s), max acceptable 637: (2.5 * 255)
 
 #include "main.h"
+#include "CommonFunctions.h"
 
 uint32_t previousMicrosRPM;
 uint8_t counterAverageRPM;
 uint32_t RPM_DeltaTime;
 
 uint16_t RPM_Value;
+
+KalmanFilterStruct RPM_Filter;
 
 uint32_t previousMillisRPM_Display;
 
