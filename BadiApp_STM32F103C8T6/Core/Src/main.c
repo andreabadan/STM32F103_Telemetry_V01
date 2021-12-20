@@ -205,8 +205,9 @@ int main(void)
 		  	  case HighTemperature:
 		  		  appendData(HIGHTEMP_SYMBOL "%u" TEMP_SYMBOL, TemperatureValue); //7 Characters
 		  		  break;
-		  	  default:
-		  		appendData(PROBEBROKE_SYMBOL "%u" TEMP_SYMBOL, 0); //7 Characters
+		  	  case ProbeNotConnected:
+		  	  case ProbeErrorReading:
+		  		appendData(PROBEBROKE_SYMBOL "%u" TEMP_SYMBOL, 0); //3 Characters
 		  		break;
 		  }
 		  //Update counter

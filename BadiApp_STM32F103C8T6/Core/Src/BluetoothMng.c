@@ -27,7 +27,7 @@ void appendData(char *options, uint32_t value){
 			sizeTxBuffer += sprintf(txBuffer + sizeTxBuffer, W_FIRMWARE_VERSION VERISON); //UP to 10 Characters
 			_writeFWVersion = 0;
 		}
-	}else{
+	} else {
 		sizeTxBuffer  = 0;
 		txBuffer[100] = 0;
 	}
@@ -47,13 +47,13 @@ HAL_StatusTypeDef printData(UART_HandleTypeDef *huart) {
 }
 
 //Read the incoming data
-BluetoothAction readData(UART_HandleTypeDef *huart, uint16_t Size){
-	if(huart->Instance==USART2){
+BluetoothAction readData(UART_HandleTypeDef *huart, uint16_t Size) {
+	if(huart->Instance==USART2) {
 		//Jump to Bootloader
 		if((char)rxBuffer[Size-4] == BOOTLOADER_WRITE[0] &&
 		   (char)rxBuffer[Size-3] == BOOTLOADER_WRITE[1] &&
 		   (char)rxBuffer[Size-2] == BOOTLOADER_WRITE[2] &&
-		   (char)rxBuffer[Size-1] == BOOTLOADER_WRITE[3]){
+		   (char)rxBuffer[Size-1] == BOOTLOADER_WRITE[3]) {
 			HAL_UARTEx_ReceiveToIdle_DMA(huart, rxBuffer, RXSIZE);
 			return(LoadNewApp);
 		}
@@ -72,7 +72,7 @@ BluetoothAction readData(UART_HandleTypeDef *huart, uint16_t Size){
 		   (char)rxBuffer[Size-6] == AT_NOT_CONNECTED[3] &&
 		   (char)rxBuffer[Size-5] == AT_NOT_CONNECTED[4] &&
 		   (char)rxBuffer[Size-4] == AT_NOT_CONNECTED[5] &&
-		   (char)rxBuffer[Size-3] == AT_NOT_CONNECTED[6]){
+		   (char)rxBuffer[Size-3] == AT_NOT_CONNECTED[6]) {
 			bluetoothStatus = Lost;
 			HAL_UARTEx_ReceiveToIdle_DMA(huart, rxBuffer, RXSIZE);
 			return(None);
@@ -85,8 +85,9 @@ BluetoothAction readData(UART_HandleTypeDef *huart, uint16_t Size){
 		   (char)rxBuffer[Size-6] == AT_CONNECTED[3] &&
 		   (char)rxBuffer[Size-5] == AT_CONNECTED[4] &&
 		   (char)rxBuffer[Size-4] == AT_CONNECTED[5] &&
-		   (char)rxBuffer[Size-3] == AT_CONNECTED[6]){
+		   (char)rxBuffer[Size-3] == AT_CONNECTED[6]) {
 			bluetoothStatus = Connect;
+			_writeFWVersion = 1;
 		}
 		HAL_UARTEx_ReceiveToIdle_DMA(huart, rxBuffer, RXSIZE);
 		return(None);

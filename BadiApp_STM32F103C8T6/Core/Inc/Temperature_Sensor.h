@@ -21,6 +21,9 @@
 #define CALCULATE_TEMPERATUIRE_SENSOR_TIME 100     	   //250ms (0.25s)
 #define DELAY_DISPLAY_TEMPERATUIRE_SENSOR_TIME 2000    //2000ms delay to fix the time of calculateTemperature (2s)
 
+#include "main.h"
+#include "CommonFunctions.h"
+
 typedef enum
 {
 	ProbeInit,
@@ -29,9 +32,6 @@ typedef enum
 	ProbeErrorReading,
 	HighTemperature
 } TempAlarm;
-
-#include "main.h"
-#include "CommonFunctions.h"
 
 uint32_t previousMillisTemperature_Read;     //Updated every CALCULATE_TEMPERATUIRE_SENSOR_TIME
 uint32_t previousMillisTemperature_Display;  //Updated every DELAY_DISPLAY_TEMPERATUIRE_SENSOR_TIME

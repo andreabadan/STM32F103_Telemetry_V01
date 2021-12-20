@@ -14,7 +14,7 @@
 #define TEMP_SYMBOL         "T"
 #define PROBEBROKE_SYMBOL   "B"
 #define HIGHTEMP_SYMBOL     "H"
-#define W_FIRMWARE_VERSION    "V"
+#define W_FIRMWARE_VERSION  "V"
 
 #define RXSIZE              20
 
