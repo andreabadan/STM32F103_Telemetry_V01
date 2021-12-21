@@ -22,11 +22,6 @@ void initBluetoothCommunication(UART_HandleTypeDef *huart){
 void appendData(char *options, uint32_t value){
 	if(bluetoothStatus==Connect){
 		sizeTxBuffer += sprintf(txBuffer + sizeTxBuffer, options, value);
-		//Add FW version to packet
-		if(_writeFWVersion == 1){
-			sizeTxBuffer += sprintf(txBuffer + sizeTxBuffer, W_FIRMWARE_VERSION VERISON); //UP to 10 Characters
-			_writeFWVersion = 0;
-		}
 	} else {
 		sizeTxBuffer  = 0;
 		txBuffer[100] = 0;
@@ -36,6 +31,11 @@ void appendData(char *options, uint32_t value){
 //Print all pending data
 HAL_StatusTypeDef printData(UART_HandleTypeDef *huart) {
 	HAL_StatusTypeDef trasmission = HAL_OK;
+	//Add FW version to packet
+	if(_writeFWVersion == 1){
+		sizeTxBuffer += sprintf(txBuffer + sizeTxBuffer, VERISON W_FIRMWARE_VERSION); //UP to 10 Characters
+		_writeFWVersion = 0;
+	}
 	if(sizeTxBuffer > 0 && bluetoothStatus==Connect){
 		trasmission = HAL_UART_Transmit_DMA(huart, (uint8_t *)txBuffer, sizeTxBuffer);
 		if(trasmission == HAL_OK){
@@ -50,42 +50,46 @@ HAL_StatusTypeDef printData(UART_HandleTypeDef *huart) {
 BluetoothAction readData(UART_HandleTypeDef *huart, uint16_t Size) {
 	if(huart->Instance==USART2) {
 		//Jump to Bootloader
-		if((char)rxBuffer[Size-4] == BOOTLOADER_WRITE[0] &&
-		   (char)rxBuffer[Size-3] == BOOTLOADER_WRITE[1] &&
-		   (char)rxBuffer[Size-2] == BOOTLOADER_WRITE[2] &&
-		   (char)rxBuffer[Size-1] == BOOTLOADER_WRITE[3]) {
+		if(Size == 4 &&
+		   (char)rxBuffer[0] == BOOTLOADER_WRITE[0] &&
+		   (char)rxBuffer[1] == BOOTLOADER_WRITE[1] &&
+		   (char)rxBuffer[2] == BOOTLOADER_WRITE[2] &&
+		   (char)rxBuffer[3] == BOOTLOADER_WRITE[3]) {
 			HAL_UARTEx_ReceiveToIdle_DMA(huart, rxBuffer, RXSIZE);
 			return(LoadNewApp);
 		}
 		//Get FW version
-		if((char)rxBuffer[Size-4] == R_FIRMWARE_VERSION[0] &&
-		   (char)rxBuffer[Size-3] == R_FIRMWARE_VERSION[1] &&
-		   (char)rxBuffer[Size-2] == R_FIRMWARE_VERSION[2]){
+		if(Size == 3 &&
+		   (char)rxBuffer[0] == R_FIRMWARE_VERSION[0] &&
+		   (char)rxBuffer[1] == R_FIRMWARE_VERSION[1] &&
+		   (char)rxBuffer[2] == R_FIRMWARE_VERSION[2]){
 			HAL_UARTEx_ReceiveToIdle_DMA(huart, rxBuffer, RXSIZE);
 			_writeFWVersion = 1;
 			return(None);
 		}
 		//Stop communication
-		if((char)rxBuffer[Size-9] == AT_NOT_CONNECTED[0] &&
-		   (char)rxBuffer[Size-8] == AT_NOT_CONNECTED[1] &&
-		   (char)rxBuffer[Size-7] == AT_NOT_CONNECTED[2] &&
-		   (char)rxBuffer[Size-6] == AT_NOT_CONNECTED[3] &&
-		   (char)rxBuffer[Size-5] == AT_NOT_CONNECTED[4] &&
-		   (char)rxBuffer[Size-4] == AT_NOT_CONNECTED[5] &&
-		   (char)rxBuffer[Size-3] == AT_NOT_CONNECTED[6]) {
+		if(Size == 9 && //Position 7 and 8 are /r and /n
+		   (char)rxBuffer[0] == AT_NOT_CONNECTED[0] &&
+		   (char)rxBuffer[1] == AT_NOT_CONNECTED[1] &&
+		   (char)rxBuffer[2] == AT_NOT_CONNECTED[2] &&
+		   (char)rxBuffer[3] == AT_NOT_CONNECTED[3] &&
+		   (char)rxBuffer[4] == AT_NOT_CONNECTED[4] &&
+		   (char)rxBuffer[5] == AT_NOT_CONNECTED[5] &&
+		   (char)rxBuffer[6] == AT_NOT_CONNECTED[6]) {
 			bluetoothStatus = Lost;
 			HAL_UARTEx_ReceiveToIdle_DMA(huart, rxBuffer, RXSIZE);
 			return(None);
 		}
 		//Start communication
 		//WARNING: "AT_CONNECTED" must be at the and of searching procedure
-		if((char)rxBuffer[Size-9] == AT_CONNECTED[0] &&
-		   (char)rxBuffer[Size-8] == AT_CONNECTED[1] &&
-		   (char)rxBuffer[Size-7] == AT_CONNECTED[2] &&
-		   (char)rxBuffer[Size-6] == AT_CONNECTED[3] &&
-		   (char)rxBuffer[Size-5] == AT_CONNECTED[4] &&
-		   (char)rxBuffer[Size-4] == AT_CONNECTED[5] &&
-		   (char)rxBuffer[Size-3] == AT_CONNECTED[6]) {
+		if(Size == 9 && //Position 7 and 8 are /r and /n
+		   (char)rxBuffer[0] == AT_CONNECTED[0] &&
+		   (char)rxBuffer[1] == AT_CONNECTED[1] &&
+		   (char)rxBuffer[2] == AT_CONNECTED[2] &&
+		   (char)rxBuffer[3] == AT_CONNECTED[3] &&
+		   (char)rxBuffer[4] == AT_CONNECTED[4] &&
+		   (char)rxBuffer[5] == AT_CONNECTED[5] &&
+		   (char)rxBuffer[6] == AT_CONNECTED[6]) {
 			bluetoothStatus = Connect;
 			_writeFWVersion = 1;
 		}
