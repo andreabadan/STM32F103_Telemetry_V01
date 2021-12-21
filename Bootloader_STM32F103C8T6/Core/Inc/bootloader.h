@@ -18,14 +18,19 @@
 #define FLASHING_ABORT     "#$FLASH_ABORT#"
 #define APPLICATION_START  "#$APPL_START$#"
 
+#define BOOTLOADER_RUNNING "b"
+#define FLASHING_ERROR     "e"
+#define FLASHING_OK        "k"
+
 #include "main.h"
 #include "usbd_cdc_if.h"
 #include <string.h>
 
 typedef enum
 {
-    JumpMode   = 0x00000000,
-	FlashMode  = 0xFFFFFFFF
+    JumpMode     = 0x00000000,
+	FlashModeBT  = 0xFFFFFFFF,
+	FlashModeUSB = 0xFFFFFFF0
 } BootloaderMode;
 
 typedef enum
@@ -65,6 +70,7 @@ uint32_t Flashed_offset;
 FlashStatus flashStatus;
 FlashLocked flashLocked;
 
+//UART_HandleTypeDef *huartToDeinit;
 //extern USBD_HandleTypeDef hUsbDeviceFS;//it is defined in the usb_device.c
 
 void bootloaderInit();
@@ -81,5 +87,6 @@ Command commandDecoding(char array1[]);
 uint8_t string_compare(char array1[], char array2[], uint16_t length);
 void messageHandler(uint8_t* Buf);
 void createMessage(uint8_t* Buf,  uint16_t Len);
+void transmitMessage(uint8_t* Buf, uint16_t Len);
 
 #endif /* INC_BOOTLOADER_H_ */

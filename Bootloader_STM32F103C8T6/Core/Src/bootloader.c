@@ -6,10 +6,13 @@
  */
 
 #include "BootLoader.h"
+#include "main.h"
+
 BootloaderMode __attribute__((section(".BootOptions"))) bootLoaderMode;
 
 void bootloaderInit()
 {
+	//huartToDeinit = huart;
 	for(uint8_t i=0; i<3; i++){
 		HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_SET);
 		HAL_Delay(100);
@@ -24,7 +27,8 @@ void bootloaderInit()
 
 	switch(bootLoaderMode)
 	{
-		case FlashMode:
+		case FlashModeBT:
+		case FlashModeUSB:
 			for(uint8_t i=0; i<10; i++)
 			{
 				HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_RESET);
@@ -32,6 +36,7 @@ void bootloaderInit()
 				HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_SET);
 				HAL_Delay(90);
 			}
+			transmitMessage((uint8_t*)BOOTLOADER_RUNNING, strlen(BOOTLOADER_RUNNING));
 			break;
 		case JumpMode:
 			jumpToApp();
@@ -85,6 +90,7 @@ void deinitEverything()
 	  __HAL_RCC_GPIOD_CLK_DISABLE();
 	  __HAL_RCC_GPIOB_CLK_DISABLE();
 	  __HAL_RCC_GPIOA_CLK_DISABLE();
+	//HAL_UART_DeInit(huartToDeinit); If bootLoaderMode is JumpMode, this peripheral will not initialized!
 	HAL_RCC_DeInit();
 	HAL_DeInit();
 	SysTick->CTRL = 0;
@@ -148,22 +154,18 @@ void flashWord(uint32_t dataToFlash)
 		  address = APP_START + Flashed_offset;
 		  status = HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, address, dataToFlash);
 		  flash_attempt++;
-	  }while(status != HAL_OK && flash_attempt < 10 && dataToFlash == readWord(address));
-	  if(status != HAL_OK){//Error exeption
-		  CDC_Transmit_FS((uint8_t*)&"Flashing Error!\n", strlen("Flashing Error!\n"));
+	  } while(status != HAL_OK && flash_attempt < 10 && dataToFlash == readWord(address));
+	  if(status != HAL_OK)  {//Error exeption
+		  transmitMessage((uint8_t*)&FLASHING_ERROR, strlen(FLASHING_ERROR));
 	  } else {//Word Flash Successful
 		  if(flashStatus != Writing)
 			  flashStatus = Writing;
 		  Flashed_offset += 4;
-		  CDC_Transmit_FS((uint8_t*)&"Flash: OK\n", strlen("Flash: OK\n"));
-		  //Reboot system in jump mode
-		  bootLoaderMode = JumpMode;
-		  NVIC_SystemReset();
+		  transmitMessage((uint8_t*)&FLASHING_OK, strlen(FLASHING_OK));
 	  }
 	}else
 	{
-	  CDC_Transmit_FS((uint8_t*)&"Error: Memory not unlocked or not erased!\n",
-			  strlen("Error: Memory not unlocked or not erased!\n"));
+		transmitMessage((uint8_t*)&FLASHING_ERROR,strlen(FLASHING_ERROR));
 	}
 }
 
@@ -263,7 +265,7 @@ void messageHandler(uint8_t* Buf)
 	Command comandReceived = commandDecoding((char*)Buf);
 	switch(comandReceived){
 		case InvalidCommand:
-			CDC_Transmit_FS((uint8_t*)&"Error: Unknown command!\n", strlen("Error: Unknown command!\n"));
+			transmitMessage((uint8_t*)&FLASHING_ERROR, strlen(FLASHING_ERROR));
 			break;
 		case EraseMemory:
 			if(flashLocked != Unlocked)
@@ -271,14 +273,14 @@ void messageHandler(uint8_t* Buf)
 			if(flashStatus != Erased)
 				eraseMemory();
 			lockMemory();
-			CDC_Transmit_FS((uint8_t*)&"Flash: Erased!\n", strlen("Flash: Erased!\n"));
+			transmitMessage((uint8_t*)&FLASHING_OK, strlen(FLASHING_OK));
 			break;
 		case FlashStart:
 			if(flashLocked != Unlocked)
 				unlockMemory();
 			if(flashStatus != Erased)
 				eraseMemory();
-			CDC_Transmit_FS((uint8_t*)&"Flash: Unlocked & Erased!\n", strlen("Flash: Unlocked & Erased!\n"));
+			transmitMessage((uint8_t*)&FLASHING_OK, strlen(FLASHING_OK));
 			break;
 		case FlashFinish:
 			if(flashStatus == Writing){
@@ -286,18 +288,18 @@ void messageHandler(uint8_t* Buf)
 				if(flashLocked != Locked)
 					lockMemory();
 				bootLoaderMode = JumpMode;
-				CDC_Transmit_FS((uint8_t*)&"Flash: Success!\n", strlen("Flash: Success!\n"));
+				transmitMessage((uint8_t*)&FLASHING_OK, strlen(FLASHING_OK));
 			} else {
-				CDC_Transmit_FS((uint8_t*)&"Flash: Error: flash procedure not running\n", strlen("Flash: Error: flash procedure not running\n"));
+				transmitMessage((uint8_t*)&FLASHING_ERROR, strlen(FLASHING_ERROR));
 			}
 			break;
 		case FlashAbort:
-			if(flashLocked != Unlocked)
+			/*if(flashLocked != Unlocked)
 				unlockMemory();
 			if(flashStatus != Erased)
 				eraseMemory();
 			lockMemory();
-			CDC_Transmit_FS((uint8_t*)&"Flash: Aborted!\n", strlen("Flash: Aborted!\n"));
+			transmitMessage((uint8_t*)&"Flash: Aborted!\n", strlen("Flash: Aborted!\n"));*/
 			break;
 		case StartApplication:
 			bootLoaderMode = JumpMode;
@@ -319,4 +321,12 @@ void createMessage(uint8_t* Buf,  uint16_t Len)
 		messageHandler(Buf);
 	}
 	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_SET);//LED OFF
+}
+
+void transmitMessage(uint8_t* Buf, uint16_t Len){
+	if(bootLoaderMode == FlashModeBT) {
+		transmitUART(Buf, Len);
+	} else if(bootLoaderMode == FlashModeUSB) {
+		CDC_Transmit_FS(Buf, Len);
+	}
 }

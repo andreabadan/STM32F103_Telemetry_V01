@@ -54,7 +54,7 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-
+void transmitUART(uint8_t* Buf, uint16_t Len);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
@@ -69,5 +69,3 @@ void Error_Handler(void);
 #endif
 
 #endif /* __MAIN_H */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
