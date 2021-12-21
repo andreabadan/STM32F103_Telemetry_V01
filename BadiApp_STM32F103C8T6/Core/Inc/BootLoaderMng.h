@@ -10,8 +10,9 @@
 
 typedef enum
 {
-    JumpMode   = 0x00000000,
-	FlashMode  = 0xFFFFFFFF
+    JumpMode     = 0x00000000,
+	FlashModeBT  = 0xFFFFFFFF,
+	FlashModeUSB = 0xFFFFFFF0
 } BootLoaderMode;
 extern BootLoaderMode bootloaderMode;
 

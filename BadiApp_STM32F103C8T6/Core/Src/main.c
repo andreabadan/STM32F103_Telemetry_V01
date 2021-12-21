@@ -694,7 +694,7 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 {
 	switch(readData(huart, Size)){
 		case LoadNewApp:
-			jumpToBootLoader(FlashMode);
+			jumpToBootLoader(FlashModeBT);
 			break;
 		default: break;
 	}

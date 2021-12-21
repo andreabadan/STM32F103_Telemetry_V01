@@ -37,7 +37,7 @@ HAL_StatusTypeDef printData(UART_HandleTypeDef *huart) {
 		_writeFWVersion = 0;
 	}
 	if(sizeTxBuffer > 0 && bluetoothStatus==Connect){
-		trasmission = HAL_UART_Transmit_DMA(huart, (uint8_t *)txBuffer, sizeTxBuffer);
+		trasmission = HAL_UART_Transmit_DMA(huart, (uint8_t*)txBuffer, sizeTxBuffer);
 		if(trasmission == HAL_OK){
 			sizeTxBuffer  = 0;
 			txBuffer[100] = 0;
