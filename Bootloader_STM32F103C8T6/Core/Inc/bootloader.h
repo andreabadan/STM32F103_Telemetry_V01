@@ -18,6 +18,8 @@
 #define FLASHING_ABORT     "#$FLASH_ABORT#"
 #define APPLICATION_START  "#$APPL_START$#"
 
+#define NUMBER_SHARED_CARACTERS 14
+
 #define BOOTLOADER_RUNNING "b"
 #define FLASHING_ERROR     "e"
 #define FLASHING_OK        "k"

@@ -44,7 +44,7 @@
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-uint8_t UART2_rxBuffer[4] = {0};
+uint8_t UART2_rxBuffer[NUMBER_SHARED_CARACTERS] = {0};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -161,7 +161,7 @@ static void MX_USART2_UART_Init(void)
 {
 
   /* USER CODE BEGIN USART2_Init 0 */
-  if(bootLoaderMode != FlashModeBT || bootLoaderMode != FlashModeUSB)//Jump the initialization if it isn't needed
+  if(bootLoaderMode != FlashModeBT && bootLoaderMode != FlashModeUSB)//Jump the initialization if it isn't needed
 	return;
   /* USER CODE END USART2_Init 0 */
 
@@ -181,7 +181,7 @@ static void MX_USART2_UART_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN USART2_Init 2 */
-
+  HAL_UART_Receive_IT (&huart2, UART2_rxBuffer, NUMBER_SHARED_CARACTERS);
   /* USER CODE END USART2_Init 2 */
 
 }
@@ -218,7 +218,7 @@ static void MX_GPIO_Init(void)
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
 	createMessage(UART2_rxBuffer, huart->RxXferSize);
-	HAL_UART_Receive_IT (&huart2, UART2_rxBuffer, 4);
+	HAL_UART_Receive_IT (&huart2, UART2_rxBuffer, NUMBER_SHARED_CARACTERS);
 }
 //Transmit Bluetooth
 void transmitUART(uint8_t* Buf, uint16_t Len)
