@@ -72,7 +72,6 @@ DMA_HandleTypeDef hdma_usart2_rx;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-static void MX_DMA_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_RTC_Init(void);
@@ -80,6 +79,7 @@ static void MX_SPI2_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_USART3_UART_Init(void);
+static void MX_DMA_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -117,7 +117,6 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_DMA_Init();
   MX_ADC1_Init();
   MX_I2C1_Init();
   MX_RTC_Init();
@@ -125,6 +124,7 @@ int main(void)
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();
   MX_USART3_UART_Init();
+  MX_DMA_Init();
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
   // Calibrate The ADC On Power-Up For Better Accuracy
@@ -256,10 +256,9 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE|RCC_OSCILLATORTYPE_LSE;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV1;
-  RCC_OscInitStruct.LSEState = RCC_LSE_ON;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
@@ -283,7 +282,7 @@ void SystemClock_Config(void)
   }
   PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_RTC|RCC_PERIPHCLK_ADC
                               |RCC_PERIPHCLK_USB;
-  PeriphClkInit.RTCClockSelection = RCC_RTCCLKSOURCE_LSE;
+  PeriphClkInit.RTCClockSelection = RCC_RTCCLKSOURCE_HSE_DIV128;
   PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV6;
   PeriphClkInit.UsbClockSelection = RCC_USBCLKSOURCE_PLL_DIV1_5;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
