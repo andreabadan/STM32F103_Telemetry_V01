@@ -1,0 +1,216 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 6 8
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Charleslabs_Parts:HM-11_Module U601
+U 1 1 608613B7
+P 6000 3650
+F 0 "U601" H 6350 4200 60  0000 C CNN
+F 1 "HM-19_Module" H 6400 3150 60  0000 C CNN
+F 2 "Charleslabs_Parts:HM-11_Module" H 6000 3100 60  0001 C CNN
+F 3 "" H 6000 1800 60  0000 C CNN
+	1    6000 3650
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0604
+U 1 1 608620AA
+P 6000 4300
+F 0 "#PWR0604" H 6000 4050 50  0001 C CNN
+F 1 "GND" H 6005 4127 50  0000 C CNN
+F 2 "" H 6000 4300 50  0001 C CNN
+F 3 "" H 6000 4300 50  0001 C CNN
+	1    6000 4300
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3V #PWR0603
+U 1 1 60862607
+P 6000 2950
+F 0 "#PWR0603" H 6000 2800 50  0001 C CNN
+F 1 "+3.3V" H 6015 3123 50  0000 C CNN
+F 2 "" H 6000 2950 50  0001 C CNN
+F 3 "" H 6000 2950 50  0001 C CNN
+	1    6000 2950
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3V #PWR?
+U 1 1 60864A83
+P 5800 1950
+AR Path="/608F8EEA/60864A83" Ref="#PWR?"  Part="1" 
+AR Path="/60860E11/60864A83" Ref="#PWR0601"  Part="1" 
+F 0 "#PWR0601" H 5800 1800 50  0001 C CNN
+F 1 "+3.3V" H 5815 2123 50  0000 C CNN
+F 2 "" H 5800 1950 50  0001 C CNN
+F 3 "" H 5800 1950 50  0001 C CNN
+	1    5800 1950
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 60864A89
+P 5800 2150
+AR Path="/608F8EEA/60864A89" Ref="C?"  Part="1" 
+AR Path="/60860E11/60864A89" Ref="C601"  Part="1" 
+F 0 "C601" H 5850 2200 50  0000 L CNN
+F 1 "10u" H 5850 2100 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder" H 5800 2150 50  0001 C CNN
+F 3 "~" H 5800 2150 50  0001 C CNN
+F 4 "C15525" H 5800 2150 50  0001 C CNN "LCSC Part #"
+	1    5800 2150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 60864A8F
+P 6100 2150
+AR Path="/608F8EEA/60864A8F" Ref="C?"  Part="1" 
+AR Path="/60860E11/60864A8F" Ref="C602"  Part="1" 
+F 0 "C602" H 6150 2200 50  0000 L CNN
+F 1 "100n" H 6150 2100 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder" H 6100 2150 50  0001 C CNN
+F 3 "~" H 6100 2150 50  0001 C CNN
+F 4 "C1525" H 6100 2150 50  0001 C CNN "LCSC Part #"
+	1    6100 2150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5800 1950 5800 2000
+Wire Wire Line
+	5800 2000 6100 2000
+Connection ~ 5800 2000
+Wire Wire Line
+	5800 2000 5800 2050
+Wire Wire Line
+	6100 2050 6100 2000
+$Comp
+L power:GND #PWR?
+U 1 1 60864AA3
+P 5800 2350
+AR Path="/608F8EEA/60864AA3" Ref="#PWR?"  Part="1" 
+AR Path="/60860E11/60864AA3" Ref="#PWR0602"  Part="1" 
+F 0 "#PWR0602" H 5800 2100 50  0001 C CNN
+F 1 "GND" H 5805 2177 50  0000 C CNN
+F 2 "" H 5800 2350 50  0001 C CNN
+F 3 "" H 5800 2350 50  0001 C CNN
+	1    5800 2350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5800 2300 5800 2350
+Wire Wire Line
+	5800 2250 5800 2300
+Connection ~ 5800 2300
+Wire Wire Line
+	6100 2250 6100 2300
+Wire Wire Line
+	6100 2300 5800 2300
+NoConn ~ 5400 3700
+NoConn ~ 5400 3800
+Text GLabel 5150 3200 1    50   Input ~ 0
+USART2_TX
+Text GLabel 4850 3200 1    50   Input ~ 0
+USART2_RX
+NoConn ~ 5400 3400
+$Comp
+L Device:R_Small R602
+U 1 1 608CBC59
+P 5150 3300
+F 0 "R602" H 5209 3346 50  0000 L CNN
+F 1 "1k" H 5209 3255 50  0000 L CNN
+F 2 "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder" H 5150 3300 50  0001 C CNN
+F 3 "~" H 5150 3300 50  0001 C CNN
+F 4 "C11702" H 5150 3300 50  0001 C CNN "LCSC Part #"
+	1    5150 3300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R601
+U 1 1 608CCCC3
+P 4850 3300
+F 0 "R601" H 4909 3346 50  0000 L CNN
+F 1 "1k" H 4909 3255 50  0000 L CNN
+F 2 "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder" H 4850 3300 50  0001 C CNN
+F 3 "~" H 4850 3300 50  0001 C CNN
+F 4 "C11702" H 4850 3300 50  0001 C CNN "LCSC Part #"
+	1    4850 3300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5150 3400 5150 3500
+Wire Wire Line
+	4850 3400 4850 3600
+Wire Wire Line
+	5150 3500 5400 3500
+Wire Wire Line
+	5400 3600 4850 3600
+$Comp
+L Device:LED_Small D?
+U 1 1 608D1F86
+P 7500 3850
+AR Path="/607F2E3B/608D1F86" Ref="D?"  Part="1" 
+AR Path="/608AF770/608D1F86" Ref="D?"  Part="1" 
+AR Path="/60860E11/608D1F86" Ref="D601"  Part="1" 
+F 0 "D601" V 7546 3780 50  0000 R CNN
+F 1 "RED" V 7455 3780 50  0000 R CNN
+F 2 "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder" V 7500 3850 50  0001 C CNN
+F 3 "~" V 7500 3850 50  0001 C CNN
+F 4 "C2286" H 7500 3850 50  0001 C CNN "LCSC Part #"
+	1    7500 3850
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	7500 4000 7500 3950
+$Comp
+L power:GND #PWR?
+U 1 1 608D1F8D
+P 7500 4250
+AR Path="/607F2E3B/608D1F8D" Ref="#PWR?"  Part="1" 
+AR Path="/608AF770/608D1F8D" Ref="#PWR?"  Part="1" 
+AR Path="/60860E11/608D1F8D" Ref="#PWR0605"  Part="1" 
+F 0 "#PWR0605" H 7500 4000 50  0001 C CNN
+F 1 "GND" H 7505 4077 50  0000 C CNN
+F 2 "" H 7500 4250 50  0001 C CNN
+F 3 "" H 7500 4250 50  0001 C CNN
+	1    7500 4250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7500 4250 7500 4200
+$Comp
+L Device:R_Small R?
+U 1 1 608D1F94
+P 7500 4100
+AR Path="/607F2E3B/608D1F94" Ref="R?"  Part="1" 
+AR Path="/608AF770/608D1F94" Ref="R?"  Part="1" 
+AR Path="/60860E11/608D1F94" Ref="R603"  Part="1" 
+F 0 "R603" H 7400 4050 50  0000 C CNN
+F 1 "1k5" H 7400 4150 50  0000 C CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder" H 7500 4100 50  0001 C CNN
+F 3 "~" H 7500 4100 50  0001 C CNN
+F 4 "C22843" H 7500 4100 50  0001 C CNN "LCSC Part #"
+	1    7500 4100
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	6600 3700 7500 3700
+Wire Wire Line
+	7500 3700 7500 3750
+NoConn ~ 6600 3500
+NoConn ~ 6600 3600
+Text GLabel 6600 3800 2    50   Input ~ 0
+BLUETOOTH_RESET
+$EndSCHEMATC

@@ -1,0 +1,214 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 5 8
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L power:+3.3V #PWR0503
+U 1 1 608FA253
+P 5350 2700
+F 0 "#PWR0503" H 5350 2550 50  0001 C CNN
+F 1 "+3.3V" H 5365 2873 50  0000 C CNN
+F 2 "" H 5350 2700 50  0001 C CNN
+F 3 "" H 5350 2700 50  0001 C CNN
+	1    5350 2700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5350 2700 5350 2750
+Wire Wire Line
+	5550 2800 5550 2750
+Wire Wire Line
+	5550 2750 5350 2750
+Connection ~ 5350 2750
+Wire Wire Line
+	5350 2750 5350 2800
+Text GLabel 4750 3300 0    50   Input ~ 0
+I2C1_SCL
+Text GLabel 4750 3200 0    50   Input ~ 0
+12C1_SDA
+$Comp
+L power:GND #PWR0504
+U 1 1 60900478
+P 6550 4350
+F 0 "#PWR0504" H 6550 4100 50  0001 C CNN
+F 1 "GND" H 6555 4177 50  0000 C CNN
+F 2 "" H 6550 4350 50  0001 C CNN
+F 3 "" H 6550 4350 50  0001 C CNN
+	1    6550 4350
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3V #PWR0501
+U 1 1 6090B20D
+P 5050 1850
+F 0 "#PWR0501" H 5050 1700 50  0001 C CNN
+F 1 "+3.3V" H 5065 2023 50  0000 C CNN
+F 2 "" H 5050 1850 50  0001 C CNN
+F 3 "" H 5050 1850 50  0001 C CNN
+	1    5050 1850
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C501
+U 1 1 6090BB99
+P 5050 2050
+F 0 "C501" H 5100 2100 50  0000 L CNN
+F 1 "10u" H 5100 2000 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder" H 5050 2050 50  0001 C CNN
+F 3 "~" H 5050 2050 50  0001 C CNN
+F 4 "C15525" H 5050 2050 50  0001 C CNN "LCSC Part #"
+	1    5050 2050
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C502
+U 1 1 6090C0F3
+P 5350 2050
+F 0 "C502" H 5400 2100 50  0000 L CNN
+F 1 "100n" H 5400 2000 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder" H 5350 2050 50  0001 C CNN
+F 3 "~" H 5350 2050 50  0001 C CNN
+F 4 "C1525" H 5350 2050 50  0001 C CNN "LCSC Part #"
+	1    5350 2050
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C503
+U 1 1 6090C402
+P 5700 2050
+F 0 "C503" H 5750 2100 50  0000 L CNN
+F 1 "100n" H 5750 2000 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder" H 5700 2050 50  0001 C CNN
+F 3 "~" H 5700 2050 50  0001 C CNN
+F 4 "C1525" H 5700 2050 50  0001 C CNN "LCSC Part #"
+	1    5700 2050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5050 1850 5050 1900
+Wire Wire Line
+	5050 1900 5350 1900
+Wire Wire Line
+	5700 1900 5700 1950
+Connection ~ 5050 1900
+Wire Wire Line
+	5050 1900 5050 1950
+Wire Wire Line
+	5350 1950 5350 1900
+Connection ~ 5350 1900
+Wire Wire Line
+	5350 1900 5700 1900
+$Comp
+L power:GND #PWR0502
+U 1 1 6090C925
+P 5050 2250
+F 0 "#PWR0502" H 5050 2000 50  0001 C CNN
+F 1 "GND" H 5055 2077 50  0000 C CNN
+F 2 "" H 5050 2250 50  0001 C CNN
+F 3 "" H 5050 2250 50  0001 C CNN
+	1    5050 2250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5700 2150 5700 2200
+Wire Wire Line
+	5700 2200 5350 2200
+Wire Wire Line
+	5050 2200 5050 2250
+Wire Wire Line
+	5050 2150 5050 2200
+Connection ~ 5050 2200
+Wire Wire Line
+	5350 2150 5350 2200
+Connection ~ 5350 2200
+Wire Wire Line
+	5350 2200 5050 2200
+Wire Wire Line
+	4750 3400 4700 3400
+Wire Wire Line
+	4750 3800 4700 3800
+$Comp
+L Sensor_Motion:MPU-6050 U501
+U 1 1 608F95E6
+P 5450 3500
+F 0 "U501" H 5900 4050 50  0000 C CNN
+F 1 "MPU-6050" H 5800 2950 50  0000 C CNN
+F 2 "Sensor_Motion:InvenSense_QFN-24_4x4mm_P0.5mm" H 5450 2700 50  0001 C CNN
+F 3 "https://store.invensense.com/datasheets/invensense/MPU-6050_DataSheet_V3%204.pdf" H 5450 3350 50  0001 C CNN
+F 4 "C24112" H 5450 3500 50  0001 C CNN "LCSC Part #"
+	1    5450 3500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4700 3400 4700 3700
+Connection ~ 4700 3800
+Wire Wire Line
+	4750 3700 4700 3700
+Connection ~ 4700 3700
+Wire Wire Line
+	4700 3700 4700 3800
+NoConn ~ 6150 3400
+NoConn ~ 6150 3500
+$Comp
+L Device:C_Small C504
+U 1 1 6091058E
+P 6200 3950
+F 0 "C504" H 6250 4000 50  0000 L CNN
+F 1 "100n" H 6250 3900 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder" H 6200 3950 50  0001 C CNN
+F 3 "~" H 6200 3950 50  0001 C CNN
+F 4 "C1525" H 6200 3950 50  0001 C CNN "LCSC Part #"
+	1    6200 3950
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C505
+U 1 1 60910BCB
+P 6550 3950
+F 0 "C505" H 6600 4000 50  0000 L CNN
+F 1 "2n2" H 6600 3900 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder" H 6550 3950 50  0001 C CNN
+F 3 "~" H 6550 3950 50  0001 C CNN
+F 4 "C1531" H 6550 3950 50  0001 C CNN "LCSC Part #"
+	1    6550 3950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6150 3700 6550 3700
+Wire Wire Line
+	6550 3700 6550 3850
+Wire Wire Line
+	6150 3800 6200 3800
+Wire Wire Line
+	6200 3800 6200 3850
+Wire Wire Line
+	4700 4350 5450 4350
+Wire Wire Line
+	4700 3800 4700 4350
+Wire Wire Line
+	5450 4350 6200 4350
+Wire Wire Line
+	6550 4350 6550 4050
+Connection ~ 5450 4350
+Wire Wire Line
+	6200 4050 6200 4350
+Connection ~ 6200 4350
+Wire Wire Line
+	6200 4350 6550 4350
+Wire Wire Line
+	5450 4200 5450 4350
+Connection ~ 6550 4350
+Text GLabel 6150 3200 2    50   Input ~ 0
+IMU_INTERRUPT
+$EndSCHEMATC

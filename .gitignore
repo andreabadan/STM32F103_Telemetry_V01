@@ -1,5 +1,10 @@
+##STM32 IDE
 .metadata/**
-
 **/Debug/**
-
 **/.settings/**
+
+##KICAD IDE
+*.sch-bak
+*.kicad_pcb-bak
+*cache.lib
+*fp-info-cache
