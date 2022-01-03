@@ -180,9 +180,10 @@ L Regulator_Linear:LD1117S33TR_SOT223 U201
 U 1 1 61D0F77D
 P 5300 2100
 F 0 "U201" H 5300 2342 50  0000 C CNN
-F 1 "LD1117S33TR_SOT223" H 5300 2251 50  0000 C CNN
+F 1 "LD1117S33TR" H 5300 2251 50  0000 C CNN
 F 2 "Package_TO_SOT_SMD:SOT-223-3_TabPin2" H 5300 2300 50  0001 C CNN
 F 3 "http://www.st.com/st-web-ui/static/active/en/resource/technical/document/datasheet/CD00000544.pdf" H 5400 1850 50  0001 C CNN
+F 4 "C86781" H 5300 2100 50  0001 C CNN "LCSC Part #"
 	1    5300 2100
 	1    0    0    -1  
 $EndComp

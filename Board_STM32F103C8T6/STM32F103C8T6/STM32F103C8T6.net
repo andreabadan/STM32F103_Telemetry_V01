@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source D:\BadiBoard\STM32F103_Telemetry_V01\Board_STM32F103C8T6\STM32F103C8T6\STM32F103C8T6.sch)
-    (date "02/01/2022 15:10:42")
+    (date "03/01/2022 13:08:05")
     (tool "Eeschema (5.1.9)-1")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
@@ -156,7 +156,7 @@
       (sheetpath (names /Power/) (tstamps /607F2DBC/))
       (tstamp 6083446B))
     (comp (ref U201)
-      (value LD1117S33TR_SOT223)
+      (value LD1117S33TR)
       (footprint Package_TO_SOT_SMD:SOT-223-3_TabPin2)
       (datasheet http://www.st.com/st-web-ui/static/active/en/resource/technical/document/datasheet/CD00000544.pdf)
       (libsource (lib Regulator_Linear) (part LD1117S33TR_SOT223) (description "800mA Fixed Low Drop Positive Voltage Regulator, Fixed Output 3.3V, SOT-223"))
@@ -572,7 +572,7 @@
       (footprint Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder)
       (datasheet ~)
       (fields
-        (field (name "LCSC Part #") C25744))
+        (field (name "LCSC Part #") C25900))
       (libsource (lib Device) (part R_Small) (description "Resistor, small symbol"))
       (sheetpath (names /MCU/) (tstamps /607F2E3B/))
       (tstamp 61CC95EA))
@@ -596,6 +596,8 @@
       (value BSS123)
       (footprint Package_TO_SOT_SMD:SOT-23)
       (datasheet http://www.diodes.com/assets/Datasheets/ds30366.pdf)
+      (fields
+        (field (name "LCSC Part #") C431506))
       (libsource (lib Transistor_FET) (part BSS123) (description "0.17A Id, 100V Vds, N-Channel MOSFET, SOT-23"))
       (sheetpath (names /MCU/) (tstamps /607F2E3B/))
       (tstamp 61DB8BBC))
@@ -662,7 +664,7 @@
       (footprint Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder)
       (datasheet ~)
       (fields
-        (field (name "LCSC Part #") C15525))
+        (field (name "LCSC Part #") C1525))
       (libsource (lib Device) (part C_Small) (description "Unpolarized capacitor, small symbol"))
       (sheetpath (names /Connectors/) (tstamps /608B029C/))
       (tstamp 608EDDAA))
@@ -695,6 +697,8 @@
       (value 22)
       (footprint Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder)
       (datasheet ~)
+      (fields
+        (field (name "LCSC Part #") C25092))
       (libsource (lib Device) (part R_Small) (description "Resistor, small symbol"))
       (sheetpath (names /Connectors/) (tstamps /608B029C/))
       (tstamp 61D28325))
@@ -702,6 +706,8 @@
       (value 22)
       (footprint Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder)
       (datasheet ~)
+      (fields
+        (field (name "LCSC Part #") C25092))
       (libsource (lib Device) (part R_Small) (description "Resistor, small symbol"))
       (sheetpath (names /Connectors/) (tstamps /608B029C/))
       (tstamp 61D2919D))
@@ -710,7 +716,7 @@
       (footprint Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder)
       (datasheet ~)
       (fields
-        (field (name "LCSC Part #") C15525))
+        (field (name "LCSC Part #") C1567))
       (libsource (lib Device) (part C_Small) (description "Unpolarized capacitor, small symbol"))
       (sheetpath (names /Connectors/) (tstamps /608B029C/))
       (tstamp 61D2E57B))
@@ -719,7 +725,7 @@
       (footprint Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder)
       (datasheet ~)
       (fields
-        (field (name "LCSC Part #") C15525))
+        (field (name "LCSC Part #") C1567))
       (libsource (lib Device) (part C_Small) (description "Unpolarized capacitor, small symbol"))
       (sheetpath (names /Connectors/) (tstamps /608B029C/))
       (tstamp 61D3175C))
@@ -838,11 +844,9 @@
       (sheetpath (names /BLUETOOTH/) (tstamps /60860E11/))
       (tstamp 608D1F94))
     (comp (ref R703)
-      (value 4,7K)
+      (value 4k7)
       (footprint Resistor_SMD:R_1210_3225Metric_Pad1.30x2.65mm_HandSolder)
       (datasheet ~)
-      (fields
-        (field (name "LCSC Part #") C25804))
       (libsource (lib Device) (part R_Small) (description "Resistor, small symbol"))
       (sheetpath (names /PROBES/) (tstamps /608D8494/))
       (tstamp 608E6B2B))
@@ -850,17 +854,13 @@
       (value 10K)
       (footprint Resistor_SMD:R_1210_3225Metric_Pad1.30x2.65mm_HandSolder)
       (datasheet ~)
-      (fields
-        (field (name "LCSC Part #") C25804))
       (libsource (lib Device) (part R_Small) (description "Resistor, small symbol"))
       (sheetpath (names /PROBES/) (tstamps /608D8494/))
       (tstamp 608E7676))
     (comp (ref C702)
-      (value 250n)
+      (value 220n)
       (footprint Capacitor_SMD:C_1210_3225Metric_Pad1.33x2.70mm_HandSolder)
       (datasheet ~)
-      (fields
-        (field (name "LCSC Part #") C14663))
       (libsource (lib Device) (part C_Small) (description "Unpolarized capacitor, small symbol"))
       (sheetpath (names /PROBES/) (tstamps /608D8494/))
       (tstamp 608E84B8))
@@ -904,8 +904,6 @@
       (value 100)
       (footprint Resistor_SMD:R_1210_3225Metric_Pad1.30x2.65mm_HandSolder)
       (datasheet ~)
-      (fields
-        (field (name "LCSC Part #") C22775))
       (libsource (lib Device) (part R_Small) (description "Resistor, small symbol"))
       (sheetpath (names /PROBES/) (tstamps /608D8494/))
       (tstamp 608F1257))
@@ -923,7 +921,7 @@
       (footprint Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder)
       (datasheet ~)
       (fields
-        (field (name "LCSC Part #") C25804))
+        (field (name "LCSC Part #") C17902))
       (libsource (lib Device) (part R_Small) (description "Resistor, small symbol"))
       (sheetpath (names /PROBES/) (tstamps /608D8494/))
       (tstamp 608F79CA))
@@ -932,7 +930,7 @@
       (footprint Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder)
       (datasheet ~)
       (fields
-        (field (name "LCSC Part #") C14663))
+        (field (name "LCSC Part #") C13585))
       (libsource (lib Device) (part C_Small) (description "Unpolarized capacitor, small symbol"))
       (sheetpath (names /PROBES/) (tstamps /608D8494/))
       (tstamp 608683D4))
@@ -941,7 +939,7 @@
       (footprint Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder)
       (datasheet ~)
       (fields
-        (field (name "LCSC Part #") C25804))
+        (field (name "LCSC Part #") C17902))
       (libsource (lib Device) (part R_Small) (description "Resistor, small symbol"))
       (sheetpath (names /PROBES/) (tstamps /608D8494/))
       (tstamp 60869BC8))
@@ -950,7 +948,7 @@
       (footprint Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder)
       (datasheet ~)
       (fields
-        (field (name "LCSC Part #") C25804))
+        (field (name "LCSC Part #") C17902))
       (libsource (lib Device) (part R_Small) (description "Resistor, small symbol"))
       (sheetpath (names /PROBES/) (tstamps /608D8494/))
       (tstamp 608D8DBB))
@@ -959,7 +957,7 @@
       (footprint Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder)
       (datasheet ~)
       (fields
-        (field (name "LCSC Part #") C14663))
+        (field (name "LCSC Part #") C13585))
       (libsource (lib Device) (part C_Small) (description "Unpolarized capacitor, small symbol"))
       (sheetpath (names /PROBES/) (tstamps /608D8494/))
       (tstamp 61DBD2BE))
