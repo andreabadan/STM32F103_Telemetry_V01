@@ -2,7 +2,7 @@
 <export version="D">
   <design>
     <source>D:\BadiBoard\STM32F103_Telemetry_V01\Board_STM32F103C8T6\STM32F103C8T6\STM32F103C8T6.sch</source>
-    <date>03/01/2022 13:58:51</date>
+    <date>07/01/2022 21:38:24</date>
     <tool>Eeschema (5.1.9)-1</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
@@ -144,7 +144,7 @@
       <tstamp>6088C70A</tstamp>
     </comp>
     <comp ref="C201">
-      <value>100n</value>
+      <value>0.1uF</value>
       <footprint>Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -166,7 +166,7 @@
       <tstamp>608AB185</tstamp>
     </comp>
     <comp ref="R201">
-      <value>1k5</value>
+      <value>1.5kΩ</value>
       <footprint>Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -199,7 +199,7 @@
       <tstamp>61D0F77D</tstamp>
     </comp>
     <comp ref="C202">
-      <value>10u</value>
+      <value>10uF</value>
       <footprint>Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -221,7 +221,7 @@
       <tstamp>60812993</tstamp>
     </comp>
     <comp ref="R318">
-      <value>10k</value>
+      <value>10kΩ</value>
       <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -232,7 +232,7 @@
       <tstamp>6081D9A2</tstamp>
     </comp>
     <comp ref="C301">
-      <value>4u7</value>
+      <value>4.7uF</value>
       <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -243,7 +243,7 @@
       <tstamp>60835319</tstamp>
     </comp>
     <comp ref="C302">
-      <value>100n</value>
+      <value>0.1uF</value>
       <footprint>Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -254,7 +254,7 @@
       <tstamp>60835932</tstamp>
     </comp>
     <comp ref="C303">
-      <value>100n</value>
+      <value>0.1uF</value>
       <footprint>Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -265,7 +265,7 @@
       <tstamp>6083726C</tstamp>
     </comp>
     <comp ref="C304">
-      <value>100n</value>
+      <value>0.1uF</value>
       <footprint>Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -276,7 +276,7 @@
       <tstamp>608377B9</tstamp>
     </comp>
     <comp ref="C305">
-      <value>100n</value>
+      <value>0.1uF</value>
       <footprint>Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -287,7 +287,7 @@
       <tstamp>60837BC9</tstamp>
     </comp>
     <comp ref="L301">
-      <value>39n</value>
+      <value>39nH</value>
       <footprint>Inductor_SMD:L_0402_1005Metric_Pad0.77x0.64mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -298,7 +298,7 @@
       <tstamp>6083D649</tstamp>
     </comp>
     <comp ref="C306">
-      <value>1u</value>
+      <value>1uF</value>
       <footprint>Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -309,7 +309,7 @@
       <tstamp>60840412</tstamp>
     </comp>
     <comp ref="C307">
-      <value>10n</value>
+      <value>0.01uF</value>
       <footprint>Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -332,7 +332,7 @@
       <tstamp>608445EF</tstamp>
     </comp>
     <comp ref="C309">
-      <value>12p</value>
+      <value>12pF</value>
       <footprint>Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -343,7 +343,7 @@
       <tstamp>60847829</tstamp>
     </comp>
     <comp ref="C311">
-      <value>12p</value>
+      <value>12pF</value>
       <footprint>Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -354,7 +354,7 @@
       <tstamp>60847EDD</tstamp>
     </comp>
     <comp ref="R305">
-      <value>1k5</value>
+      <value>1.5kΩ</value>
       <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -388,7 +388,7 @@
       <tstamp>60874E7D</tstamp>
     </comp>
     <comp ref="C310">
-      <value>6.8p</value>
+      <value>6.8pF</value>
       <footprint>Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -399,7 +399,7 @@
       <tstamp>60874E89</tstamp>
     </comp>
     <comp ref="C312">
-      <value>6.8p</value>
+      <value>6.8pF</value>
       <footprint>Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -410,7 +410,7 @@
       <tstamp>60874E8F</tstamp>
     </comp>
     <comp ref="R307">
-      <value>7.5k</value>
+      <value>7.5kΩ</value>
       <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -421,7 +421,7 @@
       <tstamp>60874E9C</tstamp>
     </comp>
     <comp ref="R311">
-      <value>1k5</value>
+      <value>1.5kΩ</value>
       <footprint>Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -432,7 +432,7 @@
       <tstamp>60865EF6</tstamp>
     </comp>
     <comp ref="R302">
-      <value>2k2</value>
+      <value>2.2kΩ</value>
       <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -443,7 +443,7 @@
       <tstamp>6089C806</tstamp>
     </comp>
     <comp ref="R301">
-      <value>2k2</value>
+      <value>2.2kΩ</value>
       <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -454,7 +454,7 @@
       <tstamp>6089CEBF</tstamp>
     </comp>
     <comp ref="R304">
-      <value>100k</value>
+      <value>100kΩ</value>
       <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -465,7 +465,7 @@
       <tstamp>6084C8B4</tstamp>
     </comp>
     <comp ref="R303">
-      <value>100k</value>
+      <value>100kΩ</value>
       <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -476,7 +476,7 @@
       <tstamp>6084C8BA</tstamp>
     </comp>
     <comp ref="R314">
-      <value>100k</value>
+      <value>100kΩ</value>
       <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -487,7 +487,7 @@
       <tstamp>6086832F</tstamp>
     </comp>
     <comp ref="R313">
-      <value>100k</value>
+      <value>100kΩ</value>
       <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -509,7 +509,7 @@
       <tstamp>608A2CA8</tstamp>
     </comp>
     <comp ref="R316">
-      <value>10k</value>
+      <value>10kΩ</value>
       <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -520,7 +520,7 @@
       <tstamp>608BDDE7</tstamp>
     </comp>
     <comp ref="R315">
-      <value>10k</value>
+      <value>10kΩ</value>
       <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -531,7 +531,7 @@
       <tstamp>608BDDED</tstamp>
     </comp>
     <comp ref="C308">
-      <value>100n</value>
+      <value>0.1uF</value>
       <footprint>Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -542,7 +542,7 @@
       <tstamp>608DA41F</tstamp>
     </comp>
     <comp ref="R306">
-      <value>100k</value>
+      <value>100kΩ</value>
       <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -553,7 +553,7 @@
       <tstamp>608B0784</tstamp>
     </comp>
     <comp ref="R308">
-      <value>100k</value>
+      <value>100kΩ</value>
       <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -564,7 +564,7 @@
       <tstamp>608B0C2E</tstamp>
     </comp>
     <comp ref="R309">
-      <value>100k</value>
+      <value>100kΩ</value>
       <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -575,7 +575,7 @@
       <tstamp>608B0F45</tstamp>
     </comp>
     <comp ref="R310">
-      <value>100k</value>
+      <value>100kΩ</value>
       <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -586,7 +586,7 @@
       <tstamp>608B12D5</tstamp>
     </comp>
     <comp ref="R319">
-      <value>1k5</value>
+      <value>1.5kΩ</value>
       <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -597,7 +597,7 @@
       <tstamp>608E4215</tstamp>
     </comp>
     <comp ref="R312">
-      <value>100</value>
+      <value>100kΩ</value>
       <footprint>Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -688,7 +688,7 @@
       <tstamp>609AC352</tstamp>
     </comp>
     <comp ref="R317">
-      <value>4k7</value>
+      <value>4.7kΩ</value>
       <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -707,7 +707,7 @@
       <tstamp>61CFF0E6</tstamp>
     </comp>
     <comp ref="R320">
-      <value>10k</value>
+      <value>10kΩ</value>
       <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -796,7 +796,7 @@
       <tstamp>60A183B9</tstamp>
     </comp>
     <comp ref="C401">
-      <value>100n</value>
+      <value>0.1uF</value>
       <footprint>Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -837,7 +837,7 @@
       <tstamp>6086FC62</tstamp>
     </comp>
     <comp ref="R402">
-      <value>22</value>
+      <value>22kΩ</value>
       <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -848,7 +848,7 @@
       <tstamp>61D28325</tstamp>
     </comp>
     <comp ref="R401">
-      <value>22</value>
+      <value>22kΩ</value>
       <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -859,7 +859,7 @@
       <tstamp>61D2919D</tstamp>
     </comp>
     <comp ref="C403">
-      <value>47p</value>
+      <value>47pF</value>
       <footprint>Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -870,7 +870,7 @@
       <tstamp>61D2E57B</tstamp>
     </comp>
     <comp ref="C402">
-      <value>47p</value>
+      <value>47pF</value>
       <footprint>Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -881,7 +881,7 @@
       <tstamp>61D3175C</tstamp>
     </comp>
     <comp ref="C501">
-      <value>10u</value>
+      <value>10uF</value>
       <footprint>Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -892,7 +892,7 @@
       <tstamp>6090BB99</tstamp>
     </comp>
     <comp ref="C502">
-      <value>100n</value>
+      <value>0.1uF</value>
       <footprint>Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -903,7 +903,7 @@
       <tstamp>6090C0F3</tstamp>
     </comp>
     <comp ref="C503">
-      <value>100n</value>
+      <value>0.1uF</value>
       <footprint>Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -925,7 +925,7 @@
       <tstamp>608F95E6</tstamp>
     </comp>
     <comp ref="C504">
-      <value>100n</value>
+      <value>0.1uF</value>
       <footprint>Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -936,7 +936,7 @@
       <tstamp>6091058E</tstamp>
     </comp>
     <comp ref="C505">
-      <value>2n2</value>
+      <value>2200pF</value>
       <footprint>Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -954,7 +954,7 @@
       <tstamp>608613B7</tstamp>
     </comp>
     <comp ref="C601">
-      <value>10u</value>
+      <value>10uF</value>
       <footprint>Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -965,7 +965,7 @@
       <tstamp>60864A89</tstamp>
     </comp>
     <comp ref="C602">
-      <value>100n</value>
+      <value>0.1uF</value>
       <footprint>Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -976,7 +976,7 @@
       <tstamp>60864A8F</tstamp>
     </comp>
     <comp ref="R602">
-      <value>1k</value>
+      <value>1kΩ</value>
       <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -987,7 +987,7 @@
       <tstamp>608CBC59</tstamp>
     </comp>
     <comp ref="R601">
-      <value>1k</value>
+      <value>1kΩ</value>
       <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -1009,7 +1009,7 @@
       <tstamp>608D1F86</tstamp>
     </comp>
     <comp ref="R603">
-      <value>1k5</value>
+      <value>1.5kΩ</value>
       <footprint>Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -1020,7 +1020,7 @@
       <tstamp>608D1F94</tstamp>
     </comp>
     <comp ref="R703">
-      <value>4k7</value>
+      <value>10kΩ</value>
       <footprint>Resistor_SMD:R_1210_3225Metric_Pad1.30x2.65mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -1031,7 +1031,7 @@
       <tstamp>608E6B2B</tstamp>
     </comp>
     <comp ref="R704">
-      <value>10K</value>
+      <value>10kΩ</value>
       <footprint>Resistor_SMD:R_1210_3225Metric_Pad1.30x2.65mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -1042,7 +1042,7 @@
       <tstamp>608E7676</tstamp>
     </comp>
     <comp ref="C702">
-      <value>220n</value>
+      <value>0.1uF</value>
       <footprint>Capacitor_SMD:C_1210_3225Metric_Pad1.33x2.70mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -1097,7 +1097,7 @@
       <tstamp>608F07CE</tstamp>
     </comp>
     <comp ref="R705">
-      <value>100</value>
+      <value>100kΩ</value>
       <footprint>Resistor_SMD:R_1210_3225Metric_Pad1.30x2.65mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -1119,7 +1119,7 @@
       <tstamp>608F2776</tstamp>
     </comp>
     <comp ref="R706">
-      <value>10K</value>
+      <value>10kΩ</value>
       <footprint>Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -1130,7 +1130,7 @@
       <tstamp>608F79CA</tstamp>
     </comp>
     <comp ref="C703">
-      <value>10u</value>
+      <value>10uF</value>
       <footprint>Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -1141,7 +1141,7 @@
       <tstamp>608683D4</tstamp>
     </comp>
     <comp ref="R701">
-      <value>10K</value>
+      <value>10kΩ</value>
       <footprint>Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -1152,7 +1152,7 @@
       <tstamp>60869BC8</tstamp>
     </comp>
     <comp ref="R702">
-      <value>10K</value>
+      <value>10kΩ</value>
       <footprint>Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -1163,7 +1163,7 @@
       <tstamp>608D8DBB</tstamp>
     </comp>
     <comp ref="C701">
-      <value>10u</value>
+      <value>10uF</value>
       <footprint>Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -1182,7 +1182,7 @@
       <tstamp>608BEACC</tstamp>
     </comp>
     <comp ref="R802">
-      <value>0</value>
+      <value>0kΩ</value>
       <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -1193,7 +1193,7 @@
       <tstamp>608C8380</tstamp>
     </comp>
     <comp ref="R801">
-      <value>0</value>
+      <value>0kΩ</value>
       <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -1204,7 +1204,7 @@
       <tstamp>608C967B</tstamp>
     </comp>
     <comp ref="R803">
-      <value>10</value>
+      <value>10kΩ</value>
       <footprint>Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -1215,7 +1215,7 @@
       <tstamp>608CA17B</tstamp>
     </comp>
     <comp ref="L801">
-      <value>100n</value>
+      <value>100nH</value>
       <footprint>Inductor_SMD:L_0402_1005Metric_Pad0.77x0.64mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -1226,7 +1226,7 @@
       <tstamp>608CB3BB</tstamp>
     </comp>
     <comp ref="C805">
-      <value>10n</value>
+      <value>0.01uF</value>
       <footprint>Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -1237,7 +1237,7 @@
       <tstamp>608CC21D</tstamp>
     </comp>
     <comp ref="C801">
-      <value>10u</value>
+      <value>10uF</value>
       <footprint>Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -1248,7 +1248,7 @@
       <tstamp>608D3053</tstamp>
     </comp>
     <comp ref="C802">
-      <value>100n</value>
+      <value>0.1uF</value>
       <footprint>Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -1259,7 +1259,7 @@
       <tstamp>608D3059</tstamp>
     </comp>
     <comp ref="C803">
-      <value>100n</value>
+      <value>0.1uF</value>
       <footprint>Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
@@ -1281,7 +1281,7 @@
       <tstamp>608D5873</tstamp>
     </comp>
     <comp ref="C804">
-      <value>100n</value>
+      <value>0.1uF</value>
       <footprint>Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder</footprint>
       <datasheet>~</datasheet>
       <fields>
