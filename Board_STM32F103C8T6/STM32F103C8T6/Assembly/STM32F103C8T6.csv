@@ -1,67 +1,92 @@
-Comment;Footprint;LCSC Part #;Designator
-Buzzer;Buzzer_Beeper:Buzzer_12x9.5RM7.6;;BZ301
-100n;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;C13585;C201
-10u;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;C13585;"C202,C701,C703"
-4u7;Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder;C19666;C301
-100n;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;C1525;"C302,C303,C304,C305,C308,C401,C502,C503,C504,C602,C802,C803,C804"
-1u;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;C52923;C306
-10n;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;C15195;"C307,C805"
-12p;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;C1547;"C309,C311"
-6.8p;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;C1576;"C310,C312"
-47p;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;C1567;"C402,C403"
-10u;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;C15525;"C501,C601,C801"
-2n2;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;C1531;C505
-220n;Capacitor_SMD:C_1210_3225Metric_Pad1.33x2.70mm_HandSolder;C396814;C702
-B5819W;Diode_SMD:D_SOD-123;C8598;D201
-GREEN;LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder;C72043;D202
-BLUE;LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder;C72041;D301
-RED;LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder;C2286;D601
-1N4007F;Diode_SMD:D_SMA;C110856;"D701,D702"
-1N4148WS;Diode_SMD:D_SOD-323F;C2128;D703
-5v1;Diode_SMD:D_SOD-123;C78479;D704
-500mA;Fuse:Fuse_1206_3216Metric;C70068;F201
-600 @ 600 MHz;Inductor_SMD:L_1206_3216Metric_Pad1.22x1.90mm_HandSolder;C1017;FB201
-MountingHole_Pad;MountingHole:MountingHole_4.3mm_M4_Pad_Via;;"H301,H302,H303,H304,H305,H306"
-MountingHole;MyFootprints:JLCPCB-Tooling-Hole;;"H307,H308,H309"
-BOOT;Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical;;J301
-BATTERY;"TerminalBlock_Phoenix:TerminalBlock_Phoenix_PT-1,5-2-3.5-H_1x02_P3.50mm_Horizontal";;J401
-I2C;Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical;;J402
-H2O;"TerminalBlock_Phoenix:TerminalBlock_Phoenix_PT-1,5-2-3.5-H_1x02_P3.50mm_Horizontal";;J403
-USB_B_Micro;Connector_USB:USB_Micro-B_Wuerth_629105150521;C40943;J404
-SWD;Connector_PinHeader_2.54mm:PinHeader_2x05_P2.54mm_Vertical;;J405
-USART1;Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical;;J406
-CIRCUIT_SENSOR;"TerminalBlock_Phoenix:TerminalBlock_Phoenix_PT-1,5-3-5.0-H_1x03_P5.00mm_Horizontal";;J407
-BLUETOOTH;Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical;;J408
-RPM;"TerminalBlock_Phoenix:TerminalBlock_Phoenix_PT-1,5-2-3.5-H_1x02_P3.50mm_Horizontal";;J409
-POWER;Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical;;J410
-Conn_Coaxial;MyFootprints:BWIPX-1-001E;C496552;J801
-39n;Inductor_SMD:L_0402_1005Metric_Pad0.77x0.64mm_HandSolder;C26443;L301
-100n;Inductor_SMD:L_0402_1005Metric_Pad0.77x0.64mm_HandSolder;C22726;L801
-AO3401A;Package_TO_SOT_SMD:SOT-23;C306862;Q201
-BSS123;Package_TO_SOT_SMD:SOT-23;C431506;Q301
-1k5;Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder;C22843;"R201,R311,R603"
-2k2;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;C25879;"R301,R302"
-100k;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;C25741;"R303,R304,R306,R308,R309,R310,R313,R314"
-1k5;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;C25867;"R305,R319"
-7.5k;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;C25918;R307
-100;Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder;C25076;R312
-4k7;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;C25900;R317
-10k;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;C25744;"R315,R316,R318,R320"
-22;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;C25092;"R401,R402"
-1k;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;C11702;"R601,R602"
-4k7;Resistor_SMD:R_1210_3225Metric_Pad1.30x2.65mm_HandSolder;C52443;R703
-10K;Resistor_SMD:R_1210_3225Metric_Pad1.30x2.65mm_HandSolder;C25672;R704
-100;Resistor_SMD:R_1210_3225Metric_Pad1.30x2.65mm_HandSolder;C56239;R705
-10K;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;C17902;"R701,R702,R706"
-0;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;C17168;"R801,R802"
-10;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;C25077;R803
-LD1117S33TR;Package_TO_SOT_SMD:SOT-223-3_TabPin2;C86781;U201
-W25Q128JVS;Package_SO:SOIC-8_5.23x5.23mm_P1.27mm;C97521;U301
-STM32F103C8T6;Package_QFP:LQFP-48_7x7mm_P0.5mm;C8734;U302
-USBLC6-2SC6;Package_TO_SOT_SMD:SOT-23-6;C558442;U401
-MPU-6050;Sensor_Motion:InvenSense_QFN-24_4x4mm_P0.5mm;C24112;U501
-HM-19;Charleslabs_Parts:HM-11_Module;;U601
-TLP627;Package_DIP:DIP-4_W7.62mm;C79290;U701
-MAX-M8Q;RF_GPS:ublox_MAX;;U801
-8Mhz;Crystal:Crystal_SMD_5032-2Pin_5.0x3.2mm_HandSoldering;C115962;Y301
-32.768KHZ;Crystal:Crystal_SMD_3215-2Pin_3.2x1.5mm;C97604;Y302
+ Mouser;Reference; Value; Footprint;;nCart;Qta;Descr;;; Mouser;Reference; Quantity; Value; Footprint
+576-1206L050YR;F201;500mA;Fuse:Fuse_1206_3216Metric;;19;1;Fusibili resettabili - PPTC 1206 PTC 6V 500MA;;1;581-1206VC104KAT2A;C201 ;1;0.1uF;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder
+78-SI2301CDS-T1-BE3;Q201;SI2301CDS-T1-BE3;Package_TO_SOT_SMD:SOT-23_Handsoldering;;33;1;MOSFET P-CHANNEL 20-V (D-S);;3;581-1206DD106KAT2A;C202 C701 C703 ;3;10uF;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder
+70-ILHB1206ER601V;FB201;600 @ 600 MHz;Inductor_SMD:L_1206_3216Metric_Pad1.22x1.90mm_HandSolder;;20;1;Perline di ferrite 600ohms 25%;;1;581-0603ZD475KAT2A;C301 ;1;4.7uF;Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder
+581-1206VC104KAT2A;C201;0.1uF;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;;7;1;Condensatori in ceramica multistrato MLCC - SMD/SMT 250V .1uF X7R 1206 10% Tol;;13;581-0402YD104K;C302 C303 C304 C305 C308 C401 C502 C503 C504 C602 C802 C803 C804 ;13;0.1uF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder
+833-B5819W-TP;D201;B5819W;Diode_SMD:D_SOD-123;;14;1;"Diodi e raddrizzatori Schottky 1A, 40V";;1;581-0402YD105KAT4A;C306 ;1;1uF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder
+755-KTR03EZPJ152;R201;1.5k?;Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder;;36;3;Resistori a pellicola spessa - SMD 0603 1.5Kohm 5% High Voltage;;2;581-0402ZC103KAT2A;C307 C805 ;2;0.01uF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder
+710-150060GS75020;D202;GREEN;LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder;;15;1;LED standard - SMD Mono Waterclear 670mcd 3.2V 140;;2;581-04025U240FAT2A;C309 C311 ;2;24pF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder
+511-LD1117S33;U201;LD1117S33TR;Package_TO_SOT_SMD:SOT-223-3_TabPin2;;24;1;Regolatori di tensione LDO 3.3V 0.8A Positive;;2;581-04023U130FAT2A;C310 C312 ;2;13pF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder
+581-1206DD106KAT2A;C202;10uF;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;;8;3;Condensatori in ceramica multistrato MLCC - SMD/SMT 35V 10uF X5R 1206 10%;;2;581-0402ZA470JAT2A;C402 C403 ;2;47pF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder
+511-STM32F103C8T6;U302;STM32F103C8T6;Package_QFP:LQFP-48_7x7mm_P0.5mm;;3;1;Microcontrollori ARM - MCU 32BIT Cortex M3 64KB 20KB RAM 2X12 ADC;;3;581-0402ZD106MAT2A;C501 C601 C801 ;3;10uF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder
+71-CRCW040210K0FKEDC;R318;10k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;;41;5;Resistori a pellicola spessa - SMD 1/16watt 10Kohms 1% Commercial Use;;1;581-0402YC222J4T2A;C505 ;1;2200pF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder
+581-0603ZD475KAT2A;C301;4.7uF;Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder;;9;1;Condensatori in ceramica multistrato MLCC - SMD/SMT 10V 4.7uF X5R 0603 10%;;1;581-1210VC224KAT2A;C702 ;1;0.1uF;Capacitor_SMD:C_1210_3225Metric_Pad1.33x2.70mm_HandSolder
+581-0402YD104K;C302;0.1uF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;;4;13;Condensatori in ceramica multistrato MLCC - SMD/SMT 16V 0.1uF X5R 0402 10%;;1;833-B5819W-TP;D201 ;1;B5819W;Diode_SMD:D_SOD-123
+581-0402YD104K;C303;0.1uF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;;4;13;Condensatori in ceramica multistrato MLCC - SMD/SMT 16V 0.1uF X5R 0402 10%;;1;710-150060GS75020;D202 ;1;GREEN;LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder
+581-0402YD104K;C304;0.1uF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;;4;13;Condensatori in ceramica multistrato MLCC - SMD/SMT 16V 0.1uF X5R 0402 10%;;1;710-150060BS55040;D301 ;1;BLUE;LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder
+581-0402YD104K;C305;0.1uF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;;4;13;Condensatori in ceramica multistrato MLCC - SMD/SMT 16V 0.1uF X5R 0402 10%;;1;710-150060RS75020;D601 ;1;RED;LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder
+710-7447840139;L301;39nH;Inductor_SMD:L_0402_1005Metric_Pad0.77x0.64mm_HandSolder;;21;1;Induttori fissi WE-MK 0402 39nH 200mA DCR=1.06ohm;;2;621-S1B-F;D701 D702 ;2;1N4007F;Diode_SMD:D_SMA_Handsoldering
+581-0402YD105KAT4A;C306;1uF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;;5;1;Condensatori in ceramica multistrato MLCC - SMD/SMT 16V 1uF X5R 0402 10% AEC-Q200;;1;241-1N4148WSR100001;D703 ;1;1N4148WS;Diode_SMD:D_SOD-323_HandSoldering
+581-0402ZC103KAT2A;C307;0.01uF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;;6;2;Condensatori in ceramica multistrato MLCC - SMD/SMT 10V 0.01uF X7R 0402 10%;;1;78-BZT52C5V1-E3-18;D704 ;1;5v1;Diode_SMD:D_SOD-123
+815-ABLS-8.0M-T;Y301;8MHz;Crystal:Crystal_SMD_HC49-SD_HandSoldering;;32;1;Cristalli 8.0    MHZ 18PF 80 OHM AUTO;;1;576-1206L050YR;F201 ;1;500mA;Fuse:Fuse_1206_3216Metric
+581-04025U240FAT2A;C309;24pF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;;27;2;Condensatori in ceramica multistrato MLCC - SMD/SMT 50V 24pF C0G 0402 1%;;1;70-ILHB1206ER601V;FB201 ;1;600 @ 600 MHz;Inductor_SMD:L_1206_3216Metric_Pad1.22x1.90mm_HandSolder
+581-04025U240FAT2A;C311;24pF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;;27;2;Condensatori in ceramica multistrato MLCC - SMD/SMT 50V 24pF C0G 0402 1%;;1;640-USB4105-GF-A;J404 ;1;USB_C_Receptacle_USB2.0;Connector_USB:USB_C_Receptacle_Palconn_UTC16-G
+652-CR0402-FX7870GLF;R305;787?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;;38;1;Resistori a pellicola spessa - SMD 787OHM 1/16WATT 1%;;1;538-73391-0080;J801 ;1;Conn_Coaxial;Connector_Coaxial:SMA_Molex_73251-2200_Horizontal
+710-150060BS55040;D301;BLUE;LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder;;16;1;LED standard - SMD WL-SMCD SMD Mono SMD 0603 Blue 465nm;;1;710-7447840139;L301 ;1;39nH;Inductor_SMD:L_0402_1005Metric_Pad0.77x0.64mm_HandSolder
+815-ABS25-32.7K-4-T;Y302;32.768KHz;Crystal:Crystal_SMD_Abracon_ABS25-4Pin_8.0x3.8mm;;30;1;Cristalli CRYSTAL 32.7680KHZ 12.5PF SMD;;1;710-7447840210G;L801 ;1;100nH;Inductor_SMD:L_0402_1005Metric_Pad0.77x0.64mm_HandSolder
+581-04023U130FAT2A;C310;13pF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;;29;2;Condensatori in ceramica multistrato MLCC - SMD/SMT 25V 13pF C0G 0402 1%;;1;78-SI2301CDS-T1-BE3;Q201 ;1;SI2301CDS-T1-BE3;Package_TO_SOT_SMD:SOT-23_Handsoldering
+581-04023U130FAT2A;C312;13pF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;;29;2;Condensatori in ceramica multistrato MLCC - SMD/SMT 25V 13pF C0G 0402 1%;;1;78-SI2312BDS-T1-BE3;Q301 ;1;SI2312BDS-T1-BE3;Package_TO_SOT_SMD:SOT-23_Handsoldering
+71-CRCW0402J-36K-E3;R307;36k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;;39;1;Resistori a pellicola spessa - SMD 1/16watt 36Kohms 5%;;3;755-KTR03EZPJ152;R201 R311 R603 ;3;1.5k?;Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder
+755-KTR03EZPJ152;R311;1.5k?;Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder;;36;3;Resistori a pellicola spessa - SMD 0603 1.5Kohm 5% High Voltage;;2;652-CR0402FX-2201GLF;R301 R302 ;2;2.2k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder
+652-CR0402FX-2201GLF;R302;2.2k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;;37;2;Resistori a pellicola spessa - SMD 2.2K OHM 1%;;8;652-CR0402JW-104GLF;R303 R304 R306 R308 R309 R310 R313 R314 ;8;100k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder
+652-CR0402FX-2201GLF;R301;2.2k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;;37;2;Resistori a pellicola spessa - SMD 2.2K OHM 1%;;1;652-CR0402-FX7870GLF;R305 ;1;787?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder
+652-CR0402JW-104GLF;R304;100k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;;49;8;Resistori a pellicola spessa - SMD 100K OHM 5%;;1;71-CRCW0402J-36K-E3;R307 ;1;36k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder
+652-CR0402JW-104GLF;R303;100k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;;49;8;Resistori a pellicola spessa - SMD 100K OHM 5%;;1;652-CR0603-FX-103ELF;R312 ;1;100k?;Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder
+652-CR0402JW-104GLF;R314;100k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;;49;8;Resistori a pellicola spessa - SMD 100K OHM 5%;;1;71-CRCW04024K70FKEDC;R317 ;1;4.7k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder
+652-CR0402JW-104GLF;R313;100k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;;49;8;Resistori a pellicola spessa - SMD 100K OHM 5%;;5;71-CRCW040210K0FKEDC;R315 R316 R318 R320 R803 ;5;10k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder
+454-W25Q128JVSIQTR;U301;W25Q128JVS;Package_SO:SOIC-8_5.23x5.23mm_P1.27mm;;25;1;"NOR Flash spiFlash, 3V, 128M-bit, 4Kb Uniform Sector";;1;652-CR0402FX-1501GLF;R319 ;1;1.5k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder
+71-CRCW040210K0FKEDC;R316;10k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;;41;5;Resistori a pellicola spessa - SMD 1/16watt 10Kohms 1% Commercial Use;;2;652-CR0402FX-2202GLF;R401 R402 ;2;22k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder
+71-CRCW040210K0FKEDC;R315;10k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;;41;5;Resistori a pellicola spessa - SMD 1/16watt 10Kohms 1% Commercial Use;;2;652-CR0402FX-2202GLF;R403 R404 ;2;5.1k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder
+581-0402YD104K;C308;0.1uF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;;4;13;Condensatori in ceramica multistrato MLCC - SMD/SMT 16V 0.1uF X5R 0402 10%;;2;652-CR0402FX-1001GLF;R601 R602 ;2;1k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder
+652-CR0402JW-104GLF;R306;100k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;;49;8;Resistori a pellicola spessa - SMD 100K OHM 5%;;2;603-RC1210FR-0710KL;R703 R704 ;2;10k?;Resistor_SMD:R_1210_3225Metric_Pad1.30x2.65mm_HandSolder
+652-CR0402JW-104GLF;R308;100k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;;49;8;Resistori a pellicola spessa - SMD 100K OHM 5%;;1;71-CRCW1210100RFKEB;R705 ;1;100?;Resistor_SMD:R_1210_3225Metric_Pad1.30x2.65mm_HandSolder
+652-CR0402JW-104GLF;R309;100k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;;49;8;Resistori a pellicola spessa - SMD 100K OHM 5%;;3;652-CR1206FX-1002ELF;R701 R702 R706 ;3;10k?;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder
+652-CR0402JW-104GLF;R310;100k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;;49;8;Resistori a pellicola spessa - SMD 100K OHM 5%;;2;652-CR0402-J/-000GLF;R801 R802 ;2;0k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder
+652-CR0402FX-1501GLF;R319;1.5k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;;42;1;Resistori a pellicola spessa - SMD 1.5K OHM 1%;;1;511-LD1117S33;U201 ;1;LD1117S33TR;Package_TO_SOT_SMD:SOT-223-3_TabPin2
+652-CR0603-FX-103ELF;R312;100k?;Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder;;46;1;Resistori a pellicola spessa - SMD 100K 1% 1/10 WATT;;1;454-W25Q128JVSIQTR;U301 ;1;W25Q128JVS;Package_SO:SOIC-8_5.23x5.23mm_P1.27mm
+71-CRCW04024K70FKEDC;R317;4.7k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;;40;1;Resistori a pellicola spessa - SMD 1/16watt 4.7Kohms 1% Commercial Use;;1;511-STM32F103C8T6;U302 ;1;STM32F103C8T6;Package_QFP:LQFP-48_7x7mm_P0.5mm
+71-CRCW040210K0FKEDC;R320;10k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;;41;5;Resistori a pellicola spessa - SMD 1/16watt 10Kohms 1% Commercial Use;;1;511-USBLC6-2SC6;U401 ;1;USBLC6-2SC6;Package_TO_SOT_SMD:SOT-23-6
+78-SI2312BDS-T1-BE3;Q301;SI2312BDS-T1-BE3;Package_TO_SOT_SMD:SOT-23_Handsoldering;;34;1;MOSFET N-CHANNEL 20-V (D-S);;1;815-ABLS-8.0M-T;Y301 ;1;8MHz;Crystal:Crystal_SMD_HC49-SD_HandSoldering
+581-0402YD104K;C401;0.1uF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;;4;13;Condensatori in ceramica multistrato MLCC - SMD/SMT 16V 0.1uF X5R 0402 10%;;1;815-ABS25-32.7K-4-T;Y302 ;1;32.768KHz;Crystal:Crystal_SMD_Abracon_ABS25-4Pin_8.0x3.8mm
+511-USBLC6-2SC6;U401;USBLC6-2SC6;Package_TO_SOT_SMD:SOT-23-6;;26;1;Soppressori ESD/Diodi TVS ESD Protection Low Cap;;;;;;;
+652-CR0402FX-2202GLF;R402;22k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;;43;2;Resistori a pellicola spessa - SMD 22K OHM 1%;;91;;;91;;
+652-CR0402FX-2202GLF;R401;22k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;;43;2;Resistori a pellicola spessa - SMD 22K OHM 1%;;;;;;;
+581-0402ZA470JAT2A;C403;47pF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;;10;2;Condensatori in ceramica multistrato MLCC - SMD/SMT 10V 47pF C0G 0402 5%;;;;;;;
+581-0402ZA470JAT2A;C402;47pF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;;10;2;Condensatori in ceramica multistrato MLCC - SMD/SMT 10V 47pF C0G 0402 5%;;;;;;;
+640-USB4105-GF-A;J404;USB_C_Receptacle_USB2.0;Connector_USB:USB_C_Receptacle_Palconn_UTC16-G;;51;1;"Connettori USB USB Type C,2.0, Rec,SMT,TH Shell Stakes,G/F,RA,Top Mnt,T&R";;;;;;;
+652-CR0402FX-2202GLF;R403;5.1k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;;43;2;Resistori a pellicola spessa - SMD 22K OHM 1%;;;;;;;
+652-CR0402FX-2202GLF;R404;5.1k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;;43;2;Resistori a pellicola spessa - SMD 22K OHM 1%;;;;;;;
+581-0402ZD106MAT2A;C501;10uF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;;11;3;Condensatori in ceramica multistrato MLCC - SMD/SMT 10V 10uF X5R 0402 20%;;;;;;;
+581-0402YD104K;C502;0.1uF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;;4;13;Condensatori in ceramica multistrato MLCC - SMD/SMT 16V 0.1uF X5R 0402 10%;;;;;;;
+581-0402YD104K;C503;0.1uF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;;4;13;Condensatori in ceramica multistrato MLCC - SMD/SMT 16V 0.1uF X5R 0402 10%;;;;;;;
+581-0402YD104K;C504;0.1uF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;;4;13;Condensatori in ceramica multistrato MLCC - SMD/SMT 16V 0.1uF X5R 0402 10%;;;;;;;
+581-0402YC222J4T2A;C505;2200pF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;;12;1;Condensatori in ceramica multistrato MLCC - SMD/SMT 16V 2200pF X7R 0402 5% AEC-Q200;;;;;;;
+581-0402ZD106MAT2A;C601;10uF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;;11;3;Condensatori in ceramica multistrato MLCC - SMD/SMT 10V 10uF X5R 0402 20%;;;;;;;
+581-0402YD104K;C602;0.1uF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;;4;13;Condensatori in ceramica multistrato MLCC - SMD/SMT 16V 0.1uF X5R 0402 10%;;;;;;;
+652-CR0402FX-1001GLF;R602;1k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;;44;2;Resistori a pellicola spessa - SMD 1.0K OHM 1%;;;;;;;
+652-CR0402FX-1001GLF;R601;1k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;;44;2;Resistori a pellicola spessa - SMD 1.0K OHM 1%;;;;;;;
+710-150060RS75020;D601;RED;LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder;;17;1;LED standard - SMD Mono Waterclear 80mcd 2V 140;;;;;;;
+755-KTR03EZPJ152;R603;1.5k?;Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder;;36;3;Resistori a pellicola spessa - SMD 0603 1.5Kohm 5% High Voltage;;;;;;;
+603-RC1210FR-0710KL;R703;10k?;Resistor_SMD:R_1210_3225Metric_Pad1.30x2.65mm_HandSolder;;47;2;Resistori a pellicola spessa - SMD 10 kOhms 500 mW 1210 1%;;;;;;;
+603-RC1210FR-0710KL;R704;10k?;Resistor_SMD:R_1210_3225Metric_Pad1.30x2.65mm_HandSolder;;47;2;Resistori a pellicola spessa - SMD 10 kOhms 500 mW 1210 1%;;;;;;;
+581-1210VC224KAT2A;C702;0.1uF;Capacitor_SMD:C_1210_3225Metric_Pad1.33x2.70mm_HandSolder;;13;1;Condensatori in ceramica multistrato MLCC - SMD/SMT 250V 0.22uF X7R 1210 10%;;;;;;;
+78-BZT52C5V1-E3-18;D704;5v1;Diode_SMD:D_SOD-123;;18;1;Diodi Zener 5.1 Volt 0.5W 5%;;;;;;;
+621-S1B-F;D702;1N4007F;Diode_SMD:D_SMA_Handsoldering;;52;2;Raddrizzatori 100V 1A;;;;;;;
+621-S1B-F;D701;1N4007F;Diode_SMD:D_SMA_Handsoldering;;52;2;Raddrizzatori 100V 1A;;;;;;;
+241-1N4148WSR100001;D703;1N4148WS;Diode_SMD:D_SOD-323_HandSoldering;;35;1;"Diodi - Uso generico, alimentazione, commutazione /A2/TR/7""/HF/5K/SOD-323/SWI/SOD/USM-02A/USM02-QI08/PJ///";;;;;;;
+71-CRCW1210100RFKEB;R705;100?;Resistor_SMD:R_1210_3225Metric_Pad1.30x2.65mm_HandSolder;;53;1;Resistori a pellicola spessa - SMD CRCW1210 100 100R 1% ET5 e3;;;;;;;
+652-CR1206FX-1002ELF;R706;10k?;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;48;3;Resistori a pellicola spessa - SMD 10K 1%;;;;;;;
+581-1206DD106KAT2A;C703;10uF;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;;8;3;Condensatori in ceramica multistrato MLCC - SMD/SMT 35V 10uF X5R 1206 10%;;;;;;;
+652-CR1206FX-1002ELF;R701;10k?;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;48;3;Resistori a pellicola spessa - SMD 10K 1%;;;;;;;
+652-CR1206FX-1002ELF;R702;10k?;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;48;3;Resistori a pellicola spessa - SMD 10K 1%;;;;;;;
+581-1206DD106KAT2A;C701;10uF;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;;8;3;Condensatori in ceramica multistrato MLCC - SMD/SMT 35V 10uF X5R 1206 10%;;;;;;;
+652-CR0402-J/-000GLF;R802;0k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;;45;2;Resistori a pellicola spessa - SMD Zero Ohm 5%;;;;;;;
+652-CR0402-J/-000GLF;R801;0k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;;45;2;Resistori a pellicola spessa - SMD Zero Ohm 5%;;;;;;;
+71-CRCW040210K0FKEDC;R803;10k?;Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder;;41;5;Resistori a pellicola spessa - SMD 1/16watt 10Kohms 1% Commercial Use;;;;;;;
+710-7447840210G;L801;100nH;Inductor_SMD:L_0402_1005Metric_Pad0.77x0.64mm_HandSolder;;22;1;Induttori fissi WE-MK DCRes= 1.6Ohms 0402 0.15A +/- 2%;;;;;;;
+581-0402ZC103KAT2A;C805;0.01uF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;;6;2;Condensatori in ceramica multistrato MLCC - SMD/SMT 10V 0.01uF X7R 0402 10%;;;;;;;
+581-0402ZD106MAT2A;C801;10uF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;;11;3;Condensatori in ceramica multistrato MLCC - SMD/SMT 10V 10uF X5R 0402 20%;;;;;;;
+581-0402YD104K;C802;0.1uF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;;4;13;Condensatori in ceramica multistrato MLCC - SMD/SMT 16V 0.1uF X5R 0402 10%;;;;;;;
+581-0402YD104K;C803;0.1uF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;;4;13;Condensatori in ceramica multistrato MLCC - SMD/SMT 16V 0.1uF X5R 0402 10%;;;;;;;
+538-73391-0080;J801;Conn_Coaxial;Connector_Coaxial:SMA_Molex_73251-2200_Horizontal;;50;1;Connettori RF/Connettori coassiali RA JACK PCB;;;;;;;
+581-0402YD104K;C804;0.1uF;Capacitor_SMD:C_0402_1005Metric_Pad0.74x0.62mm_HandSolder;;4;13;Condensatori in ceramica multistrato MLCC - SMD/SMT 16V 0.1uF X5R 0402 10%;;;;;;;
