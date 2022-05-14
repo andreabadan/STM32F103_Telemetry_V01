@@ -225,21 +225,21 @@ PanelRightEdge = PanelWidth - Thick + PanelHorizontalGap;
 // Holes for front panel
 module FPanelHoles() {
     // SquareHole(On/Off, Xpos,Ypos,Length,Width,Filet)
-    SquareHole(1, LeftEdgeOfBoardWRTFPanel +31, TopOfBoardWRTPanel -1 , 10, 15, 1);
+    SquareHole(1, LeftEdgeOfBoardWRTFPanel +33, TopOfBoardWRTPanel, 8, 14, 1);
 }
 
 
 // Text for front panel
 module FPanelText() {
     // LText(On/Off, Xpos, Ypos, "Font", Size, "Text", "HAlign", "VAlign")
-    LText(1, LeftEdgeOfBoardWRTFPanel +26.5, TopOfBoardWRTPanel +17, "Arial Black", 6, "H2O", HAlign="left");
+    LText(1, LeftEdgeOfBoardWRTFPanel +27.5, TopOfBoardWRTPanel +17, "Arial Black", 6, "H2O", HAlign="left");
 }
 
 
 // Holes for back panel
 module BPanelHoles() {
 	// SquareHole(On/Off, Xpos,Ypos,Length,Width,Filet)
-    SquareHole(1, LeftEdgeOfBoardWRTBPanel + 13, TopOfBoardWRTPanel -1, 16, 15, 1);
+    SquareHole(1, LeftEdgeOfBoardWRTBPanel + 14, TopOfBoardWRTPanel, 16, 14, 1);
 	CylinderHole(1, LeftEdgeOfBoardWRTBPanel + 70, TopOfBoardWRTPanel + 7.5, 5 + PartMargin*2);
 }
 
@@ -247,7 +247,7 @@ module BPanelHoles() {
 // Text for back panel
 module BPanelText() {
 	// LText(On/Off, Xpos, Ypos, "Font", Size, "Text", "HAlign", "VAlign")
-    LText(1, LeftEdgeOfBoardWRTBPanel + 21, TopOfBoardWRTPanel + 17, "Arial Black", 6, "LAP");
+    LText(1, LeftEdgeOfBoardWRTBPanel + 22.5, TopOfBoardWRTPanel + 17, "Arial Black", 6, "LAP");
     LText(1, LeftEdgeOfBoardWRTBPanel + 70, TopOfBoardWRTPanel + 17, "Arial Black", 6, "PWR");
 }
 
