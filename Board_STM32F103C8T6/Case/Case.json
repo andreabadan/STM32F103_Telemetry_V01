@@ -2,17 +2,24 @@
     "parameterSets": {
         "PCB1": {
             "BLTab": "1",
-            "BPanL": "1",
+            "BPanL": "0",
             "BRTab": "1",
-            "BShell": "1",
+            "BShell": "0",
             "BackEdgeMargin": "3",
+            "BackEdgeMarginBattery": "30",
+            "BatteryCase": "0",
+            "BatteryDia": "8",
+            "BatteryHeight": "8",
+            "BatteryHole": "2.2606",
+            "BatteryLength": "70",
+            "BatteryWidth": "70",
             "BoxHole": "2.8448",
             "Couleur1": "Orange",
             "Couleur2": "OrangeRed",
             "CutoutMargin": "0.3",
             "Decorations": "1",
             "FLTab": "1",
-            "FPanL": "1",
+            "FPanL": "0",
             "FRTab": "1",
             "Filet": "2",
             "FontThick": "0.5",
@@ -33,6 +40,7 @@
             "FootHole": "4.3",
             "FrontEdgeMargin": "3",
             "LeftEdgeMargin": "3",
+            "LeftEdgeMarginBattery": "40",
             "PCBFeet": "1",
             "PCBLength": "96",
             "PCBThick": "1.6",
@@ -45,7 +53,7 @@
             "ScrewHole": "2.2606",
             "Screwless": "1",
             "SnapTabs": "0",
-            "TShell": "1",
+            "TShell": "0",
             "TabThick": "2",
             "TextColor": "White",
             "Thick": "2",
@@ -54,8 +62,5 @@
             "Vent_width": "1.5"
         }
     },
-    "parameterSets": "",
-    "fileFormatVersion": "1",
-    "parameterSets": "",
-    "parameterSets": ""
+    "fileFormatVersion": "1"
 }

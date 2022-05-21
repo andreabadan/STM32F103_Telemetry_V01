@@ -161,31 +161,9 @@ BatteryLength = 70;
 // - Battery Width
 BatteryWidth = 70;
 // - Margin between back panel and Battery
-BackEdgeMarginBattery = 0;
+BackEdgeMarginBattery = 30;
 // - Margin between left wall and Battery
-LeftEdgeMarginBattery = 11;
-// Battery centers are specified as distance from Battery back-left corner.
-// X is along the "length" axis, and Y is along the "width" axis.
-// - Battery 1 distance from back Battery edge
-Battery1X = 8.1;
-// - Battery 1 distance from left Battery edge
-Battery1Y = 8.1;
-// - Battery 2 distance from back Battery edge
-Battery2X = 8.1;
-// - Battery 2 distance from right Battery edge
-Battery2YFromEdge = 8.1;
-Battery2Y = BatteryWidth - Battery2YFromEdge;
-// - Battery 3 distance from front Battery edge
-Battery3XFromEdge = 8.1;
-Battery3X = BatteryLength - Battery3XFromEdge;
-// - Battery 3 distance from left Battery edge
-Battery3Y = 8.1;
-// - Battery 4 distance from front Battery edge
-Battery4XFromEdge = 8.1;
-Battery4X = BatteryLength - Battery4XFromEdge;
-// - Battery 4 distance from right Battery edge
-Battery4YFromEdge = 8.1;
-Battery4Y = BatteryWidth - Battery4YFromEdge;
+LeftEdgeMarginBattery = 40;
 
 /* [STL element to export] */
 // - Top shell
@@ -649,48 +627,6 @@ module Feet(top=0) {
     }
 }
 
-/*  BatteryFoot module
-    Produces a single Battery for PCB mounting.
-*/
-module BatteryFoot() {
-    color(Couleur1) {
-        rotate_extrude($fn=100) {
-            difference() {
-                union() {
-					translate([BatteryHole/2 + CutoutMargin, 0, 0]) {
-						square([(BatteryDia - BatteryHole)/2 - CutoutMargin + BatteryFilet, BatteryHeight]);
-					}
-                }
-                translate([BatteryDia/2 + BatteryFilet, BatteryFilet, 0]) {
-                    offset(r=BatteryFilet, $fn=Resolution) {
-                        square(Height);
-                    }
-                }
-            }
-        }
-    }
-}
-
-/*  Battery module
-*/
-module Battery() {
-    translate([BackEdgeMarginBattery + Thick + PanelThick + PanelThickGap*2, LeftEdgeMarginBattery + Thick, Thick]) {
-		translate([Battery1X, Battery1Y]) {
-			BatteryFoot();
-		}
-		translate([Battery2X, Battery2Y]) {
-			BatteryFoot();
-			}
-		translate([Battery3X, Battery3Y]) {
-			BatteryFoot();
-			}
-		translate([Battery4X, Battery4Y]) {
-			BatteryFoot();
-		}
-    }
-}
-
-
 /*  TopShell: top shell module
     Produces the top shell, including requested fixation tabs and holes
     Model is rotated and translated to the appropriate position.
@@ -705,7 +641,6 @@ module TopShell() {
                     if (Screwless && PCBFeet) {
                        Feet(top=1);
                     }
-					Battery();
                 }
                 Holes(top=1);
             }
@@ -1169,11 +1104,57 @@ module flexbatterAAA(n=1){
 	flexbatter(n=n,l=46.1,d=10.45,hf=0.84,shd=2,el=1,xchan=[0.5],eps=0);
 }
 
-module flexbatterAAAx3(){ // AUTO_MAKE_STL
-	translate([0, 0, Height + 0.2 - BatteryHeight]) {
-        mirror([0, 0, 1]) {
-			translate([BackEdgeMarginBattery + Thick + PanelThick + PanelThickGap*2, LeftEdgeMarginBattery + Thick, Thick]){
-				flexbatterAAA(n=3);
+module flexbatterAAAx3(){
+	translate([BackEdgeMarginBattery + Thick + PanelThick + PanelThickGap*2, LeftEdgeMarginBattery + Thick, Height +0.2 - BatteryHeight - Thick]) {
+		mirror([0, 0, 1]) {		
+			flexbatterAAA(n=3);
+		}
+	}
+}
+
+/*  BatteryFoot module
+    Produces a single Battery for PCB mounting.
+*/
+module BatteryFoot(n=1,l=65,d=18,hf=0.75,r=4,shd=3,eps=0.28,el=0,xchan=[1/4,3/4],$fn=24){
+	ew=0.56;   // extrusion width
+	eh=0.25;   // extrusion height
+	w = 4*ew;  // case wall thickness
+	ws = 2*ew; // spring wall thickness
+	ch = w-ws; // edge chamfering
+	deepen=0; //deepening for side grip of batteries
+	//el = 0;  // extra length in spring
+	//eps = 0.28;
+	//shd = 3; // screw hole diameter
+	//hf=0.75;
+	//xchan=[1/4,3/4]; // relative position of traversal wire channels
+
+	r = d/5+2*ws; // linear spring length (depends on sline() call!)
+
+	for(i=[0:n-1]){
+		translate([BackEdgeMarginBattery + Thick + PanelThick + PanelThickGap*2,i*(d+w+ws) + LeftEdgeMarginBattery + Thick, Height +0.2 - Thick]){ // generate n battery cases
+			color(Couleur1) {
+				mirror([0, 0, 1]) {		
+					for(x=[7+shd,l-2*shd]){
+						for(y=[-d/2+shd,d/2-shd]){
+							translate([x,-y,-1]){
+								rotate_extrude($fn=100) {
+									difference() {
+										union() {
+											translate([BatteryHole/2 + CutoutMargin, 0, 0]) {
+												square([(BatteryDia - BatteryHole)/2 - CutoutMargin + BatteryFilet, BatteryHeight]);
+											}
+										}
+										translate([BatteryDia/2 + BatteryFilet, BatteryFilet, 0]) {
+											offset(r=BatteryFilet, $fn=Resolution) {
+												square(Height);
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	}
@@ -1183,6 +1164,7 @@ module flexbatterAAAx3(){ // AUTO_MAKE_STL
 // Top shell
 if (TShell) {
     TopShell();
+	BatteryFoot(n=3,l=46.1,d=10.45,hf=0.84,shd=2,el=1,xchan=[0.5],eps=0);
 }
 
 // Bottom shell
