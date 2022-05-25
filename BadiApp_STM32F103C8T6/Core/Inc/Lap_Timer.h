@@ -16,12 +16,12 @@
 
 #include "main.h"
 
-uint32_t previousMillisLap;
+extern uint32_t previousMillisLap;
 
-uint32_t Lap_Value;
+extern uint32_t Lap_Value;
 
-uint32_t previousMillisLap_Display;
-char LapUpdateDisplay;
+extern uint32_t previousMillisLap_Display;
+extern char LapUpdateDisplay;
 
 
 //Initialization of all variables

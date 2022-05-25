@@ -33,20 +33,19 @@ typedef enum
 	HighTemperature
 } TempAlarm;
 
-uint32_t previousMillisTemperature_Read;     //Updated every CALCULATE_TEMPERATUIRE_SENSOR_TIME
-uint32_t previousMillisTemperature_Display;  //Updated every DELAY_DISPLAY_TEMPERATUIRE_SENSOR_TIME
+extern uint32_t previousMillisTemperature_Read;     //Updated every CALCULATE_TEMPERATUIRE_SENSOR_TIME
+extern uint32_t previousMillisTemperature_Display;  //Updated every DELAY_DISPLAY_TEMPERATUIRE_SENSOR_TIME
 
-unsigned char counterAverageRead;
-uint32_t sumReadValue;
-uint32_t ActualRead;
+extern unsigned char counterAverageRead;
+extern uint32_t sumReadValue;
+extern uint32_t ActualRead;
 
-KalmanFilterStruct TemperatureFilter;
+extern KalmanFilterStruct TemperatureFilter;
 
-int16_t TemperatureAlarmThreeshold;
-int16_t TemperatureValue;
+extern int16_t TemperatureAlarmThreeshold;
+extern int16_t TemperatureValue;
 
-TempAlarm TemperatureAlarmUpdateDisplay;
-
+extern TempAlarm TemperatureAlarmUpdateDisplay;
 
 //Initialization of all variables
 void initReadTemperature();

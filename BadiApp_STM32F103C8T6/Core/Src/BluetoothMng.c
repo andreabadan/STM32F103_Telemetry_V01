@@ -7,6 +7,16 @@
 
 #include "BluetoothMng.h"
 
+//Variable declaration
+BluetoothStatus bluetoothStatus;
+
+//RX
+uint8_t rxBuffer[RXSIZE];
+//TX
+char txBuffer[100];
+uint16_t sizeTxBuffer;
+char _writeFWVersion;
+
 //Initialization of all variables
 void initBluetoothCommunication(UART_HandleTypeDef *huart){
 	//Initialization of DMA

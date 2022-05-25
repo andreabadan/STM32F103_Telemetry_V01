@@ -7,6 +7,17 @@
 
 #include "RPM_Counter.h"
 
+//Variable declaration
+uint32_t previousMicrosRPM;
+uint8_t counterAverageRPM;
+uint32_t RPM_DeltaTime;
+
+uint16_t RPM_Value;
+
+KalmanFilterStruct RPM_Filter;
+
+uint32_t previousMillisRPM_Display;
+
 //Filter initialization
 void initRPM_Filter(){
 	RPM_Filter.In  = 0.0;

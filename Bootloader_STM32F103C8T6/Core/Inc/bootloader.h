@@ -68,9 +68,9 @@ typedef struct
 
 extern BootloaderMode bootLoaderMode;
 
-uint32_t Flashed_offset;
-FlashStatus flashStatus;
-FlashLocked flashLocked;
+extern uint32_t Flashed_offset;
+extern FlashStatus flashStatus;
+extern FlashLocked flashLocked;
 
 //UART_HandleTypeDef *huartToDeinit;
 //extern USBD_HandleTypeDef hUsbDeviceFS;//it is defined in the usb_device.c

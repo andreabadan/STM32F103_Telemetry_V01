@@ -8,6 +8,21 @@
 #include "Temperature_Sensor.h"
 #include "math.h"
 
+//Variable declaration
+uint32_t previousMillisTemperature_Read;
+uint32_t previousMillisTemperature_Display;
+
+unsigned char counterAverageRead;
+uint32_t sumReadValue;
+uint32_t ActualRead;
+
+KalmanFilterStruct TemperatureFilter;
+
+int16_t TemperatureAlarmThreeshold;
+int16_t TemperatureValue;
+
+TempAlarm TemperatureAlarmUpdateDisplay;
+
 //Filter initialization
 void initTempFilter(){
 	TemperatureFilter.In  = 0.0;

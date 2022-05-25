@@ -8,6 +8,11 @@
 #include "BootLoader.h"
 #include "main.h"
 
+//Variable declaration
+uint32_t Flashed_offset;
+FlashStatus flashStatus;
+FlashLocked flashLocked;
+
 BootloaderMode __attribute__((section(".BootOptions"))) bootLoaderMode;
 
 void bootloaderInit()

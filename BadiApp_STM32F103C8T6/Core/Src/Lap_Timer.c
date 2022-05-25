@@ -7,6 +7,14 @@
 
 #include "Lap_Timer.h"
 
+//Variable declaration
+uint32_t previousMillisLap;
+
+uint32_t Lap_Value;
+
+uint32_t previousMillisLap_Display;
+char LapUpdateDisplay;
+
 //Initialization of all variables
 void initCounterLap(){
 	previousMillisLap = HAL_GetTick();

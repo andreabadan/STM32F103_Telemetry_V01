@@ -38,14 +38,15 @@ typedef enum
 } BluetoothAction;
 
 #include "main.h"
-BluetoothStatus bluetoothStatus;
+
+extern BluetoothStatus bluetoothStatus;
 
 //RX
-uint8_t rxBuffer[RXSIZE];
+extern uint8_t rxBuffer[RXSIZE];
 //TX
-char txBuffer[100];
-uint16_t sizeTxBuffer;
-char _writeFWVersion;
+extern char txBuffer[100];
+extern uint16_t sizeTxBuffer;
+extern char _writeFWVersion;
 
 //Initialization of all variables
 void initBluetoothCommunication(UART_HandleTypeDef *huart);

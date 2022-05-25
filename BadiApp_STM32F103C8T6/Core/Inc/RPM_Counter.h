@@ -16,15 +16,15 @@
 #include "main.h"
 #include "CommonFunctions.h"
 
-uint32_t previousMicrosRPM;
-uint8_t counterAverageRPM;
-uint32_t RPM_DeltaTime;
+extern uint32_t previousMicrosRPM;
+extern uint8_t counterAverageRPM;
+extern uint32_t RPM_DeltaTime;
 
-uint16_t RPM_Value;
+extern uint16_t RPM_Value;
 
-KalmanFilterStruct RPM_Filter;
+extern KalmanFilterStruct RPM_Filter;
 
-uint32_t previousMillisRPM_Display;
+extern uint32_t previousMillisRPM_Display;
 
 
 //Initialization of all variables
