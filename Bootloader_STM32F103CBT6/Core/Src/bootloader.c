@@ -273,6 +273,7 @@ void messageHandler(uint8_t* Buf)
 			transmitMessage((uint8_t*)&FLASHING_ERROR, strlen(FLASHING_ERROR));
 			break;
 		case EraseMemory:
+		case FlashAbort:
 			if(flashLocked != Unlocked)
 				unlockMemory();
 			if(flashStatus != Erased)
@@ -297,14 +298,6 @@ void messageHandler(uint8_t* Buf)
 			} else {
 				transmitMessage((uint8_t*)&FLASHING_ERROR, strlen(FLASHING_ERROR));
 			}
-			break;
-		case FlashAbort:
-			/*if(flashLocked != Unlocked)
-				unlockMemory();
-			if(flashStatus != Erased)
-				eraseMemory();
-			lockMemory();
-			transmitMessage((uint8_t*)&"Flash: Aborted!\n", strlen("Flash: Aborted!\n"));*/
 			break;
 		case StartApplication:
 			bootLoaderMode = JumpMode;
