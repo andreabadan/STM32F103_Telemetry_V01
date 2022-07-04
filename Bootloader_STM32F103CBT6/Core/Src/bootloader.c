@@ -295,8 +295,13 @@ void messageHandler(uint8_t* Buf)
 					lockMemory();
 				bootLoaderMode = JumpMode;
 				transmitMessage((uint8_t*)&FLASHING_OK, strlen(FLASHING_OK));
+				NVIC_SystemReset();
 			} else {
 				transmitMessage((uint8_t*)&FLASHING_ERROR, strlen(FLASHING_ERROR));
+				unlockMemory();
+				eraseMemory();
+				lockMemory();
+				NVIC_SystemReset();
 			}
 			break;
 		case StartApplication:
