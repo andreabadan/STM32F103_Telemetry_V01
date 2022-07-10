@@ -116,7 +116,7 @@ static void unlockMemory(){
 }
 
 static void lockMemory(){
-	/* Lock the Flash to enable the flash control register access *************/
+	/* Lock the Flash to enable the flash control register access */
 	while(HAL_FLASH_Lock()!=HAL_OK)
 		while(HAL_FLASH_Unlock()!=HAL_OK);//Weird fix attempt
 
@@ -157,7 +157,7 @@ void flashWord(uint32_t dataToFlash)
 	  do
 	  {
 		  address = APP_START + Flashed_offset;
-		  status = HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, address, dataToFlash);
+		  status = HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, address, dataToFlash);
 		  flash_attempt++;
 	  } while(status != HAL_OK && flash_attempt < 10 && dataToFlash == readWord(address));
 	  if(status != HAL_OK)  {//Error exeption
@@ -165,7 +165,7 @@ void flashWord(uint32_t dataToFlash)
 	  } else {//Word Flash Successful
 		  if(flashStatus != Writing)
 			  flashStatus = Writing;
-		  Flashed_offset += 4;
+		  Flashed_offset += 8;
 		  transmitMessage((uint8_t*)&FLASHING_OK, strlen(FLASHING_OK));
 	  }
 	}else
@@ -253,16 +253,12 @@ Command commandDecoding(char array1[]){
 
 uint8_t string_compare(char array1[], char array2[], uint16_t length)
 {
-	 uint8_t comVAR=0, i;
-	 for(i=0;i<length;i++)
-	   	{
-	   		  if(array1[i]==array2[i])
-	   	  		  comVAR++;
-	   	  	  else comVAR=0;
-	   	}
-	 if (comVAR==length)
-		 	return 1;
-	 else 	return 0;
+	 uint8_t i;
+	 for(i=0;i<length;i++){
+		 if(array1[i]!=array2[i])
+			 return 0;
+	 }
+	 return 1;
 }
 
 void messageHandler(uint8_t* Buf)
@@ -313,8 +309,7 @@ void messageHandler(uint8_t* Buf)
 
 void createMessage(uint8_t* Buf,  uint16_t Len)
 {
-	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_RESET);//LED ON
-	if(Len == 4 && flashLocked == Unlocked && flashStatus != Unerased){
+	if(Len == 8 && flashLocked == Unlocked && flashStatus != Unerased){
 		uint32_t dataToFlash =  (Buf[3]<<24) +
 								(Buf[2]<<16) +
 								(Buf[1]<<8) +
@@ -323,7 +318,7 @@ void createMessage(uint8_t* Buf,  uint16_t Len)
 	}else{
 		messageHandler(Buf);
 	}
-	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_SET);//LED OFF
+	HAL_GPIO_TogglePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin);
 }
 
 void transmitMessage(uint8_t* Buf, uint16_t Len){

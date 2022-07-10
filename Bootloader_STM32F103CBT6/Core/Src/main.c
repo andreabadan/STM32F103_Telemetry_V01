@@ -41,7 +41,9 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
- UART_HandleTypeDef huart2;
+ CRC_HandleTypeDef hcrc;
+
+UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
 uint8_t UART2_rxBuffer[NUMBER_SHARED_CARACTERS] = {0};
@@ -51,6 +53,7 @@ uint8_t UART2_rxBuffer[NUMBER_SHARED_CARACTERS] = {0};
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
+static void MX_CRC_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -83,13 +86,14 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-  HAL_UART_Receive_IT (&huart2, UART2_rxBuffer, 4);
+
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USB_DEVICE_Init();
   MX_USART2_UART_Init();
+  MX_CRC_Init();
   /* USER CODE BEGIN 2 */
   bootloaderInit();
   /* USER CODE END 2 */
@@ -154,6 +158,32 @@ void SystemClock_Config(void)
 }
 
 /**
+  * @brief CRC Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_CRC_Init(void)
+{
+
+  /* USER CODE BEGIN CRC_Init 0 */
+
+  /* USER CODE END CRC_Init 0 */
+
+  /* USER CODE BEGIN CRC_Init 1 */
+
+  /* USER CODE END CRC_Init 1 */
+  hcrc.Instance = CRC;
+  if (HAL_CRC_Init(&hcrc) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN CRC_Init 2 */
+
+  /* USER CODE END CRC_Init 2 */
+
+}
+
+/**
   * @brief USART2 Initialization Function
   * @param None
   * @retval None
@@ -182,7 +212,7 @@ static void MX_USART2_UART_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN USART2_Init 2 */
-  HAL_UART_Receive_IT (&huart2, UART2_rxBuffer, NUMBER_SHARED_CARACTERS);
+  HAL_UARTEx_ReceiveToIdle_IT (&huart2, UART2_rxBuffer, NUMBER_SHARED_CARACTERS);
   /* USER CODE END USART2_Init 2 */
 
 }
@@ -215,10 +245,10 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 //Bluetooth Callback
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 {
 	createMessage(UART2_rxBuffer, huart->RxXferSize);
-	HAL_UART_Receive_IT (&huart2, UART2_rxBuffer, NUMBER_SHARED_CARACTERS);
+	HAL_UARTEx_ReceiveToIdle_IT (&huart2, UART2_rxBuffer, NUMBER_SHARED_CARACTERS);
 }
 //Transmit Bluetooth
 void transmitUART(uint8_t* Buf, uint16_t Len)

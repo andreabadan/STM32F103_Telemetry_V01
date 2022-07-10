@@ -237,7 +237,7 @@ int main(void)
 	  printData(&huart2);
 	  //Led status
 	  HAL_GPIO_TogglePin (Led_status_GPIO_Port, Led_status_Pin);
-	  HAL_Delay(50);
+	  HAL_Delay(500);
 	  //MX_USB_DEVICE_DeInit();
   }
   /* USER CODE END 3 */
