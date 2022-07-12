@@ -26,6 +26,7 @@
 
 #include "main.h"
 #include "usbd_cdc_if.h"
+#include "usb_device.h"
 #include <string.h>
 
 typedef enum
@@ -47,6 +48,12 @@ typedef enum
 	Unlocked,
 	Locked
 } FlashLocked;
+
+typedef enum
+{
+	NotDone,
+	Done
+} FunctResult;
 
 typedef enum
 {
@@ -80,15 +87,16 @@ void bootloaderInit();
 void jumpToApp();
 void deinitEverything();
 
-void flashWord(uint32_t word);
-uint32_t readWord(uint32_t address);
+void flashDoubleWord(uint64_t dataToFlash);
+uint64_t readDoubleWord(uint32_t address);
 
-void errorBlink(char UnknounCommand);
+void errorBlink();
 
 Command commandDecoding(char array1[]);
 uint8_t string_compare(char array1[], char array2[], uint16_t length);
 void messageHandler(uint8_t* Buf);
 void createMessage(uint8_t* Buf,  uint16_t Len);
+void trasmitAckMessage(FunctResult Result);
 void transmitMessage(uint8_t* Buf, uint16_t Len);
 
 #endif /* INC_BOOTLOADER_H_ */

@@ -65,9 +65,10 @@ void jumpToApp()
 	HAL_Delay(200);
 	//Check if the application is there
 	uint8_t emptyCellCount = 0;
+	//TODO: change 20 constant
 	for(uint8_t i=0; i<20; i++)
 	{
-		if(readWord(APP_START + (i*4)) == -1)
+		if(readDoubleWord(APP_START + (i*8)) == -1)
 			emptyCellCount++;
 	}
 	if(emptyCellCount != 20)
@@ -82,7 +83,9 @@ void jumpToApp()
 		/* Jump, used asm to avoid stack optimization */
 		asm("msr msp, %0; bx %1;" : : "r"(vector_p->stack_addr), "r"(vector_p->func_p));
 	}else{
-		errorBlink(0);
+		errorBlink();
+		bootLoaderMode = FlashModeBT;
+		NVIC_SystemReset();
 	}
 }
 
@@ -103,31 +106,33 @@ void deinitEverything()
 	SysTick->VAL = 0;
 }
 
-static void unlockMemory(){
+static FunctResult unlockMemory(){
 	/* Unock the Flash to enable the flash control register access *************/
-	while(HAL_FLASH_Unlock()!=HAL_OK)
-		while(HAL_FLASH_Lock()!=HAL_OK);//Weird fix attempt
-
+	if(HAL_FLASH_Unlock() == HAL_OK){
 	/* Allow Access to option bytes sector */
-	while(HAL_FLASH_OB_Unlock()!=HAL_OK)
-		while(HAL_FLASH_OB_Lock()!=HAL_OK);//Weird fix attempt
-
-	flashLocked = Unlocked;
-}
-
-static void lockMemory(){
-	/* Lock the Flash to enable the flash control register access */
-	while(HAL_FLASH_Lock()!=HAL_OK)
-		while(HAL_FLASH_Unlock()!=HAL_OK);//Weird fix attempt
-
-	/* Lock Access to option bytes sector */
-	while(HAL_FLASH_OB_Lock()!=HAL_OK)
-		while(HAL_FLASH_OB_Unlock()!=HAL_OK);//Weird fix attempt
-
+		if (HAL_FLASH_OB_Unlock()==HAL_OK){
+			flashLocked = Unlocked;
+			return Done;
+		}
+	}
 	flashLocked = Locked;
+	return NotDone;
 }
 
-static void eraseMemory()
+static FunctResult lockMemory(){
+	/* Lock the Flash to enable the flash control register access */
+	if(HAL_FLASH_Lock()==HAL_OK){
+		/* Lock Access to option bytes sector */
+		if(HAL_FLASH_OB_Lock()==HAL_OK){
+			flashLocked = Locked;
+			return Done;
+		}
+	}
+	flashLocked = Unlocked;
+	return NotDone;
+}
+
+static FunctResult eraseMemory()
 {
 	/* Fill EraseInit structure*/
 	FLASH_EraseInitTypeDef EraseInitStruct;
@@ -139,14 +144,19 @@ static void eraseMemory()
 	volatile HAL_StatusTypeDef status_erase;
 	status_erase = HAL_FLASHEx_Erase(&EraseInitStruct, &PageError);
 
-	if(status_erase != HAL_OK)
-		errorBlink(0);
-	flashStatus = Erased;
 	Flashed_offset = 0;
+	if(status_erase != HAL_OK){
+		errorBlink();
+		flashStatus = Unerased;
+		return NotDone;
+	} else {
+		flashStatus = Erased;
+		return Done;
+	}
 }
 
 
-void flashWord(uint32_t dataToFlash)
+void flashDoubleWord(uint64_t dataToFlash)
 {
 	if((flashStatus == Erased || flashStatus == Writing) && flashLocked == Unlocked)
 	{
@@ -159,7 +169,7 @@ void flashWord(uint32_t dataToFlash)
 		  address = APP_START + Flashed_offset;
 		  status = HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, address, dataToFlash);
 		  flash_attempt++;
-	  } while(status != HAL_OK && flash_attempt < 10 && dataToFlash == readWord(address));
+	  } while(status != HAL_OK && flash_attempt < 10 && dataToFlash == readDoubleWord(address));
 	  if(status != HAL_OK)  {//Error exeption
 		  transmitMessage((uint8_t*)&FLASHING_ERROR, strlen(FLASHING_ERROR));
 	  } else {//Word Flash Successful
@@ -174,63 +184,55 @@ void flashWord(uint32_t dataToFlash)
 	}
 }
 
-uint32_t readWord(uint32_t address)
+uint64_t readDoubleWord(uint32_t address)
 {
-	uint32_t read_data;
-	read_data = *(uint32_t*)(address);
+	uint64_t read_data;
+	read_data = *(uint64_t*)(address);
 	return read_data;
 }
 
-void errorBlink(char UnknounCommand)
+void errorBlink()
 {
 	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_SET);
-	while(1)
-	{
-		HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_RESET);
-		HAL_Delay(200);
-		HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_SET);
-		HAL_Delay(200);
-		HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_RESET);
-		HAL_Delay(200);
-		HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_SET);
-		HAL_Delay(200);
-		HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_RESET);
-		HAL_Delay(200);
-		HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_SET);
-		HAL_Delay(500);
 
-		HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_RESET);
-		HAL_Delay(800);
-		HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_SET);
-		HAL_Delay(500);
-		HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_RESET);
-		HAL_Delay(800);
-		HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_SET);
-		HAL_Delay(500);
-		HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_RESET);
-		HAL_Delay(800);
-		HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_SET);
-		HAL_Delay(500);
+	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_RESET);
+	HAL_Delay(200);
+	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_SET);
+	HAL_Delay(200);
+	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_RESET);
+	HAL_Delay(200);
+	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_SET);
+	HAL_Delay(200);
+	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_RESET);
+	HAL_Delay(200);
+	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_SET);
+	HAL_Delay(500);
 
-		HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_RESET);
-		HAL_Delay(200);
-		HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_SET);
-		HAL_Delay(200);
-		HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_RESET);
-		HAL_Delay(200);
-		HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_SET);
-		HAL_Delay(200);
-		HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_RESET);
-		HAL_Delay(200);
-		HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_SET);
-		HAL_Delay(3000);
+	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_RESET);
+	HAL_Delay(800);
+	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_SET);
+	HAL_Delay(500);
+	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_RESET);
+	HAL_Delay(800);
+	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_SET);
+	HAL_Delay(500);
+	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_RESET);
+	HAL_Delay(800);
+	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_SET);
+	HAL_Delay(500);
 
-		if(UnknounCommand)
-		{
-			HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_SET);
-			HAL_Delay(3000);
-		}
-	}
+	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_RESET);
+	HAL_Delay(200);
+	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_SET);
+	HAL_Delay(200);
+	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_RESET);
+	HAL_Delay(200);
+	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_SET);
+	HAL_Delay(200);
+	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_RESET);
+	HAL_Delay(200);
+	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_SET);
+	HAL_Delay(3000);
 }
 
 Command commandDecoding(char array1[]){
@@ -264,25 +266,25 @@ uint8_t string_compare(char array1[], char array2[], uint16_t length)
 void messageHandler(uint8_t* Buf)
 {
 	Command comandReceived = commandDecoding((char*)Buf);
+	FunctResult functResultTMP = Done;
 	switch(comandReceived){
 		case InvalidCommand:
-			transmitMessage((uint8_t*)&FLASHING_ERROR, strlen(FLASHING_ERROR));
+			transmitMessage((uint8_t*)&BOOTLOADER_RUNNING FLASHING_ERROR, strlen(FLASHING_ERROR BOOTLOADER_RUNNING));
 			break;
 		case EraseMemory:
 		case FlashAbort:
 			if(flashLocked != Unlocked)
-				unlockMemory();
-			if(flashStatus != Erased)
-				eraseMemory();
-			lockMemory();
-			transmitMessage((uint8_t*)&FLASHING_OK, strlen(FLASHING_OK));
+				functResultTMP = unlockMemory();
+			if(flashStatus != Erased && functResultTMP == Done)
+				functResultTMP = eraseMemory();
+			trasmitAckMessage(lockMemory());
 			break;
 		case FlashStart:
 			if(flashLocked != Unlocked)
-				unlockMemory();
-			if(flashStatus != Erased)
-				eraseMemory();
-			transmitMessage((uint8_t*)&FLASHING_OK, strlen(FLASHING_OK));
+				functResultTMP = unlockMemory();
+			if(flashStatus != Erased && functResultTMP == Done)
+				functResultTMP = eraseMemory();
+			trasmitAckMessage(functResultTMP);
 			break;
 		case FlashFinish:
 			if(flashStatus == Writing){
@@ -310,15 +312,27 @@ void messageHandler(uint8_t* Buf)
 void createMessage(uint8_t* Buf,  uint16_t Len)
 {
 	if(Len == 8 && flashLocked == Unlocked && flashStatus != Unerased){
-		uint32_t dataToFlash =  (Buf[3]<<24) +
-								(Buf[2]<<16) +
-								(Buf[1]<<8) +
-								Buf[0];//32bit Word contains 4 Bytes
-		flashWord(dataToFlash);
+		uint64_t dataToFlash =  ((uint64_t)Buf[7]<<56) +
+ 								((uint64_t)Buf[6]<<48) +
+								((uint64_t)Buf[5]<<40) +
+								((uint64_t)Buf[4]<<32) +
+								((uint64_t)Buf[3]<<24) +
+								((uint64_t)Buf[2]<<16) +
+								((uint64_t)Buf[1]<< 8) +
+								 (uint64_t)Buf[0];//32bit Word contains 4 Bytes
+		flashDoubleWord(dataToFlash);
 	}else{
 		messageHandler(Buf);
 	}
+
 	HAL_GPIO_TogglePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin);
+}
+
+void trasmitAckMessage(FunctResult Result){
+	if(Result == Done)
+		transmitMessage((uint8_t*)&FLASHING_OK, strlen(FLASHING_OK));
+	else
+		transmitMessage((uint8_t*)&FLASHING_ERROR, strlen(FLASHING_ERROR));
 }
 
 void transmitMessage(uint8_t* Buf, uint16_t Len){

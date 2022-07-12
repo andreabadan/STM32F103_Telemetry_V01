@@ -247,7 +247,7 @@ static void MX_GPIO_Init(void)
 //Bluetooth Callback
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 {
-	createMessage(UART2_rxBuffer, huart->RxXferSize);
+	createMessage(UART2_rxBuffer, Size);
 	HAL_UARTEx_ReceiveToIdle_IT (&huart2, UART2_rxBuffer, NUMBER_SHARED_CARACTERS);
 }
 //Transmit Bluetooth
