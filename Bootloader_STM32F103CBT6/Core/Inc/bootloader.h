@@ -9,7 +9,7 @@
 #define INC_BOOTLOADER_H_
 
 #define APP_START (0x08005000)			//Origin + Bootloader size (20kB)
-#define FLASH_BANK_SIZE (0XB000)		//44kB
+#define FLASH_BANK_SIZE (0X1B000)		//108kB
 #define FLASH_PAGE_SIZE_USER (0x400)	//1kB
 
 #define ERASE_FLASH_MEMORY "#$ERASE_MEMORY"
@@ -78,9 +78,6 @@ extern BootloaderMode bootLoaderMode;
 extern uint32_t Flashed_offset;
 extern FlashStatus flashStatus;
 extern FlashLocked flashLocked;
-
-//UART_HandleTypeDef *huartToDeinit;
-//extern USBD_HandleTypeDef hUsbDeviceFS;//it is defined in the usb_device.c
 
 void bootloaderInit();
 
