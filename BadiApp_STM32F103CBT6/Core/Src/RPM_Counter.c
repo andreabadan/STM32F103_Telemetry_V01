@@ -42,19 +42,24 @@ void initCounterRPM(){
 
 //Called after each spark pulse
 void deltaTimeInterruptRPM(uint32_t currentMicrosRPM){
-	uint32_t maxCurrentMicros = previousMicrosRPM + MAX_DELTA_TIME_MICROS_RPM;
+	if(currentMicrosRPM > previousMicrosRPM)
+	{
+		uint32_t maxCurrentMicros = previousMicrosRPM + MAX_DELTA_TIME_MICROS_RPM;
 
-	if(maxCurrentMicros < currentMicrosRPM){ //Check if engine is turn on now
-		previousMicrosRPM = currentMicrosRPM;
-		RPM_DeltaTime = MAX_DELTA_TIME_MICROS_RPM;
-		counterAverageRPM = 1;
-	} else { //Calculate the delta time
-		uint32_t actualMicrosRPM = currentMicrosRPM - previousMicrosRPM;
-		if(actualMicrosRPM > MIN_DELTA_TIME_MICROS_RPM){
+		if(maxCurrentMicros < currentMicrosRPM){ //Check if engine is turn on now
 			previousMicrosRPM = currentMicrosRPM;
-			RPM_DeltaTime += actualMicrosRPM;
-			counterAverageRPM ++;
+			RPM_DeltaTime = MAX_DELTA_TIME_MICROS_RPM;
+			counterAverageRPM = 1;
+		} else { //Calculate the delta time
+			uint32_t actualMicrosRPM = currentMicrosRPM - previousMicrosRPM;
+			if(actualMicrosRPM > MIN_DELTA_TIME_MICROS_RPM){
+				previousMicrosRPM = currentMicrosRPM;
+				RPM_DeltaTime += actualMicrosRPM;
+				counterAverageRPM ++;
+			}
 		}
+	} else { //Timer resetted (every minute timer will e resetted)
+		previousMicrosRPM = currentMicrosRPM;
 	}
 }
 
