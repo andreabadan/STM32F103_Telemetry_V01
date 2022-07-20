@@ -83,6 +83,8 @@ void Error_Handler(void);
 #define IMU_Interrupt_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 #define VERISON "0.0.1B"
+
+#define BUFFER_USB_LENGTH 100
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

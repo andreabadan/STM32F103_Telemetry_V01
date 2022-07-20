@@ -17,6 +17,7 @@
 #define W_FIRMWARE_VERSION  "V"
 
 #define RXSIZE              20
+#define BUFFER_BT_LENGTH    100
 
 #define BOOTLOADER_WRITE    "BOOT"
 
@@ -38,6 +39,7 @@ typedef enum
 } BluetoothAction;
 
 #include "main.h"
+#include <string.h>
 
 extern BluetoothStatus bluetoothStatus;
 

@@ -150,7 +150,7 @@ int main(void)
   /*************/
   /*****USB*****/
   /*************/
-  char txtBufUSB[100];
+  char txtBufUSB[BUFFER_USB_LENGTH];
   uint16_t sizeBuffUSB = 0;
   /* USER CODE END 2 */
 
@@ -229,16 +229,15 @@ int main(void)
 
 	  if(sizeBuffUSB > 0){
 		  sizeBuffUSB += sprintf(txtBufUSB + sizeBuffUSB, "\r\n");
+		  memset(txtBufUSB + sizeBuffUSB, 0, BUFFER_USB_LENGTH - sizeBuffUSB); //Deleate value into unused buffer
 		  CDC_Transmit_FS((uint8_t *)txtBufUSB, sizeBuffUSB);
 		  sizeBuffUSB   = 0;
-		  txtBufUSB[50] = 0;
 	  }
 	  //Print via BT all informations
 	  printData(&huart2);
 	  //Led status
 	  HAL_GPIO_TogglePin (Led_status_GPIO_Port, Led_status_Pin);
 	  HAL_Delay(50);
-	  //MX_USB_DEVICE_DeInit();
   }
   /* USER CODE END 3 */
 }

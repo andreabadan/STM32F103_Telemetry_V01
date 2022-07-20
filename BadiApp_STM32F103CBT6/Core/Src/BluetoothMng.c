@@ -13,7 +13,7 @@ BluetoothStatus bluetoothStatus;
 //RX
 uint8_t rxBuffer[RXSIZE];
 //TX
-char txBuffer[100];
+char txBuffer[BUFFER_BT_LENGTH];
 uint16_t sizeTxBuffer;
 char _writeFWVersion;
 
@@ -31,10 +31,11 @@ void initBluetoothCommunication(UART_HandleTypeDef *huart){
 //Append new data
 void appendData(char *options, uint32_t value){
 	if(bluetoothStatus==Connect){
+		// TODO: Check array out of bound
 		sizeTxBuffer += sprintf(txBuffer + sizeTxBuffer, options, value);
 	} else {
 		sizeTxBuffer  = 0;
-		txBuffer[100] = 0;
+		memset(txBuffer, 0, BUFFER_BT_LENGTH);
 	}
 }
 
@@ -47,10 +48,10 @@ HAL_StatusTypeDef printData(UART_HandleTypeDef *huart) {
 		_writeFWVersion = 0;
 	}
 	if(sizeTxBuffer > 0 && bluetoothStatus==Connect){
+		memset(txBuffer + sizeTxBuffer, 0, BUFFER_BT_LENGTH - sizeTxBuffer); //Deleate value into unused buffer
 		trasmission = HAL_UART_Transmit_DMA(huart, (uint8_t*)txBuffer, sizeTxBuffer);
 		if(trasmission == HAL_OK){
-			sizeTxBuffer  = 0;
-			txBuffer[100] = 0;
+			sizeTxBuffer = 0;
 		}
 	}
 	return(trasmission);
