@@ -8,7 +8,6 @@
 #include "BootLoader.h"
 #include "main.h"
 
-//Variable declaration
 uint32_t Flashed_offset;
 FlashStatus flashStatus;
 FlashLocked flashLocked;
@@ -17,7 +16,6 @@ BootloaderMode __attribute__((section(".BootOptions"))) bootLoaderMode;
 
 void bootloaderInit()
 {
-	//huartToDeinit = huart;
 	for(uint8_t i=0; i<3; i++){
 		HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_SET);
 		HAL_Delay(100);
@@ -63,9 +61,9 @@ void jumpToApp()
 	}
 	HAL_GPIO_WritePin(BootloaderLed_GPIO_Port, BootloaderLed_Pin, GPIO_PIN_SET);
 	HAL_Delay(200);
-	//Check if the application is there
+	// Check if the application is there
 	uint8_t emptyCellCount = 0;
-	//TODO: change 20 constant
+	// TODO: change 20 constant
 	for(uint8_t i=0; i<20; i++)
 	{
 		if(readDoubleWord(APP_START + (i*8)) == -1)
@@ -79,8 +77,7 @@ void jumpToApp()
 
 		deinitEverything();
 
-		/* let's do The Jump! */
-		/* Jump, used asm to avoid stack optimization */
+		// Jump to app
 		asm("msr msp, %0; bx %1;" : : "r"(vector_p->stack_addr), "r"(vector_p->func_p));
 	}else{
 		errorBlink();
@@ -91,14 +88,13 @@ void jumpToApp()
 
 void deinitEverything()
 {
-	//-- reset peripherals to guarantee flawless start of user application
+	// Reset peripherals to guarantee flawless start of user application
 	HAL_GPIO_DeInit(BootloaderLed_GPIO_Port, BootloaderLed_Pin);
 	MX_USB_DEVICE_DeInit();
 	  __HAL_RCC_GPIOC_CLK_DISABLE();
 	  __HAL_RCC_GPIOD_CLK_DISABLE();
 	  __HAL_RCC_GPIOB_CLK_DISABLE();
 	  __HAL_RCC_GPIOA_CLK_DISABLE();
-	//HAL_UART_DeInit(huartToDeinit); If bootLoaderMode is JumpMode, this peripheral will not initialized!
 	HAL_RCC_DeInit();
 	HAL_DeInit();
 	SysTick->CTRL = 0;
@@ -107,9 +103,9 @@ void deinitEverything()
 }
 
 static FunctResult unlockMemory(){
-	/* Unock the Flash to enable the flash control register access *************/
+	// Unock the Flash to enable the flash control register access
 	if(HAL_FLASH_Unlock() == HAL_OK){
-	/* Allow Access to option bytes sector */
+	// Allow Access to option bytes sector
 		if (HAL_FLASH_OB_Unlock()==HAL_OK){
 			flashLocked = Unlocked;
 			return Done;
@@ -120,9 +116,9 @@ static FunctResult unlockMemory(){
 }
 
 static FunctResult lockMemory(){
-	/* Lock the Flash to enable the flash control register access */
+	// Lock the Flash to enable the flash control register access
 	if(HAL_FLASH_Lock()==HAL_OK){
-		/* Lock Access to option bytes sector */
+		// Lock Access to option bytes sector
 		if(HAL_FLASH_OB_Lock()==HAL_OK){
 			flashLocked = Locked;
 			return Done;
@@ -134,7 +130,7 @@ static FunctResult lockMemory(){
 
 static FunctResult eraseMemory()
 {
-	/* Fill EraseInit structure*/
+	// Fill EraseInit structure
 	FLASH_EraseInitTypeDef EraseInitStruct;
 	EraseInitStruct.TypeErase = FLASH_TYPEERASE_PAGES;
 	EraseInitStruct.PageAddress = APP_START;
