@@ -241,6 +241,10 @@ Command commandDecoding(char array1[]){
 	//Flash start
 	if(string_compare((char*)array1, FLASHING_START, strlen(FLASHING_START)))
 		command = FlashStart;
+	//Flash last word
+	if(string_compare((char*)array1, FLASHING_LAST_WORD, strlen(FLASHING_LAST_WORD)))
+		command = FlashLastWord;
+	//Flash finish
 	if(string_compare((char*)array1, FLASHING_FINISH, strlen(FLASHING_FINISH)))
 		command = FlashFinish;
 	//Flash abort
@@ -286,6 +290,10 @@ void messageHandler(uint8_t* Buf)
 				functResultTMP = eraseMemory();
 			trasmitAckMessage(functResultTMP);
 			break;
+		case FlashLastWord:
+			if(flashStatus == Writing)
+				flashStatus = LastWord;
+			break;
 		case FlashFinish:
 			if(flashStatus == Writing){
 				flashStatus = Unerased;
@@ -311,7 +319,8 @@ void messageHandler(uint8_t* Buf)
 
 void createMessage(uint8_t* Buf,  uint16_t Len)
 {
-	if(Len == 8 && flashLocked == Unlocked && flashStatus != Unerased){
+	if((Len == 8 || flashStatus == LastWord) && flashLocked == Unlocked && flashStatus != Unerased){
+		flashStatus = Writing;
 		uint64_t dataToFlash =  ((uint64_t)Buf[7]<<56) +
  								((uint64_t)Buf[6]<<48) +
 								((uint64_t)Buf[5]<<40) +
