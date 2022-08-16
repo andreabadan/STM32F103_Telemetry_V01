@@ -235,14 +235,18 @@ Command commandDecoding(char array1[]){
 	//Initialize command
 	Command command = InvalidCommand;
 	//Found right command
+	//Erase memory
 	if(string_compare((char*)array1, ERASE_FLASH_MEMORY, strlen(ERASE_FLASH_MEMORY)))
 		command = EraseMemory;
+	//Flash start
 	if(string_compare((char*)array1, FLASHING_START, strlen(FLASHING_START)))
 		command = FlashStart;
 	if(string_compare((char*)array1, FLASHING_FINISH, strlen(FLASHING_FINISH)))
 		command = FlashFinish;
+	//Flash abort
 	if(string_compare((char*)array1, FLASHING_ABORT, strlen(FLASHING_ABORT)))
 		command = FlashAbort;
+	//Restart application
 	if(string_compare((char*)array1, APPLICATION_START, strlen(APPLICATION_START)))
 		command = StartApplication;
 
