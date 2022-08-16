@@ -14,6 +14,7 @@
 
 #define ERASE_FLASH_MEMORY "#$ERASE_MEMORY"
 #define FLASHING_START     "#$FLASH_START#"
+#define FLASHING_LAST_WORD "#$FLASH_LAST_W"
 #define FLASHING_FINISH    "#$FLASH_FINISH"
 #define FLASHING_ABORT     "#$FLASH_ABORT#"
 #define APPLICATION_START  "#$APPL_START$#"
@@ -40,7 +41,8 @@ typedef enum
 {
     Unerased,
 	Erased,
-	Writing
+	Writing,
+	LastWord
 } FlashStatus;
 
 typedef enum
@@ -60,6 +62,7 @@ typedef enum
 	InvalidCommand,
 	EraseMemory,
 	FlashStart,
+	FlashLastWord,
 	FlashFinish,
 	FlashAbort,
 	StartApplication
