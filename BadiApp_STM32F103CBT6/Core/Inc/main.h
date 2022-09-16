@@ -82,6 +82,10 @@ void Error_Handler(void);
 #define IMU_Interrupt_Pin GPIO_PIN_9
 #define IMU_Interrupt_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
+/*!< Uncomment the following line if you need to send Bluetooth data via USB */
+/* #define debugBT */
+/*!< Uncomment the following line if you need to simulate RPM signal */
+#define DebugRPM
 #define VERISON "0.0.1B"
 
 #define BUFFER_USB_LENGTH 100

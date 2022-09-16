@@ -152,6 +152,11 @@ int main(void)
   /*************/
   char txtBufUSB[BUFFER_USB_LENGTH];
   uint16_t sizeBuffUSB = 0;
+
+#ifdef DebugRPM
+  uint8_t RPMdelay = 50; //From 5 to 50
+  uint8_t RPMincreasing = 1; //From 0 to 1
+#endif
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -177,7 +182,7 @@ int main(void)
 		  //USB
 		  sizeBuffUSB += sprintf(txtBufUSB + sizeBuffUSB, "!--! Lap value: %lu !--! ", Lap_Value);
 		  //BT
-		  appendData(LAPFINISHED_SYMBOL "%lu" LAP_SYMBOL, Lap_Value);//12 Characters
+		  appendData(LAPFINISHED_SYMBOL "%lu" LAP_SYMBOL, Lap_Value); //12 Characters
 		  //Update counter
 		  previousMillisLap_Display = currentMillis + DELAY_DISPLAY_LAP_TIME;
 		  LapUpdateDisplay = 0;
@@ -218,15 +223,12 @@ int main(void)
 		  HAL_ADC_Start_DMA(&hadc1, &ActualRead, 1);
 		  previousMillisTemperature_Read = currentMillis;
 	  }
-
-	  //Print via USB all informations
-	//#define debugBT
-	#ifdef debugBT
+#ifdef debugBT
 	  sizeBuffUSB = sizeBuffBT;
 	  for(int i=0; i<sizeBuffBT; i++)
 		  txtBufUSB[i] = txtBufBT[i];
-	#endif
-
+#endif
+	  //Print via USB all informations
 	  if(sizeBuffUSB > 0){
 		  sizeBuffUSB += sprintf(txtBufUSB + sizeBuffUSB, "\r\n");
 		  memset(txtBufUSB + sizeBuffUSB, 0, BUFFER_USB_LENGTH - sizeBuffUSB); //Deleate value into unused buffer
@@ -237,7 +239,27 @@ int main(void)
 	  printData(&huart2);
 	  //Led status
 	  HAL_GPIO_TogglePin (Led_status_GPIO_Port, Led_status_Pin);
+#ifdef DebugRPM
+	  HAL_Delay(RPMdelay);
+
+	  if(RPMincreasing){
+	  //RPM increase = delay decrease
+		  if(RPMdelay <= 5){
+			  RPMdelay = 50;
+			  RPMincreasing = 0;
+		  } else
+			  RPMdelay = RPMdelay - 1;
+	  } else {
+	  //RPM decrease = delay increase
+		  if(RPMdelay >= 50){
+			  RPMdelay = 5;
+			  RPMincreasing = 1;
+		  } else
+			  RPMdelay = RPMdelay + 1;
+	  }
+#else
 	  HAL_Delay(50);
+#endif
   }
   /* USER CODE END 3 */
 }
