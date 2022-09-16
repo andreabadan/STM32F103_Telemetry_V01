@@ -154,7 +154,7 @@ int main(void)
   uint16_t sizeBuffUSB = 0;
 
 #ifdef DebugRPM
-  uint8_t RPMdelay = 50; //From 5 to 50
+  uint8_t RPMdelay = 60; //From 5 to 60
   uint8_t RPMincreasing = 1; //From 0 to 1
 #endif
   /* USER CODE END 2 */
@@ -178,7 +178,7 @@ int main(void)
 		  previousMillisRPM_Display = currentMillis;
 	  }
 	  //Track update
-	  if(LapUpdateDisplay == 1){
+	  if(LapUpdateDisplay){
 		  //USB
 		  sizeBuffUSB += sprintf(txtBufUSB + sizeBuffUSB, "!--! Lap value: %lu !--! ", Lap_Value);
 		  //BT
@@ -187,7 +187,8 @@ int main(void)
 		  previousMillisLap_Display = currentMillis + DELAY_DISPLAY_LAP_TIME;
 		  LapUpdateDisplay = 0;
 	  }
-	  if(currentMillis > previousMillisLap_Display && currentMillis-previousMillisLap_Display > CALCULATE_LAP_DELTA_TIME && LapUpdateDisplay == 0){
+	  //Time update
+	  if(currentMillis > previousMillisLap_Display && currentMillis-previousMillisLap_Display > CALCULATE_LAP_DELTA_TIME && !LapUpdateDisplay){
 		  //USB
 		  sizeBuffUSB += sprintf(txtBufUSB + sizeBuffUSB, "Lap value: %lu ", currentMillis-previousMillisLap);
 		  //BT
@@ -239,23 +240,25 @@ int main(void)
 	  printData(&huart2);
 	  //Led status
 	  HAL_GPIO_TogglePin (Led_status_GPIO_Port, Led_status_Pin);
-#ifdef DebugRPM
-	  HAL_Delay(RPMdelay);
 
+#ifdef DebugRPM
 	  if(RPMincreasing){
 	  //RPM increase = delay decrease
-		  if(RPMdelay <= 5){
-			  RPMdelay = 50;
+		  if(RPMdelay <= 5)
 			  RPMincreasing = 0;
-		  } else
+		  else
 			  RPMdelay = RPMdelay - 1;
 	  } else {
 	  //RPM decrease = delay increase
-		  if(RPMdelay >= 50){
-			  RPMdelay = 5;
+		  if(RPMdelay >= 60)
 			  RPMincreasing = 1;
-		  } else
+		  else
 			  RPMdelay = RPMdelay + 1;
+	  }
+
+	  for(int i = 0; i < CALCULATE_RPM_DELTA_TIME ; i=i+RPMdelay){
+		  deltaTimeInterruptRPM(DWT->CYCCNT / (SystemCoreClock / 1000000U));
+		  HAL_Delay(RPMdelay);
 	  }
 #else
 	  HAL_Delay(50);
