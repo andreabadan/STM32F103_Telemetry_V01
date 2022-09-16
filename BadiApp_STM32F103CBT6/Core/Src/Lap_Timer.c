@@ -13,7 +13,7 @@ uint32_t previousMillisLap;
 uint32_t Lap_Value;
 
 uint32_t previousMillisLap_Display;
-char LapUpdateDisplay;
+uint8_t LapUpdateDisplay;
 
 //Initialization of all variables
 void initCounterLap(){

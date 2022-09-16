@@ -21,7 +21,7 @@ extern uint32_t previousMillisLap;
 extern uint32_t Lap_Value;
 
 extern uint32_t previousMillisLap_Display;
-extern char LapUpdateDisplay;
+extern uint8_t LapUpdateDisplay;
 
 
 //Initialization of all variables

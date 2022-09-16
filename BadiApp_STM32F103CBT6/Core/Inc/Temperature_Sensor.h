@@ -46,6 +46,7 @@ extern int16_t TemperatureAlarmThreeshold;
 extern int16_t TemperatureValue;
 
 extern TempAlarm TemperatureAlarmUpdateDisplay;
+extern uint8_t TempUpdate;
 
 //Initialization of all variables
 void initReadTemperature();

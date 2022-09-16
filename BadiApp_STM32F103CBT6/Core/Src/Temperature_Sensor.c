@@ -22,6 +22,8 @@ int16_t TemperatureAlarmThreeshold;
 int16_t TemperatureValue;
 
 TempAlarm TemperatureAlarmUpdateDisplay;
+/*Save value only if the newest value change*/
+uint8_t TempUpdate;
 
 //Filter initialization
 void initTempFilter(){
@@ -64,7 +66,12 @@ void calculateTemperature(){
 		/*if(TemperatureAlarmUpdateDisplay != ProbeOk || TemperatureAlarmUpdateDisplay != HighTemperature){
 		}*/
 		KalmanFilter(&TemperatureFilter);
-		TemperatureValue = TemperatureFilter.Out * 10.0;
+		int16_t TMP_TemperatureValue = TemperatureFilter.Out * 10.0;
+
+		if(TemperatureValue != TMP_TemperatureValue) {
+			TemperatureValue = TemperatureFilter.Out * 10.0;
+			TempUpdate = 1;
+		}
 		if(TemperatureValue > TemperatureAlarmThreeshold) {
 			TemperatureAlarmUpdateDisplay = HighTemperature;
 		} else {
@@ -73,6 +80,7 @@ void calculateTemperature(){
 	} else { //Probe Error
 		if(TemperatureAlarmUpdateDisplay != ProbeNotConnected) {
 			initTempFilter();
+			TempUpdate = 1;
 		}
 		TemperatureAlarmUpdateDisplay = ProbeNotConnected;
 	}
