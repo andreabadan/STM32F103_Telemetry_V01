@@ -173,7 +173,7 @@ int main(void)
 		  //USB
 		  sizeBuffUSB += sprintf(txtBufUSB, "RPM_Value: %u ", RPM_Value);
 		  //BT
-		  appendData( "%u" RPM_SYMBOL, RPM_Value); //6 Characters
+		  appendBTData( "%u" RPM_SYMBOL, RPM_Value); //6 Characters
 		  //Update counter
 		  previousMillisRPM_Display = currentMillis;
 	  }
@@ -182,7 +182,7 @@ int main(void)
 		  //USB
 		  sizeBuffUSB += sprintf(txtBufUSB + sizeBuffUSB, "!--! Lap value: %lu !--! ", Lap_Value);
 		  //BT
-		  appendData(LAPFINISHED_SYMBOL "%lu" LAP_SYMBOL, Lap_Value); //12 Characters
+		  appendBTData(LAPFINISHED_SYMBOL "%lu" LAP_SYMBOL, Lap_Value); //12 Characters
 		  //Update counter
 		  previousMillisLap_Display = currentMillis + DELAY_DISPLAY_LAP_TIME;
 		  LapUpdateDisplay = 0;
@@ -192,7 +192,7 @@ int main(void)
 		  //USB
 		  sizeBuffUSB += sprintf(txtBufUSB + sizeBuffUSB, "Lap value: %lu ", currentMillis-previousMillisLap);
 		  //BT
-		  appendData("%lu" LAP_SYMBOL, currentMillis-previousMillisLap); //11 Characters
+		  appendBTData("%lu" LAP_SYMBOL, currentMillis-previousMillisLap); //11 Characters
 		  //Update counter
 		  previousMillisLap_Display = currentMillis;
 	  }
@@ -206,14 +206,14 @@ int main(void)
 		  switch(TemperatureAlarmUpdateDisplay){
 		  	  case ProbeOk:
 		  	  case ProbeInit:
-		  		  appendData("%u" TEMP_SYMBOL, TemperatureValue); //6 Characters
+		  		  appendBTData("%u" TEMP_SYMBOL, TemperatureValue); //6 Characters
 		  		  break;
 		  	  case HighTemperature:
-		  		  appendData(HIGHTEMP_SYMBOL "%u" TEMP_SYMBOL, TemperatureValue); //7 Characters
+		  		  appendBTData(HIGHTEMP_SYMBOL "%u" TEMP_SYMBOL, TemperatureValue); //7 Characters
 		  		  break;
 		  	  case ProbeNotConnected:
 		  	  case ProbeErrorReading:
-		  		appendData(PROBEBROKE_SYMBOL "%u" TEMP_SYMBOL, 0); //3 Characters
+		  		appendBTData(PROBEBROKE_SYMBOL "%u" TEMP_SYMBOL, 0); //3 Characters
 		  		break;
 		  }
 		  //Update counter
@@ -237,10 +237,9 @@ int main(void)
 		  sizeBuffUSB   = 0;
 	  }
 	  //Print via BT all informations
-	  printData(&huart2);
+	  writeBTData(&huart2);
 	  //Led status
 	  HAL_GPIO_TogglePin (Led_status_GPIO_Port, Led_status_Pin);
-
 #ifdef DebugRPM
 	  if(RPMincreasing){
 	  //RPM increase = delay decrease
@@ -258,7 +257,7 @@ int main(void)
 
 	  for(int i = 0; i < CALCULATE_RPM_DELTA_TIME ; i=i+RPMdelay){
 		  deltaTimeInterruptRPM(DWT->CYCCNT / (SystemCoreClock / 1000000U));
-		  HAL_Delay(RPMdelay);
+		  HAL_Delay(RPMdelay-1);
 	  }
 #else
 	  HAL_Delay(50);
@@ -710,7 +709,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 // DMA USART Callback
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 {
-	switch(readData(huart, Size)){
+	switch(readBTData(huart, Size)){
 		case LoadNewApp:
 			jumpToBootLoader(FlashModeBT);
 			break;

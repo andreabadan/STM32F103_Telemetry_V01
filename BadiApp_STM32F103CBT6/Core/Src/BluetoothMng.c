@@ -29,7 +29,7 @@ void initBluetoothCommunication(UART_HandleTypeDef *huart){
 }
 
 //Append new data
-void appendData(char *options, uint32_t value){
+void appendBTData(char *options, uint32_t value){
 	if(bluetoothStatus==Connect){
 		// TODO: Check array out of bound
 		sizeTxBuffer += sprintf(txBuffer + sizeTxBuffer, options, value);
@@ -40,7 +40,7 @@ void appendData(char *options, uint32_t value){
 }
 
 //Print all pending data
-HAL_StatusTypeDef printData(UART_HandleTypeDef *huart) {
+HAL_StatusTypeDef writeBTData(UART_HandleTypeDef *huart) {
 	HAL_StatusTypeDef trasmission = HAL_OK;
 	//Add FW version to packet
 	if(_writeFWVersion == 1){
@@ -58,7 +58,7 @@ HAL_StatusTypeDef printData(UART_HandleTypeDef *huart) {
 }
 
 //Read the incoming data
-BluetoothAction readData(UART_HandleTypeDef *huart, uint16_t Size) {
+BluetoothAction readBTData(UART_HandleTypeDef *huart, uint16_t Size) {
 	if(huart->Instance==USART2) {
 		//Jump to Bootloader
 		if(Size == 4 &&

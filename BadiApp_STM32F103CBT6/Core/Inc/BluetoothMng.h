@@ -54,12 +54,12 @@ extern char _writeFWVersion;
 void initBluetoothCommunication(UART_HandleTypeDef *huart);
 
 //Append new data
-void appendData(char *options, uint32_t value);
+void appendBTData(char *options, uint32_t value);
 
 //Print all pending data
-HAL_StatusTypeDef printData(UART_HandleTypeDef *huart);
+HAL_StatusTypeDef writeBTData(UART_HandleTypeDef *huart);
 
 //Read the incoming data
-BluetoothAction readData(UART_HandleTypeDef *huart, uint16_t Size);
+BluetoothAction readBTData(UART_HandleTypeDef *huart, uint16_t Size);
 
 #endif /* BLUETOOTH_MNG_H_ */
