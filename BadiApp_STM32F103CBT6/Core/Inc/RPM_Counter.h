@@ -13,8 +13,18 @@
 
 #define CALCULATE_RPM_DELTA_TIME 200     //200ms (0.2s), max acceptable 637: (2.5 * 255)
 
+typedef enum
+{
+    Off,
+	TurnedOff,
+	On,
+	TurnedOn
+} EngineStatus;
+
 #include "main.h"
 #include "CommonFunctions.h"
+
+extern EngineStatus engineStatus;
 
 extern uint32_t previousMicrosRPM;
 extern uint8_t counterAverageRPM;

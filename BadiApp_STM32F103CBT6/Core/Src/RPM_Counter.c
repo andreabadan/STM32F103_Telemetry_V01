@@ -8,6 +8,8 @@
 #include "RPM_Counter.h"
 
 //Variable declaration
+EngineStatus engineStatus;
+
 uint32_t previousMicrosRPM;
 uint8_t counterAverageRPM;
 uint32_t RPM_DeltaTime;
@@ -34,6 +36,8 @@ void initCounterRPM(){
 	counterAverageRPM = 0;
 	RPM_DeltaTime = 0;
 	RPM_Value = 0;
+
+	engineStatus = Off;
 
 	previousMillisRPM_Display = previousMicrosRPM/1000U;
 
@@ -76,4 +80,23 @@ void calculateRPM(){
 	//Reset counters
 	counterAverageRPM = 0;
 	RPM_DeltaTime = 0;
+
+	//Update status
+	switch(engineStatus){
+		case Off:
+			if(RPM_Value > 0)
+				engineStatus = TurnedOn;
+			break;
+		case TurnedOff:
+		case TurnedOn:
+			if(RPM_Value <= 0)
+				engineStatus = Off;
+			else
+				engineStatus = On;
+			break;
+		case On:
+			if(RPM_Value <= 0)
+				engineStatus = TurnedOff;
+			break;
+	}
 }

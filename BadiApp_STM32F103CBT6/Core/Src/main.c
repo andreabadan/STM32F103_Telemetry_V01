@@ -27,6 +27,8 @@
 
 #include "BootLoaderMng.h"
 
+#include "MemoryMng.h"
+
 #include "BluetoothMng.h"
 
 #include "RPM_Counter.h"
@@ -138,6 +140,8 @@ int main(void)
   /*************/
   //Initialization of "BootLoader"
   initBootLoaderMode();
+  //Initialization of "NOR memory"
+  initMemory();
   //Initialization of "Bluetooth"
   initBluetoothCommunication(&huart2);
   //Initialization of "RPM counter"
@@ -167,25 +171,38 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 	  uint32_t currentMillis = HAL_GetTick();
+	  uint8_t logUpdated = 0;
+	  //Write log data
+	  if(currentMillis-previousMillis_LogUpdate > DELAY_LOG_UPDATE_TIME) {
+		  calculateRPM();
+		  //LOG
+		  if(engineStatus == TurnedOn) {
+			  //Session started
+			  updateLog( "%u" SESSION, 111, 0); //4 Characters
+		  }
+		  if(engineStatus != Off) {
+			  //RPM value
+			  updateLog( "%u" RPM_SYMBOL, RPM_Value, 0); //6 Characters
+			  if(engineStatus == TurnedOff) {
+				  //Session finished
+				  updateLog( "%u" SESSION, 111, 1); //4 Characters
+			  }
+		  }
+		  //Update counter
+		  previousMillis_LogUpdate = currentMillis;
+		  logUpdated = 1;
+	  }
 	  //RPM update
 	  if(currentMillis-previousMillisRPM_Display > CALCULATE_RPM_DELTA_TIME){
-		  calculateRPM();
+		  if(!logUpdated) {
+			  calculateRPM();
+		  }
 		  //USB
 		  sizeBuffUSB += sprintf(txtBufUSB, "RPM_Value: %u ", RPM_Value);
 		  //BT
 		  appendBTData( "%u" RPM_SYMBOL, RPM_Value); //6 Characters
 		  //Update counter
 		  previousMillisRPM_Display = currentMillis;
-	  }
-	  //Track update
-	  if(LapUpdateDisplay){
-		  //USB
-		  sizeBuffUSB += sprintf(txtBufUSB + sizeBuffUSB, "!--! Lap value: %lu !--! ", Lap_Value);
-		  //BT
-		  appendBTData(LAPFINISHED_SYMBOL "%lu" LAP_SYMBOL, Lap_Value); //12 Characters
-		  //Update counter
-		  previousMillisLap_Display = currentMillis + DELAY_DISPLAY_LAP_TIME;
-		  LapUpdateDisplay = 0;
 	  }
 	  //Time update
 	  if(currentMillis > previousMillisLap_Display && currentMillis-previousMillisLap_Display > CALCULATE_LAP_DELTA_TIME && !LapUpdateDisplay){
@@ -196,25 +213,47 @@ int main(void)
 		  //Update counter
 		  previousMillisLap_Display = currentMillis;
 	  }
+	  //Track update
+	  if(LapUpdateDisplay){
+		  //USB
+		  sizeBuffUSB += sprintf(txtBufUSB + sizeBuffUSB, "!--! Lap value: %lu !--! ", Lap_Value);
+		  //BT
+		  appendBTData(LAPFINISHED_SYMBOL "%lu" LAP_SYMBOL, Lap_Value); //12 Characters
+		  //LOG
+		  updateLog(LAPFINISHED_SYMBOL "%lu" LAP_SYMBOL, Lap_Value, 0); //12 Characters
+		  //Update counter
+		  previousMillisLap_Display = currentMillis + DELAY_DISPLAY_LAP_TIME;
+		  LapUpdateDisplay = 0;
+	  }
 	  //Temperature sensor
 	  if(currentMillis-previousMillisTemperature_Display > DELAY_DISPLAY_TEMPERATUIRE_SENSOR_TIME){
 		  //Calculate temperature
-		  calculateTemperature();
-		  //USB
-		  sizeBuffUSB += sprintf(txtBufUSB + sizeBuffUSB, "Temp: %u ", TemperatureValue);
-		  //BT
-		  switch(TemperatureAlarmUpdateDisplay){
-		  	  case ProbeOk:
-		  	  case ProbeInit:
-		  		  appendBTData("%u" TEMP_SYMBOL, TemperatureValue); //6 Characters
-		  		  break;
-		  	  case HighTemperature:
-		  		  appendBTData(HIGHTEMP_SYMBOL "%u" TEMP_SYMBOL, TemperatureValue); //7 Characters
-		  		  break;
-		  	  case ProbeNotConnected:
-		  	  case ProbeErrorReading:
-		  		appendBTData(PROBEBROKE_SYMBOL "%u" TEMP_SYMBOL, 0); //3 Characters
-		  		break;
+		  if(calculateTemperature() || bluetoothStatus == Connecting){
+			  //USB
+			  sizeBuffUSB += sprintf(txtBufUSB + sizeBuffUSB, "Temp: %u ", TemperatureValue);
+			  //BT
+			  switch(TemperatureAlarmUpdateDisplay){
+				  case ProbeOk:
+				  case ProbeInit:
+					  //BT
+					  appendBTData("%u" TEMP_SYMBOL, TemperatureValue); //6 Characters
+					  //LOG
+					  updateLog("%u" TEMP_SYMBOL, TemperatureValue, 0); //6 Characters
+					  break;
+				  case HighTemperature:
+					  //BT
+					  appendBTData(HIGHTEMP_SYMBOL "%u" TEMP_SYMBOL, TemperatureValue); //7 Characters
+					  //LOG
+					  updateLog(HIGHTEMP_SYMBOL "%u" TEMP_SYMBOL, TemperatureValue, 0); //7 Characters
+					  break;
+				  case ProbeNotConnected:
+				  case ProbeErrorReading:
+					  //BT
+					  appendBTData(PROBEBROKE_SYMBOL "%u" TEMP_SYMBOL, 0); //3 Characters
+					  //LOG
+					  updateLog(PROBEBROKE_SYMBOL "%u" TEMP_SYMBOL, 0, 0); //3 Characters
+					  break;
+			  }
 		  }
 		  //Update counter
 		  previousMillisTemperature_Display = currentMillis;
@@ -222,8 +261,10 @@ int main(void)
 	  //Read temperature value
 	  if(currentMillis-previousMillisTemperature_Read > CALCULATE_TEMPERATUIRE_SENSOR_TIME){
 		  HAL_ADC_Start_DMA(&hadc1, &ActualRead, 1);
+		  //Update counter
 		  previousMillisTemperature_Read = currentMillis;
 	  }
+
 #ifdef debugBT
 	  sizeBuffUSB = sizeBuffBT;
 	  for(int i=0; i<sizeBuffBT; i++)
@@ -255,12 +296,12 @@ int main(void)
 			  RPMdelay = RPMdelay + 1;
 	  }
 
-	  for(int i = 0; i < CALCULATE_RPM_DELTA_TIME ; i=i+RPMdelay){
+	  for(int i = 0; i < CALCULATE_RPM_DELTA_TIME; i=i+RPMdelay){
 		  deltaTimeInterruptRPM(DWT->CYCCNT / (SystemCoreClock / 1000000U));
 		  HAL_Delay(RPMdelay-1);
 	  }
 #else
-	  HAL_Delay(50);
+	  HAL_Delay(25);
 #endif
   }
   /* USER CODE END 3 */

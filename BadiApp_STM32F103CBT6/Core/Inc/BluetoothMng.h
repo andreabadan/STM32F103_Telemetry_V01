@@ -15,6 +15,7 @@
 #define PROBEBROKE_SYMBOL   "B"
 #define HIGHTEMP_SYMBOL     "H"
 #define W_FIRMWARE_VERSION  "V"
+#define SESSION				"S"
 
 #define RXSIZE              20
 #define BUFFER_BT_LENGTH    100
@@ -29,7 +30,8 @@
 typedef enum
 {
     Lost,
-	Connect
+	Connecting,
+	Connected
 } BluetoothStatus;
 
 typedef enum

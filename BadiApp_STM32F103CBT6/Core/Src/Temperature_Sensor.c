@@ -22,8 +22,6 @@ int16_t TemperatureAlarmThreeshold;
 int16_t TemperatureValue;
 
 TempAlarm TemperatureAlarmUpdateDisplay;
-/*Save value only if the newest value change*/
-uint8_t TempUpdate;
 
 //Filter initialization
 void initTempFilter(){
@@ -57,7 +55,10 @@ void averageRead(){
 }
 
 //Convert read average to temperature
-void calculateTemperature(){
+uint8_t calculateTemperature(){
+	/*Save value only if the newest value change*/
+	uint8_t TempUpdate = 0;
+
 	float Vin = V_MAX_TEMP*(((float)sumReadValue/(float)counterAverageRead)/4096.0f);
 
 	if(Vin > V_MIN_ERROR && Vin < V_MAX_ERROR) { //Probe OK
@@ -87,4 +88,6 @@ void calculateTemperature(){
 
 	sumReadValue = 0;
 	counterAverageRead = 0;
+
+	return TempUpdate;
 }
