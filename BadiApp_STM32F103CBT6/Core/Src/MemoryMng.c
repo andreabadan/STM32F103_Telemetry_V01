@@ -26,7 +26,7 @@ void _writeMemory(UART_HandleTypeDef *huart){
 
 //Print all pending data
 HAL_StatusTypeDef updateLog(char *options, uint32_t value, uint8_t forceWrite) {
-	char dataToWrite [strlen(options) + 10]; // 10 -> maximum number of characters in a uint32_t variable
+	/*char dataToWrite [strlen(options) + 10]; // 10 -> maximum number of characters in a uint32_t variable
 	uint16_t lenData = sprintf(dataToWrite, options, value);
 	uint16_t startingPoint = 0;
 	uint16_t lenToWrite = 0;
@@ -56,6 +56,6 @@ HAL_StatusTypeDef updateLog(char *options, uint32_t value, uint8_t forceWrite) {
 			//_writeMemory(huart);
 			actualSizeMemoryPage = 0;
 		}
-	} while(startingPoint + lenToWrite < lenData);
+	} while(startingPoint + lenToWrite < lenData);*/
 	return HAL_OK;
 }
