@@ -48,7 +48,7 @@ extern BluetoothStatus bluetoothStatus;
 //RX
 extern uint8_t rxBuffer[RXSIZE];
 //TX
-extern char txBuffer[100];
+extern char txBuffer[BUFFER_BT_LENGTH];
 extern uint16_t sizeTxBuffer;
 extern char _writeFWVersion;
 
