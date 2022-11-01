@@ -55,6 +55,7 @@ void initReadTemperature();
 void averageRead();
 
 //Calculate the current temperature (from average of value read)
-void calculateTemperature();
+//return: 1 only if the newest value change
+uint8_t calculateTemperature();
 
 #endif /* TEMPERATURE_SENSOR_H_ */

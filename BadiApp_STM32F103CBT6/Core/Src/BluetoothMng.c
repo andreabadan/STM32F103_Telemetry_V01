@@ -21,7 +21,7 @@ char _writeFWVersion;
 void initBluetoothCommunication(UART_HandleTypeDef *huart){
 	//Initialization of DMA
 	HAL_UARTEx_ReceiveToIdle_DMA (huart, rxBuffer, RXSIZE);
-	bluetoothStatus = Connect;
+	bluetoothStatus = Connected;
 	sizeTxBuffer = 0;
 
 	_writeFWVersion = 0;
@@ -30,7 +30,7 @@ void initBluetoothCommunication(UART_HandleTypeDef *huart){
 
 //Append new data
 void appendBTData(char *options, uint32_t value){
-	if(bluetoothStatus==Connect){
+	if(bluetoothStatus==Connected){
 		// TODO: Check array out of bound
 		sizeTxBuffer += sprintf(txBuffer + sizeTxBuffer, options, value);
 	} else {
@@ -47,12 +47,15 @@ HAL_StatusTypeDef writeBTData(UART_HandleTypeDef *huart) {
 		sizeTxBuffer += sprintf(txBuffer + sizeTxBuffer, VERISON W_FIRMWARE_VERSION); //UP to 10 Characters
 		_writeFWVersion = 0;
 	}
-	if(sizeTxBuffer > 0 && bluetoothStatus==Connect){
+	if(sizeTxBuffer > 0 && (bluetoothStatus==Connecting || bluetoothStatus==Connected)){
 		memset(txBuffer + sizeTxBuffer, 0, BUFFER_BT_LENGTH - sizeTxBuffer); //Deleate value into unused buffer
 		trasmission = HAL_UART_Transmit_DMA(huart, (uint8_t*)txBuffer, sizeTxBuffer);
 		if(trasmission == HAL_OK){
 			sizeTxBuffer = 0;
 		}
+	}
+	if(bluetoothStatus==Connecting){
+		bluetoothStatus = Connected;
 	}
 	return(trasmission);
 }
@@ -101,7 +104,7 @@ BluetoothAction readBTData(UART_HandleTypeDef *huart, uint16_t Size) {
 		   (char)rxBuffer[4] == AT_CONNECTED[4] &&
 		   (char)rxBuffer[5] == AT_CONNECTED[5] &&
 		   (char)rxBuffer[6] == AT_CONNECTED[6]) {
-			bluetoothStatus = Connect;
+			bluetoothStatus = Connecting;
 			_writeFWVersion = 1;
 		}
 		HAL_UARTEx_ReceiveToIdle_DMA(huart, rxBuffer, RXSIZE);

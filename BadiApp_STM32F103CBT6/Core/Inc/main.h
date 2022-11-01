@@ -75,6 +75,8 @@ void Error_Handler(void);
 #define GPS_PPS_GPIO_Port GPIOB
 #define HOLD_Flash_Pin GPIO_PIN_2
 #define HOLD_Flash_GPIO_Port GPIOB
+#define SPI2_NSS_Pin GPIO_PIN_12
+#define SPI2_NSS_GPIO_Port GPIOB
 #define WP_Flash_Pin GPIO_PIN_8
 #define WP_Flash_GPIO_Port GPIOA
 #define GPS_NRST_Pin GPIO_PIN_4
@@ -86,6 +88,8 @@ void Error_Handler(void);
 /* #define debugBT */
 /*!< Uncomment the following line if you need to simulate RPM signal */
 #define DebugRPM
+/*!< Uncomment the following line if you need to disable Data log write */
+#define disableDataLogWrite
 #define VERISON "0.0.1B"
 
 #define BUFFER_USB_LENGTH 100

@@ -27,6 +27,8 @@
 
 #include "BootLoaderMng.h"
 
+#include "MemoryMng.h"
+
 #include "BluetoothMng.h"
 
 #include "RPM_Counter.h"
@@ -58,6 +60,8 @@ I2C_HandleTypeDef hi2c1;
 RTC_HandleTypeDef hrtc;
 
 SPI_HandleTypeDef hspi2;
+DMA_HandleTypeDef hdma_spi2_tx;
+DMA_HandleTypeDef hdma_spi2_rx;
 
 UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
@@ -138,6 +142,8 @@ int main(void)
   /*************/
   //Initialization of "BootLoader"
   initBootLoaderMode();
+  //Initialization of "NOR memory"
+  initMemory(&hspi2);
   //Initialization of "Bluetooth"
   initBluetoothCommunication(&huart2);
   //Initialization of "RPM counter"
@@ -167,25 +173,38 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 	  uint32_t currentMillis = HAL_GetTick();
+	  uint8_t logUpdated = 0;
+	  //Write log data
+	  if(currentMillis-previousMillis_LogUpdate > DELAY_LOG_UPDATE_TIME) {
+		  calculateRPM();
+		  //LOG
+		  if(engineStatus == TurnedOn) {
+			  //Session started
+			  updateLog( "%u" SESSION, 111, 0); //4 Characters
+		  }
+		  if(engineStatus != Off) {
+			  //RPM value
+			  updateLog( "%u" RPM_SYMBOL, RPM_Value, 0); //6 Characters
+			  if(engineStatus == TurnedOff) {
+				  //Session finished
+				  updateLog( "%u" SESSION, 111, 1); //4 Characters
+			  }
+		  }
+		  //Update counter
+		  previousMillis_LogUpdate = currentMillis;
+		  logUpdated = 1;
+	  }
 	  //RPM update
 	  if(currentMillis-previousMillisRPM_Display > CALCULATE_RPM_DELTA_TIME){
-		  calculateRPM();
+		  if(!logUpdated) {
+			  calculateRPM();
+		  }
 		  //USB
 		  sizeBuffUSB += sprintf(txtBufUSB, "RPM_Value: %u ", RPM_Value);
 		  //BT
 		  appendBTData( "%u" RPM_SYMBOL, RPM_Value); //6 Characters
 		  //Update counter
 		  previousMillisRPM_Display = currentMillis;
-	  }
-	  //Track update
-	  if(LapUpdateDisplay){
-		  //USB
-		  sizeBuffUSB += sprintf(txtBufUSB + sizeBuffUSB, "!--! Lap value: %lu !--! ", Lap_Value);
-		  //BT
-		  appendBTData(LAPFINISHED_SYMBOL "%lu" LAP_SYMBOL, Lap_Value); //12 Characters
-		  //Update counter
-		  previousMillisLap_Display = currentMillis + DELAY_DISPLAY_LAP_TIME;
-		  LapUpdateDisplay = 0;
 	  }
 	  //Time update
 	  if(currentMillis > previousMillisLap_Display && currentMillis-previousMillisLap_Display > CALCULATE_LAP_DELTA_TIME && !LapUpdateDisplay){
@@ -196,25 +215,47 @@ int main(void)
 		  //Update counter
 		  previousMillisLap_Display = currentMillis;
 	  }
+	  //Track update
+	  if(LapUpdateDisplay){
+		  //USB
+		  sizeBuffUSB += sprintf(txtBufUSB + sizeBuffUSB, "!--! Lap value: %lu !--! ", Lap_Value);
+		  //BT
+		  appendBTData(LAPFINISHED_SYMBOL "%lu" LAP_SYMBOL, Lap_Value); //12 Characters
+		  //LOG
+		  updateLog(LAPFINISHED_SYMBOL "%lu" LAP_SYMBOL, Lap_Value, 0); //12 Characters
+		  //Update counter
+		  previousMillisLap_Display = currentMillis + DELAY_DISPLAY_LAP_TIME;
+		  LapUpdateDisplay = 0;
+	  }
 	  //Temperature sensor
 	  if(currentMillis-previousMillisTemperature_Display > DELAY_DISPLAY_TEMPERATUIRE_SENSOR_TIME){
 		  //Calculate temperature
-		  calculateTemperature();
-		  //USB
-		  sizeBuffUSB += sprintf(txtBufUSB + sizeBuffUSB, "Temp: %u ", TemperatureValue);
-		  //BT
-		  switch(TemperatureAlarmUpdateDisplay){
-		  	  case ProbeOk:
-		  	  case ProbeInit:
-		  		  appendBTData("%u" TEMP_SYMBOL, TemperatureValue); //6 Characters
-		  		  break;
-		  	  case HighTemperature:
-		  		  appendBTData(HIGHTEMP_SYMBOL "%u" TEMP_SYMBOL, TemperatureValue); //7 Characters
-		  		  break;
-		  	  case ProbeNotConnected:
-		  	  case ProbeErrorReading:
-		  		appendBTData(PROBEBROKE_SYMBOL "%u" TEMP_SYMBOL, 0); //3 Characters
-		  		break;
+		  if(calculateTemperature() || bluetoothStatus == Connecting){
+			  //USB
+			  sizeBuffUSB += sprintf(txtBufUSB + sizeBuffUSB, "Temp: %u ", TemperatureValue);
+			  //BT
+			  switch(TemperatureAlarmUpdateDisplay){
+				  case ProbeOk:
+				  case ProbeInit:
+					  //BT
+					  appendBTData("%u" TEMP_SYMBOL, TemperatureValue); //6 Characters
+					  //LOG
+					  updateLog("%u" TEMP_SYMBOL, TemperatureValue, 0); //6 Characters
+					  break;
+				  case HighTemperature:
+					  //BT
+					  appendBTData(HIGHTEMP_SYMBOL "%u" TEMP_SYMBOL, TemperatureValue); //7 Characters
+					  //LOG
+					  updateLog(HIGHTEMP_SYMBOL "%u" TEMP_SYMBOL, TemperatureValue, 0); //7 Characters
+					  break;
+				  case ProbeNotConnected:
+				  case ProbeErrorReading:
+					  //BT
+					  appendBTData(PROBEBROKE_SYMBOL "%u" TEMP_SYMBOL, 0); //3 Characters
+					  //LOG
+					  updateLog(PROBEBROKE_SYMBOL "%u" TEMP_SYMBOL, 0, 0); //3 Characters
+					  break;
+			  }
 		  }
 		  //Update counter
 		  previousMillisTemperature_Display = currentMillis;
@@ -222,8 +263,10 @@ int main(void)
 	  //Read temperature value
 	  if(currentMillis-previousMillisTemperature_Read > CALCULATE_TEMPERATUIRE_SENSOR_TIME){
 		  HAL_ADC_Start_DMA(&hadc1, &ActualRead, 1);
+		  //Update counter
 		  previousMillisTemperature_Read = currentMillis;
 	  }
+
 #ifdef debugBT
 	  sizeBuffUSB = sizeBuffBT;
 	  for(int i=0; i<sizeBuffBT; i++)
@@ -255,12 +298,12 @@ int main(void)
 			  RPMdelay = RPMdelay + 1;
 	  }
 
-	  for(int i = 0; i < CALCULATE_RPM_DELTA_TIME ; i=i+RPMdelay){
+	  for(int i = 0; i < CALCULATE_RPM_DELTA_TIME; i=i+RPMdelay){
 		  deltaTimeInterruptRPM(DWT->CYCCNT / (SystemCoreClock / 1000000U));
 		  HAL_Delay(RPMdelay-1);
 	  }
 #else
-	  HAL_Delay(50);
+	  HAL_Delay(25);
 #endif
   }
   /* USER CODE END 3 */
@@ -480,8 +523,8 @@ static void MX_SPI2_Init(void)
   hspi2.Init.DataSize = SPI_DATASIZE_8BIT;
   hspi2.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi2.Init.CLKPhase = SPI_PHASE_1EDGE;
-  hspi2.Init.NSS = SPI_NSS_HARD_OUTPUT;
-  hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
+  hspi2.Init.NSS = SPI_NSS_SOFT;
+  hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_256;
   hspi2.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi2.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi2.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
@@ -608,6 +651,12 @@ static void MX_DMA_Init(void)
   /* DMA1_Channel1_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
+  /* DMA1_Channel4_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Channel4_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Channel4_IRQn);
+  /* DMA1_Channel5_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Channel5_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Channel5_IRQn);
   /* DMA1_Channel6_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA1_Channel6_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA1_Channel6_IRQn);
@@ -636,7 +685,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOA, Led_status_Pin|Buzzer_Pin|WP_Flash_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, GPS_ONOFF_Pin|HOLD_Flash_Pin|GPS_NRST_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, GPS_ONOFF_Pin|HOLD_Flash_Pin|SPI2_NSS_Pin|GPS_NRST_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : Led_status_Pin Buzzer_Pin */
   GPIO_InitStruct.Pin = Led_status_Pin|Buzzer_Pin;
@@ -670,6 +719,13 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(HOLD_Flash_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : SPI2_NSS_Pin */
+  GPIO_InitStruct.Pin = SPI2_NSS_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;
+  HAL_GPIO_Init(SPI2_NSS_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : WP_Flash_Pin */
   GPIO_InitStruct.Pin = WP_Flash_Pin;
@@ -716,6 +772,13 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 		default: break;
 	}
 
+}
+// DMA SPI Callback
+void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef * hspi)
+{
+    if(hspi->Instance == SPI2){
+    	MemoryMNG_Callback();
+    }
 }
 /* USER CODE END 4 */
 

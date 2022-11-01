@@ -15,6 +15,7 @@
 #define PROBEBROKE_SYMBOL   "B"
 #define HIGHTEMP_SYMBOL     "H"
 #define W_FIRMWARE_VERSION  "V"
+#define SESSION				"S"
 
 #define RXSIZE              20
 #define BUFFER_BT_LENGTH    100
@@ -29,7 +30,8 @@
 typedef enum
 {
     Lost,
-	Connect
+	Connecting,
+	Connected
 } BluetoothStatus;
 
 typedef enum
@@ -46,7 +48,7 @@ extern BluetoothStatus bluetoothStatus;
 //RX
 extern uint8_t rxBuffer[RXSIZE];
 //TX
-extern char txBuffer[100];
+extern char txBuffer[BUFFER_BT_LENGTH];
 extern uint16_t sizeTxBuffer;
 extern char _writeFWVersion;
 
