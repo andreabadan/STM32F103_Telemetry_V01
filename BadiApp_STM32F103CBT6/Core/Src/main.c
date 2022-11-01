@@ -143,7 +143,7 @@ int main(void)
   //Initialization of "BootLoader"
   initBootLoaderMode();
   //Initialization of "NOR memory"
-  initMemory();
+  initMemory(&hspi2);
   //Initialization of "Bluetooth"
   initBluetoothCommunication(&huart2);
   //Initialization of "RPM counter"
@@ -523,7 +523,7 @@ static void MX_SPI2_Init(void)
   hspi2.Init.DataSize = SPI_DATASIZE_8BIT;
   hspi2.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi2.Init.CLKPhase = SPI_PHASE_1EDGE;
-  hspi2.Init.NSS = SPI_NSS_HARD_OUTPUT;
+  hspi2.Init.NSS = SPI_NSS_SOFT;
   hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_256;
   hspi2.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi2.Init.TIMode = SPI_TIMODE_DISABLE;
@@ -685,7 +685,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOA, Led_status_Pin|Buzzer_Pin|WP_Flash_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, GPS_ONOFF_Pin|HOLD_Flash_Pin|GPS_NRST_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, GPS_ONOFF_Pin|HOLD_Flash_Pin|SPI2_NSS_Pin|GPS_NRST_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : Led_status_Pin Buzzer_Pin */
   GPIO_InitStruct.Pin = Led_status_Pin|Buzzer_Pin;
@@ -719,6 +719,13 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(HOLD_Flash_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : SPI2_NSS_Pin */
+  GPIO_InitStruct.Pin = SPI2_NSS_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;
+  HAL_GPIO_Init(SPI2_NSS_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : WP_Flash_Pin */
   GPIO_InitStruct.Pin = WP_Flash_Pin;
@@ -765,6 +772,13 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 		default: break;
 	}
 
+}
+// DMA SPI Callback
+void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef * hspi)
+{
+    if(hspi->Instance == SPI2){
+    	MemoryMNG_Callback();
+    }
 }
 /* USER CODE END 4 */
 

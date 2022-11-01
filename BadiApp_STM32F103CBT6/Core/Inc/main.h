@@ -88,6 +88,8 @@ void Error_Handler(void);
 /* #define debugBT */
 /*!< Uncomment the following line if you need to simulate RPM signal */
 #define DebugRPM
+/*!< Uncomment the following line if you need to disable Data log write */
+#define disableDataLogWrite
 #define VERISON "0.0.1B"
 
 #define BUFFER_USB_LENGTH 100

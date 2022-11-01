@@ -11,7 +11,7 @@ uint8_t MemoryPage[2][1 + 3 + PAGE_SIZE];
 //Bit 8: Initialization pageToWrite
 //Bit 4: Write enable (1 -> enable, 0 -> not enable)
 //Bit 3: Memory status (1 -> busy, 0 -> ready)
-//Bit 2: Buffer (not (bit 1)) ready to be written
+//Bit 2: Buffer[not(Bit1)] is ready to be written
 //Bit 1: Buffer used (0 -> MemoryPage[0], 1 -> MemoryPage[1])
 uint8_t MemoryStatus = 0;
 
@@ -56,12 +56,12 @@ uint8_t _readHeaderPage(uint16_t pageToRead){
 //Initialization of pageToWrite (The first page to be written)
 uint16_t _initPageToWrite(){
 	uint16_t pageToWrite;
-	MemoryStatus = MemoryStatus | 127; // Set Bit 8 = 1
+	MemoryStatus = MemoryStatus | 128; // Set Bit 8 = 1
 
 	//Search the first free position
 	pageToWrite = 0;
 	do{
-		if(_readHeaderPage(pageToWrite) == 0)
+		if(_readHeaderPage(pageToWrite) == 0xFF)
 			break;
 
 		if(pageToWrite == NUMBER_OF_PAGES){
@@ -76,8 +76,7 @@ uint16_t _initPageToWrite(){
 
 //Initialization of all variables
 void initMemory(SPI_HandleTypeDef *hspi){
-	HAL_GPIO_WritePin(SPI2_NSS_GPIO_Port, SPI2_NSS_Pin, GPIO_PIN_SET);
-	NSSPinStatus = GPIO_PIN_SET;
+	_NSSChangeStatus(GPIO_PIN_SET);
 
 	previousMillis_LogUpdate = HAL_GetTick();
 
@@ -88,9 +87,6 @@ void initMemory(SPI_HandleTypeDef *hspi){
 
 	memset(MemoryPage[0] + 1, 0, PAGE_SIZE + 3);
 	memset(MemoryPage[1] + 1, 0, PAGE_SIZE + 3);
-
-	MemoryPage[0][4] = 0xFF;
-	MemoryPage[1][4] = 0xFF;
 
 	actualSizeMemoryPage = 0;
 	currentPageWrited = _initPageToWrite();
@@ -127,12 +123,34 @@ void _status(){
 	HAL_SPI_TransmitReceive(Memoryhspi, commandToWrite, dataRead, 2, WAIT_TIME * 2);
 	_NSSChangeStatus(GPIO_PIN_SET);
 
-	MemoryStatus = (MemoryStatus & 243) | (dataRead[1] << 2); //Ready to write
+	MemoryStatus = (MemoryStatus & 243) | ((dataRead[1] & 3) << 2);//Ready to write
 }
 
+//Check if memory is waiting to be written
+//flesh data into memory
+void flashPage(){
+	if(NSSPinStatus == GPIO_PIN_SET){
+		_writeEnable();
+		_status();
+
+#ifndef disableDataLogWrite
+		if(MemoryStatus & 2 && !(MemoryStatus & 4) && MemoryStatus & 8){ //Ready and write enable
+			_NSSChangeStatus(GPIO_PIN_RESET);
+			HAL_SPI_Transmit_DMA(Memoryhspi, MemoryPage[(MemoryStatus & 1) ^ 1], 1 + 3 + PAGE_SIZE);
+		}
+#else
+		MemoryMNG_Callback();
+#endif
+
+	}
+}
 
 //Write memory
 void _writeMemory(){
+	//Wait until write procedure is finished
+	//It is very important to start writre memory function only when GPIO pin is = SET
+	while(NSSPinStatus==GPIO_PIN_RESET){}
+
 	//Reached end of memory
 	if (currentPageWrited == NUMBER_OF_PAGES)
 		currentPageWrited = 0;
@@ -151,29 +169,30 @@ void _writeMemory(){
 	//Check if the next page to write is in a new sector
 	if (nextPageToWrite % SECTOR_SIZE == 0){
 		//Check if the new sector is already writed
-		if(_readHeaderPage(nextPageToWrite) != 0)
+		if(_readHeaderPage(nextPageToWrite) != 0xFF)
 			_eraseSector(&nextPageToWrite);
 	}
 
 	//Write new page
-	_writeEnable();
-	_status();
-	if(NSSPinStatus == GPIO_PIN_SET && MemoryStatus & 4 && MemoryStatus & 8){ //Ready and write enable
-		_NSSChangeStatus(GPIO_PIN_RESET);
-		HAL_SPI_Transmit_DMA(Memoryhspi, MemoryPage[MemoryStatus & 1], 1 + 3 + PAGE_SIZE);
-	} else {
-		//Write not ready
-		if(MemoryStatus & 2){ //Bit 2 of MemoryStatus
-			//TODO: Error: Both buffer are full of data
-		} else {
-			MemoryStatus = MemoryStatus | 2; // Set Bit 2 = 1
-			MemoryStatus = MemoryStatus ^ 1; // Set Bit 1 = not (Bit 1)
-		}
-	}
+	flashPage();
 }
 
-void checkMemoryStatus(){
+//Erase all chip memory
+//Return 1 if all is done
+uint8_t chipErase(){
+	if(NSSPinStatus==GPIO_PIN_SET){
+		_writeEnable();
+		_status();
+		if(!(MemoryStatus & 4) && MemoryStatus & 8){
+			uint8_t commandToWrite = FLASH_CHIP_ERASE;
 
+			_NSSChangeStatus(GPIO_PIN_RESET);
+			HAL_SPI_Transmit(Memoryhspi, &commandToWrite, 1, WAIT_TIME);
+			_NSSChangeStatus(GPIO_PIN_SET);
+			return 1;
+		}
+	}
+	return 0;
 }
 
 //Print all pending data
@@ -203,9 +222,24 @@ HAL_StatusTypeDef updateLog(char *options, uint32_t value, uint8_t forceWrite) {
 			if(forceWrite){
 				memset(MemoryPage[MemoryStatus & 1] + 1 + 3 + HEADER_SIZE + actualSizeMemoryPage, 0, PAGE_SIZE - HEADER_SIZE - actualSizeMemoryPage);
 			}
+
+			if(MemoryStatus & 2){ //Bit 2 of MemoryStatus
+				//TODO: Error: Both buffer are full of data
+			}
+
+			//Update memory status bits
+			MemoryStatus = MemoryStatus | 2; // Set Bit 2 = 1 			-> Buffer[not(Bit1)] is ready to be written
+			MemoryStatus = MemoryStatus ^ 1; // Set Bit 1 = not (Bit 1) -> Buffer[Bit1] is empty
+			//Write memory
 			_writeMemory();
 			actualSizeMemoryPage = 0;
 		}
 	} while(startingPoint + lenToWrite < lenData);
 	return HAL_OK;
+}
+
+//Callback
+void MemoryMNG_Callback(){
+	_NSSChangeStatus(GPIO_PIN_SET);
+	MemoryStatus = MemoryStatus & 253;
 }

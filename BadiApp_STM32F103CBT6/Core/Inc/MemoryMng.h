@@ -13,6 +13,7 @@
 #define FLASH_SECTOR_ERASE	((uint8_t)0x20)
 #define FLASH_DATA_READE	((uint8_t)0x03)
 #define FLASH_READ_STATUS1	((uint8_t)0x05)
+#define FLASH_CHIP_ERASE	((uint8_t)0xC7)
 
 #define NUMBER_OF_PAGES 65535 	// from 0 to 65535 [page] = 16.777.215 (number of byte) / 256 (byte in a page)
 #define PAGE_SIZE 		256 	// bytes in a page
@@ -41,5 +42,15 @@ void initMemory(SPI_HandleTypeDef *hspi);
 
 //Print all pending data
 HAL_StatusTypeDef updateLog(char *options, uint32_t value, uint8_t forceWrite);
+
+//Check if memory is waiting to be written
+void flashPage();
+
+//Erase all chip memory
+//Return 1 if all is done
+uint8_t chipErase();
+
+//Callback
+void MemoryMNG_Callback();
 
 #endif /* MEMORY_MNG_H_ */
